@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Description TODO
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date 2020/5/26
  * @Version 1.0
  */
-@Controller
+@RestController
 @RequestMapping("user")
 public class UserController {
 

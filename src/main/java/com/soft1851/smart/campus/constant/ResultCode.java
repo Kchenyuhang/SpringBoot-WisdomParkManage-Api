@@ -1,10 +1,9 @@
 package com.soft1851.smart.campus.constant;
 
 /**
- * @Description TODO
- * @Author wf
- * @Date 2020/4/21
- * @Version 1.0
+ * @author wf
+ * @description 各类返回的状态码
+ * @create 2020/2/5
  */
 public enum ResultCode {
     /* 成功状态码 */
@@ -20,9 +19,7 @@ public enum ResultCode {
     HTTP_NOT_FOUND(10007, "请求地址错误"),
     BOUND_STATEMENT_NOT_FOUND(10008, "Mybatis未绑定"),
     CONNECTION_ERROR(10009, "网络连接错误"),
-    ARITHMETIC_ERROR(100010,"计算错误"),
-
-
+    INDEX_NOT_RANGE(10010, "越界错误"),
 
     /* 用户错误：20001-29999*/
     USER_NOT_SIGN_IN(20001, "请先登录"),
@@ -35,25 +32,23 @@ public enum ResultCode {
     USER_SIGN_IN_FAIL(20008, "用户登录失败"),
     USER_NOT_FOUND(20009, "用户不存在"),
     USER_NO_AUTH(20019, "用户权限不足"),
-    USER_TOKEN_EXPIRES(200010, "Token已过期"),
 
 
     /* 业务错误：30001-39999 */
     SMS_ERROR(30001, "短信业务出现问题"),
-    UPLOAD_ERROR(30002, "上传文件业务出现问题"),
+    TOKEN_NOT_USE(30002, "token已失效"),
+    UPLOAD_ERROR(30003, "上传文件业务出现问题"),
 
     /* 数据错误：40001-49999 */
     RESULT_CODE_DATA_NONE(50001, "数据未找到"),
     DATA_IS_WRONG(50002, "数据有误"),
     DATA_ALREADY_EXISTED(50003, "数据已存在"),
     DATABASE_ERROR(50004, "数据库操作异常"),
-    DATABASE_EXPORT_ERROR(50005, "数据导出异常"),
 
 
     /* 服务器或系统错误：50001-599999 */
     SERVER_ERROR(50000, "服务器错误，请稍后重试"),
     SYSTEM_ERROR(40001, "系统错误，请稍后重试"),
-    PARAMETER_ERROR(50002, "参数校验异常"),
 
     /* 接口错误：60001-69999 */
     INTERFACE_INNER_INVOKE_ERROR(60001, "内部系统接口调用异常"),

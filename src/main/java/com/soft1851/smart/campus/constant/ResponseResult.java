@@ -5,10 +5,10 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Description TODO
- * @Author wf
- * @Date 2020/4/21
- * @Version 1.0
+ * @author wf
+ * @ClassName ResponseResult
+ * @description 返回的JSON数据结构标准
+ * @create 2020/2/5
  */
 @Data
 public class ResponseResult implements Serializable {
