@@ -1,11 +1,11 @@
 package com.soft1851.smart.campus.service;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< src/test/java/com/soft1851/smart/campus/service/RedisServiceTest.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-
 import javax.annotation.Resource;
 
 /**
