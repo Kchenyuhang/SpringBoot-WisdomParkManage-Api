@@ -14,7 +14,7 @@ import java.util.List;
  * @ClassName CorsConfig
  * @Description CorsConfig
  * @Author wf
- * @Date 2020/4/15
+ * @Date 2020/5/27
  * @Version 1.0
  */
 @Configuration
@@ -31,7 +31,7 @@ public class CorsConfig {
         List<String> allowedRequestMethods = Arrays.asList(requestMethods);
         config.setAllowedMethods(allowedRequestMethods);
         //允许的客户端请求头列表
-        String[] requestHeaders = {"x-requested-with","adminId" ,"Verify","roleId", "Content-Type", "Authorization"};
+        String[] requestHeaders = {"x-requested-with", "Content-Type", "Authorization"};
         List<String> allowedHeaders = Arrays.asList(requestHeaders);
         config.setAllowedHeaders(allowedHeaders);
         //允许的响应头列表

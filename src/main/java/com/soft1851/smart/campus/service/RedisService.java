@@ -1,35 +1,64 @@
 package com.soft1851.smart.campus.service;
 
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Service;
+public interface RedisService {
+    /**
+     * 添加 Redis术语中 string 类型的数据
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean set(final String key, Object value);
 
-import javax.annotation.Resource;
+    /**
+     * 添加 Redis术语中 string 类型的数据,并设置超时
+     *
+     * @param key
+     * @param value
+     * @param expireTime
+     * @return
+     */
+    public boolean set(final String key, Object value, Long expireTime);
 
-/**
- * @Description TODO
- * @Author wf
- * @Date 2020/5/26
- * @Version 1.0
- */
-@Service
-public class RedisService {
-    @Resource
-    private RedisTemplate<String,Object> redisTemplate;
+    /**
+     * 判断 key 是否存在
+     *
+     * @param key
+     * @return
+     */
+    public boolean existsKey(final String key);
 
-    public void set(String key, Object value) {
-        //更改在redis里面查看key编码问题
-        RedisSerializer redisSerializer =new StringRedisSerializer();
-        redisTemplate.setKeySerializer(redisSerializer);
-        ValueOperations<String,Object> vo = redisTemplate.opsForValue();
-        vo.set(key, value);
-    }
+    /**
+     * 根据( Redis 术语中 string 类型的) key 获取值,如果出现异常则返回null
+     *
+     * @param key
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public <T> T getValue(final String key, Class<T> type);
 
-    public Object get(String key) {
-        ValueOperations<String,Object> vo = redisTemplate.opsForValue();
-        return vo.get(key);
-    }
+    /**
+     * 删除对应的value
+     *
+     * @param key
+     */
+
+    public void removeKey(final String key);
+
+    /**
+     * 批量删除对应的value
+     *
+     * @param keys
+     */
+
+    public void remove(final String... keys);
+
+    /**
+     * 批量删除key
+     *
+     * @param pattern
+     */
+
+    public void removePattern(final String pattern);
 }
-

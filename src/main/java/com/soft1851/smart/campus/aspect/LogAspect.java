@@ -3,7 +3,10 @@ package com.soft1851.smart.campus.aspect;
 import com.alibaba.fastjson.JSON;
 import com.soft1851.smart.campus.annotation.OperationLogDetail;
 import com.soft1851.smart.campus.model.entity.LogInfo;
+<<<<<<< src/main/java/com/soft1851/smart/campus/aspect/LogAspect.java
+=======
 import com.soft1851.smart.campus.model.entity.OperationLog;
+>>>>>>> src/main/java/com/soft1851/smart/campus/aspect/LogAspect.java
 import com.soft1851.smart.campus.utils.FileUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,9 +18,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 import java.util.UUID;
 
 /**
