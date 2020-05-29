@@ -23,8 +23,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
-<<<<<<< HEAD
-=======
   #redis配置数据
   redis:
     database: 0
@@ -38,4 +36,3 @@ spring:
         max-active: 8
         max-wait: 1ms
       shutdown-timeout: 100ms
->>>>>>> 288b8b5d4053546391d1b4ef047b7af6c8563b87
