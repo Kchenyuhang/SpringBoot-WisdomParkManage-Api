@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "sys_course",indexes = {@Index(name = "schedule_idIndex",columnList = "schedule_id")})
+@Table(name = "sys_course",indexes = {@Index(name = "timetable_idIndex",columnList = "timetable_id")})
 public class SysCourse {
     /**
      * 主键，策略为自增
@@ -34,31 +34,31 @@ public class SysCourse {
      * 课表id
      * nullable = false为非空约束，unique = true是唯一约束
      */
-    @Column(name ="schedule_id",nullable = false, unique = true)
-    private Long scheduleId;
+    @Column(name ="timetable_id",nullable = false)
+    private Long timetableId;
 
     /**
      * 科目id
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long subjectId;
 
     /**
      * 教师工号
      */
-    @Column(nullable = false, unique = true,length = 20)
+    @Column(nullable = false, length = 20)
     private String userJobNumber;
 
     /**
      * 房间id
      */
-    @Column(nullable = false, unique = true,length = 11)
-    private Long roomId;
+    @Column(nullable = false, length = 11)
+    private Integer roomId;
 
     /**
      * 周几
      */
-    @Column(nullable = false, unique = true,length = 4)
+    @Column(nullable = false, length = 4)
     private Integer weekDay;
 
     /**
@@ -70,7 +70,7 @@ public class SysCourse {
      *
      * ）
      */
-    @Column(nullable = false, unique = true,length = 4)
+    @Column(nullable = false, length = 4)
     private Integer time;
 
     /**
@@ -91,12 +91,5 @@ public class SysCourse {
      */
     @Column(nullable = false,length = 4)
     private Boolean isDeleted;
-
-    /**
-     * 课表id
-     * nullable = false为非空约束，unique = true是唯一约束
-     */
-    @Column(name ="timetable_id",nullable = false, unique = true)
-    private Integer timetableId;
 
 }

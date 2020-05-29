@@ -8,13 +8,13 @@ import javax.annotation.Resource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ScheduleRepositoryTest {
+class UserAccountRepositoryTest {
 
     @Resource
-    private ScheduleRepository scheduleRepository;
+    private UserAccountRepository userAccountRepository;
 
     @Test
-    void getId() {
-        System.out.println(scheduleRepository.getId(1L, 1L, 1));
+    void getUserName() {
+        System.out.println(userAccountRepository.getUserName("1802343124"));
     }
 }

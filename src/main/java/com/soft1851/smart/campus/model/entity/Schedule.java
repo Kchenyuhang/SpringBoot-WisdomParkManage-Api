@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@Entity
+@Entity
 @Table(name = "school_timetable",indexes = {@Index(name = "clazz_idIndex",columnList = "clazz_id")})
 public class Schedule {
     /**
@@ -33,14 +33,14 @@ public class Schedule {
     /**
      * 班级id
      */
-    @Column(name ="clazz_id",nullable = false, unique = true)
-    private Integer clazzId;
+    @Column(name ="clazz_id",nullable = false)
+    private Long clazzId;
 
     /**
      * 学期id
      */
     @Column(nullable = false)
-    private Integer semesterId;
+    private Long semesterId;
 
     /**
      * 第几周（第一周、第二周...）

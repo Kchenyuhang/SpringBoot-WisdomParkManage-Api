@@ -1,0 +1,69 @@
+package com.soft1851.smart.campus.model.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+/**
+ * @author Tao
+ * @version 1.0
+ * @ClassName SysSubject
+ * @Description 科目表
+ * @date 2020-05-25 22:07
+ **/
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+public class SysSubject {
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pk_subject_id",nullable = false)
+    private Long pk_subject_id;
+
+    /**
+     * 名称
+     */
+    @Column(name = "name",nullable = false,length = 20)
+    private String name;
+
+    /**
+     * 课程类型
+     */
+    @Column(name = "type",nullable = false,length = 20)
+    private String type;
+
+    /**
+     * 科目图片
+     */
+    @Column(name = "cover",nullable = false)
+    private String cover;
+
+    /**
+     * 创建时间
+     */
+    @Column(name = "gmt_create",nullable = false)
+    private Timestamp gmt_create;
+
+    /**
+     * 更新时间
+     */
+    @UpdateTimestamp
+    @Column(name = "gmt_modified",nullable = false)
+    private Timestamp gmt_modified;
+
+    /**
+     * 删除标志
+     */
+    @Column(name = "is_deleted",nullable = false,length = 4)
+    private Boolean isDeleted;
+}

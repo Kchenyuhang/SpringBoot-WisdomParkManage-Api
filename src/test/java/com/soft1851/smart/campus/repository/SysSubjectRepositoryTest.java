@@ -8,13 +8,13 @@ import javax.annotation.Resource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ScheduleRepositoryTest {
+class SysSubjectRepositoryTest {
 
     @Resource
-    private ScheduleRepository scheduleRepository;
+    private SysSubjectRepository sysSubjectRepository;
 
     @Test
-    void getId() {
-        System.out.println(scheduleRepository.getId(1L, 1L, 1));
+    void getSubjectName() {
+        System.out.println(sysSubjectRepository.getSubjectName(1L));
     }
 }
