@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "school_timetable",indexes = {@Index(name = "clazz_idIndex",columnList = "clazz_id")})
+@Table(name = "schedule",indexes = {@Index(name = "clazz_idIndex",columnList = "clazz_id")})
 public class Schedule {
     /**
      * 主键，策略为自增

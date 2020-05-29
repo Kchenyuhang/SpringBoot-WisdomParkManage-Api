@@ -1,0 +1,34 @@
+package com.soft1851.smart.campus.controller;
+
+import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.ScheduleDto;
+import com.soft1851.smart.campus.service.ScheduleService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+
+/**
+ * @author xunmi
+ * @ClassName ScheduleController
+ * @Description TODO
+ * @Date 2020/5/30
+ * @Version 1.0
+ **/
+@RestController
+@RequestMapping("/api/schedule")
+public class ScheduleController {
+
+    @Resource
+    private ScheduleService scheduleService;
+
+    /**
+     * 获取指定 学期、班级、周次的课表信息接口
+     *
+     * @param scheduleDto
+     * @return
+     */
+    @GetMapping("/info")
+    public ResponseResult getInfo(@RequestBody ScheduleDto scheduleDto) {
+        return ResponseResult.success(scheduleService.getScheduleInfo(scheduleDto.getSemesterId(), scheduleDto.getClazzId(), scheduleDto.getWeek()));
+    }
+}

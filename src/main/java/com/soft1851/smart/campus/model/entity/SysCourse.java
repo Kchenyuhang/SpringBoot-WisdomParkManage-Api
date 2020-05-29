@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "sys_course",indexes = {@Index(name = "timetable_idIndex",columnList = "timetable_id")})
+@Table(name = "sys_course",indexes = {@Index(name = "schedule_idIndex",columnList = "schedule_id")})
 public class SysCourse {
     /**
      * 主键，策略为自增
@@ -34,31 +34,37 @@ public class SysCourse {
      * 课表id
      * nullable = false为非空约束，unique = true是唯一约束
      */
-    @Column(name ="timetable_id",nullable = false)
-    private Long timetableId;
+    @Column(name ="schedule_id",nullable = false)
+    private Long scheduleId;
 
     /**
      * 科目id
      */
-    @Column(nullable = false)
+    @Column(name ="subject_id",nullable = false)
     private Long subjectId;
 
     /**
      * 教师工号
      */
-    @Column(nullable = false, length = 20)
+    @Column(name ="user_job_number",nullable = false, length = 20)
     private String userJobNumber;
+
+    /**
+     * 周次（例如 1-5，8-13）
+     */
+    @Column(name ="week_duration",nullable = false)
+    private String weekDuration;
 
     /**
      * 房间id
      */
-    @Column(nullable = false, length = 11)
+    @Column(name ="room_id",nullable = false, length = 11)
     private Integer roomId;
 
     /**
      * 周几
      */
-    @Column(nullable = false, length = 4)
+    @Column(name ="week_day",nullable = false, length = 4)
     private Integer weekDay;
 
     /**
@@ -70,26 +76,25 @@ public class SysCourse {
      *
      * ）
      */
-    @Column(nullable = false, length = 4)
+    @Column(name ="time",nullable = false, length = 4)
     private Integer time;
 
     /**
      * 创建时间
      */
-    @Column(nullable = false)
+    @Column(name ="gmt_create",nullable = false)
     private Timestamp gmtCreate;
 
     /**
      * 修改时间
      */
     @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(name ="gmt_modified",nullable = false)
     private Timestamp gmtModified;
 
     /**
      * 删除标志（0 逻辑删除， 1 未删除）
      */
-    @Column(nullable = false,length = 4)
+    @Column(name ="is_deleted",nullable = false,length = 4)
     private Boolean isDeleted;
-
 }

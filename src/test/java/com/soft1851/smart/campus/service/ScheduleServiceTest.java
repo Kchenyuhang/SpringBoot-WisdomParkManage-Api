@@ -1,4 +1,4 @@
-package com.soft1851.smart.campus.repository;
+package com.soft1851.smart.campus.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,14 +8,13 @@ import javax.annotation.Resource;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SysCourseRepositoryTest {
+class ScheduleServiceTest {
 
     @Resource
-    private SysCourseRepository sysCourseRepository;
+    private ScheduleService scheduleService;
 
     @Test
-    void getIdInfo() {
-        sysCourseRepository.getInfoOfId(1L).forEach(System.out::println);
+    void getScheduleInfo() {
+        scheduleService.getScheduleInfo(1L, 1L, 1).forEach(System.out::println);
     }
-
 }

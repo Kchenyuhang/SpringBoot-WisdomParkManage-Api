@@ -1,7 +1,6 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.Room;
-import com.soft1851.smart.campus.model.entity.SysCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,6 +15,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     /**
      * 通过房间 id 查找出房间名
+     *
      * @param id
      * @return
      */

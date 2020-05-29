@@ -49,6 +49,13 @@ public class SysSubject {
     private String cover;
 
     /**
+     * 背景颜色
+     */
+    @Column(name = "background_color",nullable = false)
+    private String backgroundColor;
+
+
+    /**
      * 创建时间
      */
     @Column(name = "gmt_create",nullable = false)
