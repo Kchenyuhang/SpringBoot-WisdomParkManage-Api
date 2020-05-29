@@ -1,36 +1,32 @@
 package com.soft1851.smart.campus.service;
 
 import org.junit.jupiter.api.Test;
-<<<<<<< src/test/java/com/soft1851/smart/campus/service/RedisServiceTest.java
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+
 import javax.annotation.Resource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Description TODO
  * @Author wf
- * @Date 2020/5/26
+ * @Date 2020/5/29
  * @Version 1.0
  */
 @SpringBootTest
 class RedisServiceTest {
-
     @Resource
-    private RedisService service;
-
+    private RedisService redisService;
 
     @Test
-    public void save() {
-        service.set("code", "132132132", (long) 10);
-        if(service.existsKey("code")) {
-            System.out.println(service.getValue("code", String.class));
-        }
+    void set() {
+        redisService.set("1","112221", (long)1);
+
     }
 
     @Test
-    public void test() {
-        System.out.println(service.getValue("code", String.class));
+    void getValue() {
+        System.out.println(redisService.getValue("1", String.class));
+
     }
 }

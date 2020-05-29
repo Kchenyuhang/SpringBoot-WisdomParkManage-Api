@@ -6,12 +6,6 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import java.util.Date;
 
-/**
- * @Description TODO
- * @Author wf
- * @Date 2020/5/27
- * @Version 1.0
- */
 @Slf4j
 public class QuartzManager {
     /**
