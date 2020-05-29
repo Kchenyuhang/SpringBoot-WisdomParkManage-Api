@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("/api/schedule")
+@RequestMapping("timetable")
 public class ScheduleController {
 
     @Resource
@@ -38,7 +38,7 @@ public class ScheduleController {
      * @param scheduleId
      * @return
      */
-    @GetMapping("/info/{scheduleId}")
+    @GetMapping("/{scheduleId}")
     public ResponseResult getInfoById(@PathVariable Long scheduleId) {
         return ResponseResult.success(scheduleService.getScheduleInfoById(scheduleId));
     }
