@@ -44,6 +44,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         // 第二步：通过课程表 id 查找出对应课程、老师、教室的 id值
         List<SysCourse> infoOfId = sysCourseRepository.getInfoOfId(scheduleId);
         // 第三步：遍历集合，分别将各类 id 取出并进行查询
+        return createVo(infoOfId);
+    }
+
+    @Override
+    public List<CourseVo> getScheduleInfoById(Long scheduleId) {
+        List<SysCourse> infoOfId = sysCourseRepository.getInfoOfId(scheduleId);
+        return createVo(infoOfId);
+    }
+
+    /**
+     * 构造 Vo 对象并返回
+     *
+     * @param infoOfId
+     * @return
+     */
+    private List<CourseVo> createVo(List<SysCourse> infoOfId) {
+        List<CourseVo> list = new ArrayList<>(10);
+        // 第三步：遍历集合，分别将各类 id 取出并进行查询
         infoOfId.forEach((item) -> {
             CourseVo course = new CourseVo();
             // 先获取科目信息

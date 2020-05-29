@@ -22,4 +22,12 @@ public interface ScheduleService {
      * @return
      */
     List<CourseVo> getScheduleInfo(Long semesterId, Long clazzId, Integer week);
+
+    /**
+     * 通过课表 id 查找课表信息
+     *
+     * @param scheduleId
+     * @return
+     */
+    List<CourseVo> getScheduleInfoById(Long scheduleId);
 }

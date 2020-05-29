@@ -31,4 +31,15 @@ public class ScheduleController {
     public ResponseResult getInfo(@RequestBody ScheduleDto scheduleDto) {
         return ResponseResult.success(scheduleService.getScheduleInfo(scheduleDto.getSemesterId(), scheduleDto.getClazzId(), scheduleDto.getWeek()));
     }
+
+    /**
+     * 获取课表 id 查找课表信息接口
+     *
+     * @param scheduleId
+     * @return
+     */
+    @GetMapping("/info/{scheduleId}")
+    public ResponseResult getInfoById(@PathVariable Long scheduleId) {
+        return ResponseResult.success(scheduleService.getScheduleInfoById(scheduleId));
+    }
 }
