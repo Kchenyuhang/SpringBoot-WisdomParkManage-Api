@@ -3,6 +3,9 @@ package com.soft1851.smart.campus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author
+ */
 @SpringBootApplication
 public class SmartCampusApplication {
 
