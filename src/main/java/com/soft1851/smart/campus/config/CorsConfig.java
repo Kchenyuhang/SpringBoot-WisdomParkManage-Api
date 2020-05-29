@@ -14,7 +14,7 @@ import java.util.List;
  * @ClassName CorsConfig
  * @Description CorsConfig
  * @Author wf
- * @Date 2020/5/27
+ * @Date 2020/4/15
  * @Version 1.0
  */
 @Configuration
