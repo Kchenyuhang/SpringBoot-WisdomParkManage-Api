@@ -61,4 +61,10 @@ public class CardServiceImpl implements CardService {
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);
     }
+
+    @Override
+    public ResponseResult insert(SysCard sysCard) {
+        SysCard addCard=cardRepository.save(sysCard);
+        return ResponseResult.success(addCard);
+    }
 }

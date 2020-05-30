@@ -56,4 +56,17 @@ public class CardController {
         return service.deleteCard(pkCardId);
     }
 
+    /**
+     * 单个增加一卡通信息
+     * @param sysCard
+     * @return
+     */
+    @ApiOperation(value = "增加一卡通信息数据",notes = "请求参数为Id")
+    @PostMapping("/card/increase")
+    ResponseResult saveCard(@RequestBody SysCard sysCard){
+        return service.insert(sysCard);
+    }
+
+
+
 }
