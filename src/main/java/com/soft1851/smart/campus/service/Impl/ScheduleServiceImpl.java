@@ -66,6 +66,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             CourseVo course = new CourseVo();
             // 先获取科目信息
             course.setSubjectName(sysSubjectRepository.getSubjectName(item.getSubjectId()));
+            // 获取科目背景色
+            course.setBackgroundColor(sysSubjectRepository.getSubjectBackgroundColor(item.getSubjectId()));
             // 获取教室信息
             course.setRoomName(roomRepository.getRoomName((long) item.getRoomId()));
             // 获取教师信息

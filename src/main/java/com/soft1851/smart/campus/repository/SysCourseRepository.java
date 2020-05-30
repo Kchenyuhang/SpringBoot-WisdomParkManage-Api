@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,4 +31,19 @@ public interface SysCourseRepository extends JpaRepository<SysCourse, Long> {
             "WHERE schedule_id = ?1", nativeQuery = true)
     List<SysCourse> getInfoOfId(Long scheduleId);
 
+
+    /**
+     * 新增课表
+     *
+     * @param sysCourse
+     * @return
+     */
+    @Transactional
+    @Query(value = "INSERT INTO sys_course(schedule_id, subject_id, user_job_number, room_id, week_day, " +
+            "time, gmt_create, gmt_modified, is_deleted, week_duration) " +
+            "VALUE (#{#sysCourse.scheduleId}, #{#sysCourse.subjectId}, #{#sysCourse.userJobNumber}, " +
+            "#{#sysCourse.roomId}, #{#sysCourse.weekDay}, #{#sysCourse.time},#{#sysCourse.gmtCreate}," +
+            "#{#sysCourse.gmtModified},#{#sysCourse.isDeleted},#{#sysCourse.weekDuration})",
+            nativeQuery = true)
+    void insertCourse(SysCourse sysCourse);
 }

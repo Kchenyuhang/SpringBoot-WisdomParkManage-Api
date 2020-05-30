@@ -43,9 +43,5 @@ public class CardServiceImpl implements CardService {
         return ResponseResult.success(sysCardList);
     }
 
-    @Override
-    public ResponseResult deleteCard(Long pkCardId) {
-        int a=cardRepository.delete(pkCardId);
-        return ResponseResult.success(a);
-    }
+
 }

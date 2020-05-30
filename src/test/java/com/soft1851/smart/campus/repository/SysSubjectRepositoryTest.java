@@ -17,4 +17,9 @@ class SysSubjectRepositoryTest {
     void getSubjectName() {
         System.out.println(sysSubjectRepository.getSubjectName(1L));
     }
+
+    @Test
+    void getSubjectBackground() {
+        System.out.println(sysSubjectRepository.getSubjectBackgroundColor(1L));
+    }
 }
