@@ -24,6 +24,22 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public void updateInfo(Examination examination) {
+        createDate(examination);
+        examinationRepository.updateInfo(examination);
+    }
+
+    @Override
+    public void increaseInfo(Examination examination) {
+        createDate(examination);
+        examinationRepository.saveAndFlush(examination);
+    }
+
+    /**
+     * 为 examination对象补充属性值的方法
+     *
+     * @param examination
+     */
+    private void createDate(Examination examination) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         if (examination.getGmtCreate() == null) {
             examination.setGmtCreate(timestamp);
@@ -32,6 +48,5 @@ public class ExaminationServiceImpl implements ExaminationService {
             examination.setGmtModified(timestamp);
         }
         examination.setIsDeleted(false);
-        examinationRepository.updateInfo(examination);
     }
 }

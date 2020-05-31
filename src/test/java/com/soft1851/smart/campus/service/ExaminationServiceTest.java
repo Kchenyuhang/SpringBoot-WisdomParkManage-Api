@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ExaminationServiceTest {
@@ -28,12 +27,31 @@ class ExaminationServiceTest {
                 .gmtModified(timestamp)
                 .isDeleted(false)
                 .score(100)
-                .semester(1L)
+                .semester("2019-2020 第一学期")
                 .startTime(timestamp)
                 .subjectId(1L)
                 .teacherName("张老师")
                 .type("选修课")
                 .build();
         examinationService.updateInfo(examination);
+    }
+
+    @Test
+    void increaseInfo() {
+        Timestamp timestamp = new Timestamp(new Date().getTime());
+        Examination examination = Examination.builder()
+                .area("测试新增考务数据")
+                .clazzId(1L)
+                .gmtCreate(timestamp)
+                .gmtModified(timestamp)
+                .isDeleted(false)
+                .score(100)
+                .semester("2019-2020 第一学期")
+                .startTime(timestamp)
+                .subjectId(1L)
+                .teacherName("张老师")
+                .type("选修课")
+                .build();
+        examinationService.increaseInfo(examination);
     }
 }

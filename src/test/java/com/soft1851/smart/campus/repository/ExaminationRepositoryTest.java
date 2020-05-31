@@ -28,7 +28,7 @@ class ExaminationRepositoryTest {
                 .gmtModified(timestamp)
                 .isDeleted(false)
                 .score(100)
-                .semester(1L)
+                .semester("2019-2020 第一学期")
                 .startTime(timestamp)
                 .subjectId(1L)
                 .teacherName("张老师")

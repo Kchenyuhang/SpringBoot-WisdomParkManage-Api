@@ -5,15 +5,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class SysCourseRepositoryTest {
-
+class CardRepositoryTest {
     @Resource
-    private SysCourseRepository sysCourseRepository;
+    private  CardRepository cardRepository;
 
     @Test
-    void getInfoOfId() {
-        sysCourseRepository.getInfoOfId(1L).forEach(System.out::println);
+    void deleteByPkCardId() {
+        cardRepository.deleteByPkCardId(3L);
     }
 }

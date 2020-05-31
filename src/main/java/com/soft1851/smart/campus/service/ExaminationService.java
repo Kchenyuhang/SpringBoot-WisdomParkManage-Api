@@ -17,4 +17,10 @@ public interface ExaminationService {
      * @param examination
      */
     void updateInfo(Examination examination);
+
+    /**
+     * 新增考务信息     *
+     * @param examination
+     */
+    void increaseInfo(Examination examination);
 }

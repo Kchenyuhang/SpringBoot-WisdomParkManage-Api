@@ -34,18 +34,18 @@ public class Examination {
      * 学期
      * nullable = false为非空约束，unique = true是唯一约束
      */
-    @Column(nullable = false, length = 0)
-    private Long semester;
+    @Column(nullable = false, length = 60)
+    private String semester;
 
     /**
      * 科目id
      */
-    @Column(nullable = false, length = 0)
+    @Column(nullable = false)
     private Long subjectId;
     /**
      * 班级id
      */
-    @Column(name = "clazz_id",nullable = false, length = 0)
+    @Column(name = "clazz_id",nullable = false)
     private Long clazzId;
 
     /**

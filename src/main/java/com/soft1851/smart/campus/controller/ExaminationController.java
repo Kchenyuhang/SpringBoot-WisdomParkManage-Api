@@ -24,4 +24,9 @@ public class ExaminationController {
     public void updateInfo(@RequestBody Examination examination) {
         examinationService.updateInfo(examination);
     }
+
+    @PostMapping("/increase")
+    public void increaseInfo(@RequestBody Examination examination) {
+        examinationService.increaseInfo(examination);
+    }
 }
