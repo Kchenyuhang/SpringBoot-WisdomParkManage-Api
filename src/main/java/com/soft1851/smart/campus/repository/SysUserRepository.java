@@ -2,10 +2,7 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Description TODO
@@ -16,7 +13,7 @@ import java.util.Map;
 public interface SysUserRepository extends JpaRepository<SysUser, Long> {
 
     /**
-     * 根据用户idc查询用户信息
+     * 根据用户 id 查询用户信息
      *
      * @param sysUserId
      * @return
