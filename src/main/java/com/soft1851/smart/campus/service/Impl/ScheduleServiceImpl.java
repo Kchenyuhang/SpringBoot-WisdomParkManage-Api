@@ -7,6 +7,7 @@ import com.soft1851.smart.campus.service.ScheduleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     public List<CourseVo> getScheduleInfoById(Long scheduleId) {
         List<SysCourse> infoOfId = sysCourseRepository.getInfoOfId(scheduleId);
         return createVo(infoOfId);
+    }
+
+    @Override
+    public void increase(SysCourse sysCourse) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        if (sysCourse.getGmtCreate() == null) {
+            sysCourse.setGmtCreate(timestamp);
+        }
+        if (sysCourse.getGmtModified() == null) {
+            sysCourse.setGmtModified(timestamp);
+        }
+        sysCourse.setIsDeleted(false);
+        sysCourseRepository.saveAndFlush(sysCourse);
     }
 
     /**

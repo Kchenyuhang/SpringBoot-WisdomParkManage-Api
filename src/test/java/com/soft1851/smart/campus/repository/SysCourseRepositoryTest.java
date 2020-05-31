@@ -18,28 +18,7 @@ class SysCourseRepositoryTest {
     private SysCourseRepository sysCourseRepository;
 
     @Test
-    void getIdInfo() {
-        sysCourseRepository.getInfoOfId(1L).forEach(System.out::println);
-    }
-
-
-    @Test
     void getInfoOfId() {
-        Timestamp timestamp = new Timestamp(new Date().getTime());
-        SysCourse course = SysCourse.builder()
-                .scheduleId(10L)
-                .subjectId(10L)
-                .userJobNumber("测试")
-                .roomId(10)
-                .weekDay(10)
-                .time(5)
-                .gmtCreate(timestamp)
-                .gmtModified(timestamp)
-                .isDeleted(false)
-                .weekDuration("1-5")
-                .build();
-        // sysCourseRepository.insertCourse(course);
-        sysCourseRepository.saveAndFlush(course);
-
+        sysCourseRepository.getInfoOfId(1L).forEach(System.out::println);
     }
 }
