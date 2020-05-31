@@ -22,10 +22,10 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Query("select u from SysCard u")
     Page<SysCard> findALL(Pageable pageable);
 
-    /**
-     * 删除一卡通信息
-     * @param pkCardId
-     * @return
-     */
-    int delete(Long pkCardId);
+//    /**
+//     * 删除一卡通信息
+//     * @param pkCardId
+//     * @return
+//     */
+//    int delete(Long pkCardId);
 }

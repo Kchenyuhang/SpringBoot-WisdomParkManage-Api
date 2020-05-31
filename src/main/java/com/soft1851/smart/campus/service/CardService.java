@@ -28,9 +28,9 @@ public interface CardService {
      */
     ResponseResult insertAll(List<SysCard> sysCards);
 
-    /**
-     * 删除一卡通信息
-     * @return
-     */
-    ResponseResult deleteCard(Long pkCardId);
+//    /**
+//     * 删除一卡通信息
+//     * @return
+//     */
+//    ResponseResult deleteCard(Long pkCardId);
 }
