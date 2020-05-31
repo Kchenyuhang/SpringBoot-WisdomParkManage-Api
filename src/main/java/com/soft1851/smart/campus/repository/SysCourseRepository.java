@@ -32,18 +32,18 @@ public interface SysCourseRepository extends JpaRepository<SysCourse, Long> {
     List<SysCourse> getInfoOfId(Long scheduleId);
 
 
-    /**
-     * 新增课表
-     *
-     * @param sysCourse
-     * @return
-     */
-    @Transactional
-    @Query(value = "INSERT INTO sys_course(schedule_id, subject_id, user_job_number, room_id, week_day, " +
-            "time, gmt_create, gmt_modified, is_deleted, week_duration) " +
-            "VALUE (#{#sysCourse.scheduleId}, #{#sysCourse.subjectId}, #{#sysCourse.userJobNumber}, " +
-            "#{#sysCourse.roomId}, #{#sysCourse.weekDay}, #{#sysCourse.time},#{#sysCourse.gmtCreate}," +
-            "#{#sysCourse.gmtModified},#{#sysCourse.isDeleted},#{#sysCourse.weekDuration})",
-            nativeQuery = true)
-    void insertCourse(SysCourse sysCourse);
+//    /**
+//     * 新增课表
+//     *
+//     * @param sysCourse
+//     * @return
+//     */
+//    @Transactional
+//    @Query(value = "INSERT INTO sys_course(schedule_id, subject_id, user_job_number, room_id, week_day, " +
+//            "time, gmt_create, gmt_modified, is_deleted, week_duration) " +
+//            "VALUE (#{#sysCourse.scheduleId}, #{#sysCourse.subjectId}, #{#sysCourse.userJobNumber}, " +
+//            "#{#sysCourse.roomId}, #{#sysCourse.weekDay}, #{#sysCourse.time},#{#sysCourse.gmtCreate}," +
+//            "#{#sysCourse.gmtModified},#{#sysCourse.isDeleted},#{#sysCourse.weekDuration})",
+//            nativeQuery = true)
+//    void insertCourse(SysCourse sysCourse);
 }

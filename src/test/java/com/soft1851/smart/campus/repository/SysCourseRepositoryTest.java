@@ -29,7 +29,7 @@ class SysCourseRepositoryTest {
         SysCourse course = SysCourse.builder()
                 .scheduleId(10L)
                 .subjectId(10L)
-                .userJobNumber("1802343124")
+                .userJobNumber("测试")
                 .roomId(10)
                 .weekDay(10)
                 .time(5)
@@ -38,6 +38,8 @@ class SysCourseRepositoryTest {
                 .isDeleted(false)
                 .weekDuration("1-5")
                 .build();
-        sysCourseRepository.insertCourse(course);
+        // sysCourseRepository.insertCourse(course);
+        sysCourseRepository.saveAndFlush(course);
+
     }
 }
