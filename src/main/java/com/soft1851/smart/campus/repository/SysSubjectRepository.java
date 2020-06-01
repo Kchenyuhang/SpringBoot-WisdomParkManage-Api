@@ -21,4 +21,13 @@ public interface SysSubjectRepository extends JpaRepository<SysSubject, Long> {
      */
     @Query(value = "SELECT name FROM sys_subject WHERE pk_subject_id = ?1", nativeQuery = true)
     String getSubjectName(Long id);
+
+    /**
+     * 通过科目 id 查找指定科目背景色
+     *
+     * @param id
+     * @return
+     */
+    @Query(value = "SELECT background_color FROM sys_subject WHERE pk_subject_id = ?1", nativeQuery = true)
+    String getSubjectBackgroundColor(Long id);
 }

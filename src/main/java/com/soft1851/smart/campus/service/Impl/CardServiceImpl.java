@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 public class CardServiceImpl implements CardService {
     @Resource
-   private CardRepository cardRepository;
+    private CardRepository cardRepository;
 
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
@@ -39,10 +40,9 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public ResponseResult insertAll(List<SysCard> sysCards) {
-        List<SysCard> sysCardList=cardRepository.saveAll(sysCards);
+        List<SysCard> sysCardList=new ArrayList<>();
         return ResponseResult.success(sysCardList);
     }
-
 
     @Override
     public ResponseResult deleteCard(Long pkCardId) {
@@ -57,7 +57,7 @@ public class CardServiceImpl implements CardService {
             card.setCardPassword(sysCard.getCardPassword());
             card.setJobNumber(sysCard.getJobNumber());
             card.setCardBalance(sysCard.getCardBalance());
-           cardRepository.saveAndFlush(card);
+            cardRepository.saveAndFlush(card);
             return ResponseResult.success(card);
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);
@@ -65,8 +65,11 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public ResponseResult insert(SysCard sysCard) {
-        SysCard addCard=cardRepository.save(sysCard);
-        return ResponseResult.success(addCard);
+        if (cardRepository.findByCardNumber(sysCard.getCardNumber())==null){
+            SysCard addCard=cardRepository.save(sysCard);
+            return ResponseResult.success(addCard);
+        }
+        return ResponseResult.failure(ResultCode.DATABASE_ERROR);
     }
 
 }

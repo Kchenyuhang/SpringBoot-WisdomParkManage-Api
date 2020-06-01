@@ -4,18 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+
 import java.sql.Timestamp;
 
 /**
- * @Description TODO
- * @Author wf
- * @Date 2020/5/19
+ * @Description 系统用户表
+ * @Author 涛涛
+ * @Date 2020/5/25 21:58
  * @Version 1.0
- */
+ **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +27,7 @@ import java.sql.Timestamp;
 public class SysUser {
     //用户Id
     @Id
-    @Column(length = 32)
+    @Column(length = 128)
     private String pkUserId;
 
     //用户名字
@@ -52,6 +55,7 @@ public class SysUser {
     private Boolean isEnabled;
 
     //创建时间
+    @CreatedDate
     @Column(nullable = false)
     private Timestamp gmtCreate;
 

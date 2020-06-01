@@ -1,0 +1,36 @@
+package com.soft1851.smart.campus.controller;
+
+import com.soft1851.smart.campus.model.entity.SysCourse;
+import com.soft1851.smart.campus.service.SysCourseService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+/**
+ * @author xunmi
+ * @ClassName SysCourseController
+ * @Description TODO
+ * @Date 2020/6/1
+ * @Version 1.0
+ **/
+@RestController
+@RequestMapping("/course")
+public class SysCourseController {
+
+    @Resource
+    private SysCourseService sysCourseService;
+
+    /**
+     * 新增课程
+     *
+     * @param sysCourse
+     */
+    @PostMapping("/increase")
+    public void increase(@RequestBody SysCourse sysCourse) {
+        System.out.println(sysCourse);
+        sysCourseService.increase(sysCourse);
+    }
+}

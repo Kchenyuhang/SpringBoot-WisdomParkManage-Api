@@ -1,12 +1,15 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.model.vo.CourseVo;
 import com.soft1851.smart.campus.repository.*;
 import com.soft1851.smart.campus.service.ScheduleService;
+import com.soft1851.smart.campus.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +56,19 @@ public class ScheduleServiceImpl implements ScheduleService {
         return createVo(infoOfId);
     }
 
+    @Override
+    public void increase(Schedule schedule) {
+        Timestamp timestamp = DateUtil.getTimestamp();
+        if (schedule.getGmtCreate() == null) {
+            schedule.setGmtCreate(timestamp);
+        }
+        if (schedule.getGmtModified() == null) {
+            schedule.setGmtModified(timestamp);
+        }
+        schedule.setIsDeleted(false);
+        scheduleRepository.saveAndFlush(schedule);
+    }
+
     /**
      * 构造 Vo 对象并返回
      *
@@ -66,6 +82,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             CourseVo course = new CourseVo();
             // 先获取科目信息
             course.setSubjectName(sysSubjectRepository.getSubjectName(item.getSubjectId()));
+            // 获取科目背景色
+            course.setBackgroundColor(sysSubjectRepository.getSubjectBackgroundColor(item.getSubjectId()));
             // 获取教室信息
             course.setRoomName(roomRepository.getRoomName((long) item.getRoomId()));
             // 获取教师信息

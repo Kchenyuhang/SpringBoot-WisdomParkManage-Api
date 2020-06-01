@@ -8,14 +8,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 /**
- * @author Tao
- * @version 1.0
- * @ClassName SysRole
- * @Description TODO
- * @date 2020-05-31 14:23
+ * @Description 角色
+ * @Author 涛涛
+ * @Date 2020/5/25 22:13
+ * @Version 1.0
  **/
 @Data
 @AllArgsConstructor

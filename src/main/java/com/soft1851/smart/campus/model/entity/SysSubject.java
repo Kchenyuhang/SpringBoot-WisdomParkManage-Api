@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class SysSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pk_subject_id",nullable = false)
-    private Long pk_subject_id;
+    private Long pkSubjectId;
 
     /**
      * 名称
@@ -58,12 +59,14 @@ public class SysSubject {
     /**
      * 创建时间
      */
+    @JsonIgnore
     @Column(name = "gmt_create",nullable = false)
     private Timestamp gmt_create;
 
     /**
      * 更新时间
      */
+    @JsonIgnore
     @UpdateTimestamp
     @Column(name = "gmt_modified",nullable = false)
     private Timestamp gmt_modified;
@@ -71,6 +74,7 @@ public class SysSubject {
     /**
      * 删除标志
      */
+    @JsonIgnore
     @Column(name = "is_deleted",nullable = false,length = 4)
     private Boolean isDeleted;
 }

@@ -26,6 +26,11 @@ public class CourseVo {
     private String subjectName;
 
     /**
+     * 背景颜色
+     */
+    private String backgroundColor;
+
+    /**
      * 教师名称
      */
     private String teacherName;

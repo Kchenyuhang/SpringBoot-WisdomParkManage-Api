@@ -34,6 +34,7 @@ public interface CardService {
      */
     ResponseResult deleteCard(Long pkCardId);
 
+
     /**
      * 修改一卡通信息
      * @param sysCard

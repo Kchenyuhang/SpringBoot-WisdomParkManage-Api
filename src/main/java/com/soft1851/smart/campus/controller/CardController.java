@@ -5,6 +5,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.service.CardService;
+import com.soft1851.smart.campus.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,9 @@ import javax.annotation.Resource;
 public class CardController {
     @Resource
     private CardService service;
+    @Resource
+    private OrderService orderService;
+
     /**
      * 查询所有消息
      * @param pageDto
@@ -30,6 +34,7 @@ public class CardController {
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
         return service.findAllByPage(pageDto);
     }
+
 
     /**
      * 修改一卡通信息
@@ -60,7 +65,13 @@ public class CardController {
     ResponseResult saveCard(@RequestBody SysCard sysCard){
         return service.insert(sysCard);
     }
-
-
-
+    /**
+     * 查询清单明细
+     * @param jobNumber
+     * @return
+     */
+    @GetMapping("/card/consume")
+    ResponseResult findAllByJobNumber(@RequestParam("job_number") String  jobNumber){
+        return orderService.findALLByJobNumer(jobNumber);
+    }
 }
