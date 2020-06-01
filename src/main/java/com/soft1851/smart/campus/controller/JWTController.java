@@ -32,7 +32,7 @@ public class JWTController {
     private SysUserRepository sysUserRepository;
 
     @PostMapping("/login")
-    public ResponseResult login(@RequestParam("userId") String userId,
+    public ResponseResult   login(@RequestParam("userId") String userId,
                         @RequestParam("password") String password) {
         SysUser user = sysUserRepository.getBySysUserId(Long.parseLong(userId));
         if (user.getPassword().equals(password)) {
