@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 /**
  * @author xunmi
  * @ClassName SysCourseController
- * @Description TODO
+ * @Description 课表中的课程控制器
  * @Date 2020/6/1
  * @Version 1.0
  **/

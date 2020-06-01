@@ -1,11 +1,14 @@
 package com.soft1851.smart.campus.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
@@ -14,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @Date 2020/4/21
  * @Version 1.0
  */
-@ControllerAdvice
+@RestControllerAdvice(annotations = RestController.class)
 public class GlobalResponseHandler implements ResponseBodyAdvice {
 
 
@@ -34,6 +37,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice {
         if (body instanceof ResponseResult) {
             return body;
         } else {
+            System.out.println(ResponseResult.success(body));
             return ResponseResult.success(body);
         }
     }

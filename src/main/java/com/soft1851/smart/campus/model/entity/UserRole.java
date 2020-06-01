@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
@@ -31,6 +32,7 @@ public class UserRole {
      * 用户id
      */
     @Column(unique = true)
+    @NotNull(message = "sysUserId不能为空")
     private String sysUserId;
 
     /**

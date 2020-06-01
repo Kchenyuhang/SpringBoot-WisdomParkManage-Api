@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author xunmi
  * @ClassName SysCourseRepository
- * @Description TODO
+ * @Description 课表中的课程相关操作的类
  * @Date 2020/5/29
  * @Version 1.0
  **/

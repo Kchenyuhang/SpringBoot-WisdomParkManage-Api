@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 /**
  * @author xunmi
  * @ClassName ExaminationController
- * @Description TODO
+ * @Description 考务控制器
  * @Date 2020/5/31
  * @Version 1.0
  **/

@@ -5,23 +5,16 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 
 /**
- * @ClassName OrderService
+ * @ClassName ReportLossService
  * @Description TODO
  * @Author 田震
- * @Date 2020/5/29
+ * @Date 2020/6/1
  **/
-public interface OrderService {
+public interface ReportLossService {
     /**
-     * 查询清单明细
-     * @param jobNumber
-     * @return
-     */
-    ResponseResult findALLByJobNumer(String jobNumber);
-    /**
-     * 分页查询订单信息
+     * 分页查询挂失信息
      * @param pageDto
      * @return
      */
     ResponseResult findAllByPage(PageDto pageDto);
-
 }
