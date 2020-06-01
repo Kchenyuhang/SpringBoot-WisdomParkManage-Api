@@ -41,4 +41,12 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Modifying
     @Query("delete from SysCard where pk_card_id = ?1")
     void deleteByPkCardId(Long pkCardId);
+
+    /**
+     * 根据卡号查询一卡通信息
+     * @param cardNumber
+     * @return
+     */
+    SysCard findByCardNumber(String cardNumber);
+
 }
