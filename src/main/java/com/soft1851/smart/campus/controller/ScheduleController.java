@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 /**
  * @author xunmi
  * @ClassName ScheduleController
- * @Description TODO
+ * @Description 课表控制器
  * @Date 2020/5/30
  * @Version 1.0
  **/

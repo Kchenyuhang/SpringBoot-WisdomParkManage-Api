@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * @author xunmi
  * @ClassName RoomRepository
- * @Description TODO
+ * @Description 房间管理相关操作的类
  * @Date 2020/5/29
  * @Version 1.0
  **/

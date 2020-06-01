@@ -28,7 +28,6 @@ public class UserRole {
     private Long pkRoleId;
     //用户id
     @NotNull(message = "sysUserId不能为空")
-    @Column(unique = true)
     private String sysUserId;
 
     //角色id

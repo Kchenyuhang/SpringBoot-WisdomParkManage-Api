@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * @author xunmi
  * @ClassName ScheduleRepository
- * @Description TODO
+ * @Description 课程表相关操作的类
  * @Date 2020/5/29
  * @Version 1.0
  **/

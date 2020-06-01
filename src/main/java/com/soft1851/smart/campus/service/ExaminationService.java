@@ -5,7 +5,7 @@ import com.soft1851.smart.campus.model.entity.Examination;
 /**
  * @author xunmi
  * @ClassName ExaminationService
- * @Description TODO
+ * @Description 考务业务逻辑层
  * @Date 2020/5/31
  * @Version 1.0
  **/
