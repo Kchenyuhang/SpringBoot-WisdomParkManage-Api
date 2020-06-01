@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2020/5/29
  * @Version 1.0
  */
-@Configuration
+//@Configuration
 public class WebSocketConfig {
 }
 

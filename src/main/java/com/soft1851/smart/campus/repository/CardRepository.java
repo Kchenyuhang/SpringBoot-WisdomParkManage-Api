@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ClassName CardRepository
@@ -22,10 +24,21 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Query("select u from SysCard u")
     Page<SysCard> findALL(Pageable pageable);
 
+
     /**
-     * 删除一卡通信息
+     * 根据Id查询一卡通信息
+     * @param id
+     * @return
+     */
+    SysCard findByPkCardId(Long id);
+
+    /**
+     * 根据id删除一卡通信息
      * @param pkCardId
      * @return
      */
-    int delete(Long pkCardId);
+    @Transactional
+    @Modifying
+    @Query("delete from SysCard where pk_card_id = ?1")
+    void deleteByPkCardId(Long pkCardId);
 }

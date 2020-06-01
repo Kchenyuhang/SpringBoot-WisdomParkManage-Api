@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.repository.CardRepository;
@@ -45,7 +46,27 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public ResponseResult deleteCard(Long pkCardId) {
-        int a=cardRepository.delete(pkCardId);
-        return ResponseResult.success(a);
+        cardRepository.deleteByPkCardId(pkCardId);
+        return ResponseResult.success();
     }
+
+    @Override
+    public ResponseResult updateCard(SysCard sysCard) {
+        SysCard card=cardRepository.findByPkCardId(sysCard.getPkCardId());
+        if (card.getStatus()){
+            card.setCardPassword(sysCard.getCardPassword());
+            card.setJobNumber(sysCard.getJobNumber());
+            card.setCardBalance(sysCard.getCardBalance());
+           cardRepository.saveAndFlush(card);
+            return ResponseResult.success(card);
+        }
+        return ResponseResult.failure(ResultCode.DATABASE_ERROR);
+    }
+
+    @Override
+    public ResponseResult insert(SysCard sysCard) {
+        SysCard addCard=cardRepository.save(sysCard);
+        return ResponseResult.success(addCard);
+    }
+
 }
