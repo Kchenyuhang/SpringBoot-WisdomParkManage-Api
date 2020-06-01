@@ -5,12 +5,14 @@ import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.entity.SysRole;
 import com.soft1851.smart.campus.repository.SysRoleRepository;
 import com.soft1851.smart.campus.service.SysRoleService;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -84,6 +86,7 @@ public class SysRoleServiceImpl implements SysRoleService {
      * @return
      */
     @Override
+    @LastModifiedDate
     public ResponseResult updateSysRole(SysRole sysRole) {
         //根据id查询该角色信息是否存在，不存在返回数据不存在状态码
         SysRole sysRole1 = sysRoleRepository.findByPkRoleId(sysRole.getPkRoleId());
@@ -117,5 +120,29 @@ public class SysRoleServiceImpl implements SysRoleService {
                 .build();
         sysRoleRepository.save(sysRole1);
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult updateSysRoleSort(String sortList) {
+        // 将前端传过来的sortId字符串转换为数组形式
+        // 这个sortList的形式为[3,2,1,4] 含义：Id为3的元素 sortId为1，Id为2的元素 sortId为2
+        String[] sortArray = null;
+        sortArray = sortList.split(",");
+        //判断前端传过来的sortId是否有相同的数据
+        HashSet<String> sortHashSet = new HashSet<>();
+        for(int j = 0;j<sortArray.length;j++){
+            sortHashSet.add(sortArray[j]);
+        }
+        //前端返回数据中无相同数据 为正确
+        if (sortHashSet.size() == sortArray.length){
+            for (int i=0;i<sortArray.length;i++){
+                sysRoleRepository.updateSysRole(Long.parseLong(sortArray[i]),(i+1));
+            }
+            // 查询出所有角色数据
+            List<SysRole> roles = sysRoleRepository.findAllRole();
+            return ResponseResult.success(roles);
+        } else {
+          return ResponseResult.failure(ResultCode.DATA_IS_WRONG);
+        }
     }
 }

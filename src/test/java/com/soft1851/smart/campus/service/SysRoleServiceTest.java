@@ -36,7 +36,6 @@ class SysRoleServiceTest {
         ResponseResult responseResult = sysRoleService.updateSysRole(sysRole);
         System.out.println(responseResult);
 
-
     }
 
     @Test
@@ -46,6 +45,12 @@ class SysRoleServiceTest {
                 .roleName("测试管理")
                 .build();
         ResponseResult responseResult = sysRoleService.increaseSysRole(sysRole);
+        System.out.println(responseResult);
+    }
+
+    @Test
+    void updateSysRoleSort() {
+        ResponseResult responseResult = sysRoleService.updateSysRoleSort("1,6,2,10,12,11");
         System.out.println(responseResult);
     }
 }

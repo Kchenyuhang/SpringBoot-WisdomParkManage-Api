@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.config.shiro;
 
+
 import com.soft1851.smart.campus.model.entity.SysUser;
 import com.soft1851.smart.campus.repository.SysUserRepository;
 import com.soft1851.smart.campus.repository.SysUserRoleRepository;
@@ -18,6 +19,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @Description TODO
+ * @Author wf
+ * @Date 2020/5/19
+ * @Version 1.0
+ */
 /**
  * @Description TODO
  * @Author wf

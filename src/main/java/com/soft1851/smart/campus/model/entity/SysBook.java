@@ -65,10 +65,10 @@ public class SysBook {
     private  Integer bookResidueNumber;
 
     /**
-     * 状态  0已上架/1未上架/2即将上架
+     * 状态
      */
     @Column(nullable = false)
-    private  Integer status;
+    private  Boolean status;
 
     /**
      * 书名

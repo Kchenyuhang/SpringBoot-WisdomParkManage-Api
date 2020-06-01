@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * @author xunmi
  * @ClassName ExaminationRepository
- * @Description TODO
+ * @Description 考务管理相关操作的类
  * @Date 2020/5/31
  * @Version 1.0
  **/

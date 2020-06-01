@@ -44,7 +44,7 @@ public class JWTController {
         Subject subject = SecurityUtils.getSubject();
         //判断是否登录
         if (subject.isAuthenticated()) {
-            return ResponseResult.success( "你已经登录了");
+            return ResponseResult.success("你已经登录了");
         } else {
             return ResponseResult.failure(ResultCode.DATA_IS_WRONG);
         }
@@ -61,8 +61,8 @@ public class JWTController {
         return ResponseResult.success("test");
     }
 
-    @GetMapping("other")
     //@RequiresPermissions(value = "other")
+    @GetMapping("other")
     public String require() {
         return "你拥有other权限";
     }
