@@ -3,11 +3,10 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.service.CardService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,10 +26,41 @@ public class CardController {
      * @param pageDto
      * @return
      */
-//    @ApiOperation(value = "查询所有",notes = "请求参数为当前页和页面条数")
     @PostMapping("/card/all")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
         return service.findAllByPage(pageDto);
     }
+
+    /**
+     * 修改一卡通信息
+     * @param sysCard
+     * @return
+     */
+    @PutMapping("/card/modification")
+    ResponseResult updateCard (@RequestBody SysCard sysCard){
+        return service.updateCard(sysCard);
+    }
+
+    /**
+     * 删除一卡通信息
+     * @param pkCardId
+     * @return
+     */
+    @GetMapping("/card/deletion/{pk_card_id}")
+    ResponseResult deleteCard(@RequestParam ("pk_card_id") Long pkCardId){
+        return service.deleteCard(pkCardId);
+    }
+
+    /**
+     * 单个增加一卡通信息
+     * @param sysCard
+     * @return
+     */
+    @PostMapping("/card/increase")
+    ResponseResult saveCard(@RequestBody SysCard sysCard){
+        return service.insert(sysCard);
+    }
+
+
 
 }
