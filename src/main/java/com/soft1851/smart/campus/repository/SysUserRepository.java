@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SysUserRepository extends JpaRepository<SysUser, Long> {
 
     /**
-     * 根据用户 id 查询用户信息
+     * 根据用户手机号查询用户信息
      *
-     * @param sysUserId
+     * @param phoneNumber
      * @return
      */
-    SysUser getBySysUserId(Long sysUserId);
+    SysUser getSysUserBySysUserPhoneNumber(String phoneNumber);
 }

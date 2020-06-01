@@ -15,11 +15,4 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 class RolePermissionRespositoryTest {
-    @Resource
-    private RolePermissionRespository rolePermissionRespository;
-
-    @Test
-    void getByRole() {
-        System.out.println(rolePermissionRespository.getByRole(1));
-    }
 }

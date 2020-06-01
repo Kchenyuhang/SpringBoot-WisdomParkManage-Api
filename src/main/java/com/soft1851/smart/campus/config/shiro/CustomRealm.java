@@ -1,26 +1,22 @@
 package com.soft1851.smart.campus.config.shiro;
 
-import com.alibaba.fastjson.JSONObject;
-import com.soft1851.smart.campus.model.entity.Permission;
-import com.soft1851.smart.campus.model.entity.RolePermission;
 import com.soft1851.smart.campus.model.entity.SysUser;
-import com.soft1851.smart.campus.repository.PermissionRepository;
-import com.soft1851.smart.campus.repository.RolePermissionRespository;
 import com.soft1851.smart.campus.repository.SysUserRepository;
+import com.soft1851.smart.campus.repository.SysUserRoleRepository;
+import com.soft1851.smart.campus.service.RoleService;
 import com.soft1851.smart.campus.utils.JWTUtil;
+import com.soft1851.smart.campus.utils.TreeNode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Realm;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Console;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Description TODO
@@ -33,20 +29,24 @@ public class CustomRealm extends AuthorizingRealm {
     @Resource
     private SysUserRepository sysUserRepository;
     @Resource
-    private RolePermissionRespository rolePermissionRespository;
+    private RoleService roleService;
+    @Resource
+    private SysUserRoleRepository sysUserRoleRepository;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        String userId = JWTUtil.getUserId(principalCollection.toString());
+        String phoneNumber = JWTUtil.getPhoneNumber(principalCollection.toString());
         //获取用户信息
-        //SysUser user = sysUserRepository.getBySysUserId(Long.parseLong(userId));
-        List<Permission> list = rolePermissionRespository.getByRole(Long.parseLong(userId));
+        SysUser user = sysUserRepository.getSysUserBySysUserPhoneNumber(phoneNumber);
+        String roleId = JWTUtil.getRoleId(principalCollection.toString());
+        List<TreeNode> menus = roleService.getRoleMenuByRoleId(Long.parseLong(roleId));
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获取用户权限
         Set<String> userPermission = new HashSet<>();
-        list.forEach(permission -> {
-            userPermission.add(permission.getName());
+        menus.forEach(menu -> {
+            userPermission.add(menu.getName());
         });
+        System.out.println(userPermission.toString());
         assert false;
         log.info(userPermission.toString());
         info.setStringPermissions(userPermission);
@@ -73,17 +73,25 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         String token = (String) authcToken.getPrincipal();
-        String userId = JWTUtil.getUserId(token);
-        if (userId == null) {
+        String phoneNumber = JWTUtil.getPhoneNumber(token);
+        if (phoneNumber == null) {
             throw new AuthenticationException("token invalid");
         }
         //根据用户名从数据库获取密码
-        System.out.println(userId);
-        SysUser user = sysUserRepository.getBySysUserId(Long.parseLong(userId));
+        SysUser user = sysUserRepository.getSysUserBySysUserPhoneNumber(phoneNumber);
         if (user == null) {
             throw new AccountException("用户名不正确");
         }
-        if (!JWTUtil.deToken(token, userId, user.getPassword())) {
+        System.out.println(token);
+        System.out.println(phoneNumber);
+        String password = user.getSysPassword();
+        System.out.println(password);
+        String roleId = JWTUtil.getRoleId(token);
+        System.out.println("角色id:" + roleId);
+        System.out.println("账号密码：" + password);
+        System.out.println("账号：" + phoneNumber);
+        System.out.println("token的值: " + token);
+        if (!JWTUtil.deToken(token, phoneNumber, password, roleId)) {
             throw new AuthenticationException("用户名或密码不正确");
         }
         log.info(">>>>>>>>>>>>>>>>>>>登录认证>>>>>>>>>>>>>>");
