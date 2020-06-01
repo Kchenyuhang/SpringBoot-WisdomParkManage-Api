@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.model.entity.Schedule;
+import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.model.vo.CourseVo;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * @author xunmi
  * @ClassName ScheduleService
- * @Description TODO
+ * @Description 课表业务逻辑层
  * @Date 2020/5/30
  * @Version 1.0
  **/
@@ -30,4 +32,11 @@ public interface ScheduleService {
      * @return
      */
     List<CourseVo> getScheduleInfoById(Long scheduleId);
+
+    /**
+     * 增加课表的方法
+     *
+     * @param schedule
+     */
+    void increase(Schedule schedule);
 }

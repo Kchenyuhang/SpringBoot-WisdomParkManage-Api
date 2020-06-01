@@ -3,15 +3,10 @@ package com.soft1851.smart.campus.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Description TODO
@@ -24,14 +19,15 @@ public class JWTUtil {
     /**
      * 加密
      *
-     * @param userId
+     * @param phoneNumber
      * @param secret
      * @return String
      */
-    public static String getToken(final String userId, String secret) {
+    public static String getToken(final String phoneNumber, String secret, String roleId ) {
         String token = null;
         token = JWT.create()
-                .withClaim("userId", userId) // 自定义
+                .withClaim("phoneNumber", phoneNumber)
+                .withClaim("roleId", roleId)
                 .withExpiresAt(new Date(System.currentTimeMillis() + 5*60*1000)) //过期时间
                 // 使用了HMAC256加密算法, mySecret是用来加密数字签名的密钥
                 .sign(Algorithm.HMAC256(secret)); //signature
@@ -45,10 +41,24 @@ public class JWTUtil {
      * @param token
      * @return token中的用户id
      */
-    public static String getUserId(String token) {
+    public static String getPhoneNumber(String token) {
         try {
             DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim("userId").asString();
+            return jwt.getClaim("phoneNumber").asString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 获取角色id
+     * @param token
+     * @return
+     */
+    public static String getRoleId(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("roleId").asString();
         } catch (Exception e) {
             return null;
         }
@@ -60,11 +70,12 @@ public class JWTUtil {
      * @param token
      * @return DecodedJWT
      */
-    public static boolean deToken(final String token,String userId, String secret) {
+    public static boolean deToken(final String token,String phoneNumber, String secret, String roleId) {
         try {
             JWTVerifier verifier = null;
             verifier = JWT.require(Algorithm.HMAC256(secret))
-                    .withClaim("userId", userId)
+                    .withClaim("phoneNumber", phoneNumber)
+                    .withClaim("roleId", roleId)
                     .build();
             assert verifier != null;
             verifier.verify(token);
@@ -75,9 +86,11 @@ public class JWTUtil {
     }
 
     public static void main(String[] args) {
-        String token = JWTUtil.getToken("1", "123");
-        String userId = JWTUtil.getUserId(token);
+        /*String token = JWTUtil.getToken("1", "123");
+        String userId = JWTUtil.getPhoneNumber(token);
         log.info(token);
-        System.out.println(userId);
+        System.out.println(userId);*/
     }
+
+
 }

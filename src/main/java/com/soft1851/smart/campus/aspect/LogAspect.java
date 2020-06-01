@@ -2,7 +2,7 @@ package com.soft1851.smart.campus.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.soft1851.smart.campus.annotation.OperationLogDetail;
-import com.soft1851.smart.campus.model.entity.LogInfo;
+import com.soft1851.smart.campus.model.vo.LogInfo;
 import com.soft1851.smart.campus.utils.FileUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * @Description APO切面类
  * @Author wf

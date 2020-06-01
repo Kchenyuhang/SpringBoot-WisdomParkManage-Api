@@ -1,8 +1,7 @@
-package com.soft1851.smart.campus.model.entity;
+package com.soft1851.smart.campus.model.vo;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -12,9 +11,15 @@ import java.util.Date;
  * @Version 1.0
  */
 @Data
-public class LogInfo {
+public class OperationLog {
 
     private String id;
+    private Date createTime;
+
+    /**
+     * 日志等级
+     */
+    private Integer level;
 
     /**
      * 被操作的对象
@@ -32,14 +37,19 @@ public class LogInfo {
     private String args;
 
     /**
+     * 操作人的id
+     */
+    private String userId;
+
+    /**
      * 操作人的姓名
      */
-    private String phoneNumber;
+    private String userName;
 
     /**
      * 日志描述
      */
-    private String description;
+    private String describe;
 
     /**
      * 操作类型
@@ -55,9 +65,4 @@ public class LogInfo {
      * 方法返回值
      */
     private String returnValue;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
 }

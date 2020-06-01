@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * @author xunmi
  * @ClassName UserAccountRepository
- * @Description TODO
+ * @Description 用户相关操作的类
  * @Date 2020/5/29
  * @Version 1.0
  **/

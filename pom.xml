@@ -101,7 +101,12 @@
             <artifactId>HikariCP</artifactId>
             <version>3.4.2</version>
         </dependency>
-
+        <!--数据校验-->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+        <version>2.3.0.RELEASE</version>
+        </dependency>
         <!--jwt-->
         <dependency>
             <groupId>com.auth0</groupId>

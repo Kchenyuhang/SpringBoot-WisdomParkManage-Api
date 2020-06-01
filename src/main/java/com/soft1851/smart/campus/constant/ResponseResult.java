@@ -38,6 +38,7 @@ public class ResponseResult implements Serializable {
         ResponseResult result = new ResponseResult();
         result.setResultCode(ResultCode.SUCCESS);
         result.setData(data);
+        System.out.println(result);
         return result;
     }
 
