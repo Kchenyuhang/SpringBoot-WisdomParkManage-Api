@@ -62,8 +62,8 @@ public class JWTController {
     }
 
     @GetMapping("other")
-    @RequiresPermissions(value = "other")
-    public ResponseResult require() {
-        return ResponseResult.success("你拥有other权限");
+    //@RequiresPermissions(value = "other")
+    public String require() {
+        return "你拥有other权限";
     }
 }
