@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SysCourseRepositoryTest {
@@ -14,8 +13,7 @@ class SysCourseRepositoryTest {
     private SysCourseRepository sysCourseRepository;
 
     @Test
-    void getIdInfo() {
+    void getInfoOfId() {
         sysCourseRepository.getInfoOfId(1L).forEach(System.out::println);
     }
-
 }

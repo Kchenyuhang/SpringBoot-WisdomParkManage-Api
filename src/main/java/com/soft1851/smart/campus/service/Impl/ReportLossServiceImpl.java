@@ -1,11 +1,10 @@
 package com.soft1851.smart.campus.service.Impl;
 
-
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.entity.SysOrder;
-import com.soft1851.smart.campus.repository.OrderRepository;
-import com.soft1851.smart.campus.service.OrderService;
+import com.soft1851.smart.campus.model.entity.ReportLoss;
+import com.soft1851.smart.campus.repository.ReportLossRepository;
+import com.soft1851.smart.campus.service.ReportLossService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,34 +12,31 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
- * @ClassName OrderServiceImpl
+ * @ClassName ReportServiceImpl
  * @Description TODO
  * @Author 田震
- * @Date 2020/5/29
+ * @Date 2020/6/1
  **/
 @Service
-public class OrderServiceImpl implements OrderService {
+public class ReportLossServiceImpl implements ReportLossService {
     @Resource
-    private OrderRepository orderRepository;
+    private ReportLossRepository reportLossRepository;
 
-    @Override
-    public ResponseResult findALLByJobNumer(String jobNumber) {
-        List<SysOrder> sysOrderList=orderRepository.findAllByJobNumber(jobNumber);
-
-        return ResponseResult.success(sysOrderList);
-    }
-
+    /**
+     * 分页查询所有信息
+     * @param pageDto
+     * @return
+     */
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
-                "pkOrderId");
-        Page<SysOrder> sysOrders = orderRepository.findAll(pageable);
-        return ResponseResult.success(sysOrders.getContent());
+                "pkReportLossId");
+        Page<ReportLoss> reportLosses = reportLossRepository.findAll(pageable);
+        return ResponseResult.success(reportLosses.getContent());
     }
 }
