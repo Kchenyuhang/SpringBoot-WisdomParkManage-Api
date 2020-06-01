@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class CardServiceImpl implements CardService {
     @Resource
-   private CardRepository cardRepository;
+    private CardRepository cardRepository;
 
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
@@ -57,7 +57,7 @@ public class CardServiceImpl implements CardService {
             card.setCardPassword(sysCard.getCardPassword());
             card.setJobNumber(sysCard.getJobNumber());
             card.setCardBalance(sysCard.getCardBalance());
-           cardRepository.saveAndFlush(card);
+            cardRepository.saveAndFlush(card);
             return ResponseResult.success(card);
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);

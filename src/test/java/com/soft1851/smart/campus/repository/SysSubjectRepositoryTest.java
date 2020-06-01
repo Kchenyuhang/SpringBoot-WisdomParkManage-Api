@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SysSubjectRepositoryTest {
@@ -16,5 +15,10 @@ class SysSubjectRepositoryTest {
     @Test
     void getSubjectName() {
         System.out.println(sysSubjectRepository.getSubjectName(1L));
+    }
+
+    @Test
+    void getSubjectBackground() {
+        System.out.println(sysSubjectRepository.getSubjectBackgroundColor(1L));
     }
 }

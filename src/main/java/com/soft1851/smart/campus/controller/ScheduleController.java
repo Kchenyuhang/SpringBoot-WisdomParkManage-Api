@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.ScheduleDto;
+import com.soft1851.smart.campus.model.entity.Schedule;
+import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import javax.annotation.Resource;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("timetable")
+@RequestMapping("/timetable")
 public class ScheduleController {
 
     @Resource
@@ -41,5 +43,16 @@ public class ScheduleController {
     @GetMapping("/{scheduleId}")
     public ResponseResult getInfoById(@PathVariable Long scheduleId) {
         return ResponseResult.success(scheduleService.getScheduleInfoById(scheduleId));
+    }
+
+    /**
+     * 新增课表
+     *
+     * @param schedule
+     */
+    @PostMapping("/increase")
+    public void increase(@RequestBody Schedule schedule) {
+        System.out.println(schedule);
+        scheduleService.increase(schedule);
     }
 }
