@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.ScheduleDto;
+import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
@@ -47,11 +48,11 @@ public class ScheduleController {
     /**
      * 新增课表
      *
-     * @param sysCourse
+     * @param schedule
      */
     @PostMapping("/increase")
-    public void increase(@RequestBody SysCourse sysCourse) {
-        System.out.println(sysCourse);
-        scheduleService.increase(sysCourse);
+    public void increase(@RequestBody Schedule schedule) {
+        System.out.println(schedule);
+        scheduleService.increase(schedule);
     }
 }

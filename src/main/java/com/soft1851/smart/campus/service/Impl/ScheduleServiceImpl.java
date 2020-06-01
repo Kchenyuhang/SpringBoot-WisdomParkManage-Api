@@ -1,9 +1,11 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.model.vo.CourseVo;
 import com.soft1851.smart.campus.repository.*;
 import com.soft1851.smart.campus.service.ScheduleService;
+import com.soft1851.smart.campus.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -55,16 +57,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void increase(SysCourse sysCourse) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        if (sysCourse.getGmtCreate() == null) {
-            sysCourse.setGmtCreate(timestamp);
+    public void increase(Schedule schedule) {
+        Timestamp timestamp = DateUtil.getTimestamp();
+        if (schedule.getGmtCreate() == null) {
+            schedule.setGmtCreate(timestamp);
         }
-        if (sysCourse.getGmtModified() == null) {
-            sysCourse.setGmtModified(timestamp);
+        if (schedule.getGmtModified() == null) {
+            schedule.setGmtModified(timestamp);
         }
-        sysCourse.setIsDeleted(false);
-        sysCourseRepository.saveAndFlush(sysCourse);
+        schedule.setIsDeleted(false);
+        scheduleRepository.saveAndFlush(schedule);
     }
 
     /**

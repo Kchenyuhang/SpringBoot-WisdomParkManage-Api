@@ -22,7 +22,7 @@ class ExaminationRepositoryTest {
         Timestamp timestamp = new Timestamp(new Date().getTime());
         Examination examination = Examination.builder()
                 .pkExaminationId(1L)
-                .area("测试")
+                .area("测试修改操作")
                 .clazzId(1L)
                 .gmtCreate(timestamp)
                 .gmtModified(timestamp)

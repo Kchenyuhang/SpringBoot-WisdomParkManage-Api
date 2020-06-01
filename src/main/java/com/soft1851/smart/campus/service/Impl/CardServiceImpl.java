@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public ResponseResult insertAll(List<SysCard> sysCards) {
-        List<SysCard> sysCardList=cardRepository.saveAll(sysCards);
+        List<SysCard> sysCardList=new ArrayList<>();
         return ResponseResult.success(sysCardList);
     }
 
@@ -67,4 +68,5 @@ public class CardServiceImpl implements CardService {
         SysCard addCard=cardRepository.save(sysCard);
         return ResponseResult.success(addCard);
     }
+
 }

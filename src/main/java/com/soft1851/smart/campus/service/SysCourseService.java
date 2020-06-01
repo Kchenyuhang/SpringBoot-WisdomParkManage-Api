@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.model.entity.SysCourse;
+
 /**
  * @author xunmi
  * @ClassName SysCourseService
@@ -8,4 +10,11 @@ package com.soft1851.smart.campus.service;
  * @Version 1.0
  **/
 public interface SysCourseService {
+
+    /**
+     * 新增课程的方法
+     *
+     * @param sysCourse
+     */
+    void increase(SysCourse sysCourse);
 }
