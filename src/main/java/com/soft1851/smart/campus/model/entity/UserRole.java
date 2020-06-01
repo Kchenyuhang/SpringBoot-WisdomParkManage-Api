@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,46 +11,37 @@ import java.sql.Timestamp;
 /**
  * @author Tao
  * @version 1.0
- * @ClassName SysRole
+ * @ClassName UserRole
  * @Description TODO
- * @date 2020-05-31 14:23
+ * @date 2020-06-01 13:46
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class SysRole {
-    //角色id
+public class UserRole {
+    //主键
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pkRoleId;
+    //用户id
+    @Column(unique = true)
+    private Long sysUserId;
 
-    //角色名
-    @Column(length = 32, nullable = false)
-    private String roleName;
-
-    //角色描述
-    @Column(length = 32, nullable = false)
-    private String roleDecoration;
-
-    //排序字段
-    @Column(length = 4, nullable = false)
-    private Integer sort;
-
+    //角色id
+    @Column(unique = true)
+    private Long roleId;
 
     //创建时间
     @Column(nullable = false)
     private Timestamp gmtCreate;
 
     //修改时间
-    @LastModifiedDate
     @Column(nullable = false)
     private Timestamp gmtModified;
 
     //是否删除（1 逻辑删除， 0 未删除）
     @Column(length = 4, nullable = false)
     private Boolean isDeleted;
-
 }

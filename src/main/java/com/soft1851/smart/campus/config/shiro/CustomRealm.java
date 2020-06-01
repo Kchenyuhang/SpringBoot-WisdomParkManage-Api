@@ -1,26 +1,21 @@
 package com.soft1851.smart.campus.config.shiro;
 
-import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.model.entity.Permission;
-import com.soft1851.smart.campus.model.entity.RolePermission;
 import com.soft1851.smart.campus.model.entity.SysUser;
-import com.soft1851.smart.campus.repository.PermissionRepository;
 import com.soft1851.smart.campus.repository.RolePermissionRespository;
 import com.soft1851.smart.campus.repository.SysUserRepository;
 import com.soft1851.smart.campus.utils.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Realm;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.Console;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @Description TODO
@@ -83,7 +78,7 @@ public class CustomRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AccountException("用户名不正确");
         }
-        if (!JWTUtil.deToken(token, userId, user.getPassword())) {
+        if (!JWTUtil.deToken(token, userId, user.getSysPassword())) {
             throw new AuthenticationException("用户名或密码不正确");
         }
         log.info(">>>>>>>>>>>>>>>>>>>登录认证>>>>>>>>>>>>>>");

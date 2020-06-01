@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysRole;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,7 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long> {
      * 查询所有角色
      * @return
      */
-    @Query("select r from SysRole r")
+    @Query("select r from SysRole r order by sort asc ")
     List<SysRole> findAllRole();
 
     /**
@@ -40,6 +41,19 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long> {
      * @return
      */
     SysRole findTopByOrderBySortDesc();
+
+
+    /**
+     * 修改排序Id
+     * @param id
+     * @param sort
+     * @return
+     */
+    @Modifying
+    @LastModifiedBy
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update first_smart_campus.sys_role set sort = ?2 where pk_role_id = ?1",nativeQuery = true)
+    int updateSysRole(Long id,Integer sort);
 
 
 }

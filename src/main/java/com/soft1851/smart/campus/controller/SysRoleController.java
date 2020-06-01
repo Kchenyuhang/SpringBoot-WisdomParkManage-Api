@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.SysRole;
 import com.soft1851.smart.campus.service.SysRoleService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -69,4 +70,13 @@ public class SysRoleController {
         return sysRoleService.increaseSysRole(sysRole);
     }
 
+    /**
+     * 修改排序id
+     * @param sortList
+     * @return
+     */
+    @PutMapping("/modification/sort")
+    public ResponseResult modificationSort(@Param("sortList") String sortList){
+        return sysRoleService.updateSysRoleSort(sortList);
+    }
 }
