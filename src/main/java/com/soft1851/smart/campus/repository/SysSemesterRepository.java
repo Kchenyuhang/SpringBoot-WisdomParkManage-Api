@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysSemester;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * @author xunmi
@@ -12,4 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  **/
 public interface SysSemesterRepository extends JpaRepository<SysSemester, Long> {
 
+    @Query("UPDATE SysSemester SET name=:#{#sysSemester.name}," +
+            "weekCount=:#{#sysSemester.weekCount} WHERE pkSemesterId=:#{#sysSemester.pkSemesterId}")
+    void updateSemesterById(@Param("sysSemester") SysSemester sysSemester);
 }

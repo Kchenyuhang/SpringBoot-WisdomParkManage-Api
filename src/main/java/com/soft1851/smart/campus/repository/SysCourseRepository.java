@@ -2,9 +2,7 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -40,4 +40,11 @@ public interface SysRoleService {
      * @return
      */
     ResponseResult increaseSysRole(SysRole sysRole);
+
+    /**
+     * 拖拽排序后，修改排序id
+     * @param sortList
+     * @return
+     */
+    ResponseResult updateSysRoleSort(String sortList);
 }

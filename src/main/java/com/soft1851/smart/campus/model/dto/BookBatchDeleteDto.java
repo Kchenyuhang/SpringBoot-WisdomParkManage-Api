@@ -6,17 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Tao
- * @version 1.0
- * @ClassName PageDto
  * @Description TODO
- * @date 2020-05-26 15:55
+ * @Author 涛涛
+ * @Date 2020/6/1 14:38
+ * @Version 1.0
  **/
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class PageDto {
-    private int currentPage;
-    private int pageSize;
+@NoArgsConstructor
+public class BookBatchDeleteDto {
+    //删除的书籍的id
+    private String ids;
 }
