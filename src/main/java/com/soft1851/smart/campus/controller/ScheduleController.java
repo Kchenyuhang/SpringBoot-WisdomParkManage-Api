@@ -29,7 +29,7 @@ public class ScheduleController {
      * @param scheduleDto
      * @return
      */
-    @GetMapping("/info")
+    @PostMapping("/info")
     public ResponseResult getInfo(@RequestBody ScheduleDto scheduleDto) {
         return ResponseResult.success(scheduleService.getScheduleInfo(scheduleDto.getSemesterId(), scheduleDto.getClazzId(), scheduleDto.getWeek()));
     }
