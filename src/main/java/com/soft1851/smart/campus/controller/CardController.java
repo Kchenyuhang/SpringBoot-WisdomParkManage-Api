@@ -30,7 +30,7 @@ public class CardController {
      * @param pageDto
      * @return
      */
-    @PostMapping("/card/all")
+    @PostMapping("/card/list")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
         return service.findAllByPage(pageDto);
     }

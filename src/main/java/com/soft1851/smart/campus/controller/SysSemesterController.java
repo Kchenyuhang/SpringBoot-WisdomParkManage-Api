@@ -1,10 +1,9 @@
 package com.soft1851.smart.campus.controller;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.SysSemester;
 import com.soft1851.smart.campus.service.SysSemesterService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,5 +25,23 @@ public class SysSemesterController {
     @GetMapping("/all")
     public List<SysSemester> findAll() {
         return sysSemesterService.findAll();
+    }
+
+    @PutMapping("/id")
+    public ResponseResult updateSemesterById(@RequestBody SysSemester sysSemester) {
+        sysSemesterService.updateSemesterById(sysSemester);
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/single")
+    public ResponseResult insertSemester(@RequestBody SysSemester sysSemester) {
+        sysSemesterService.insertSemester(sysSemester);
+        return ResponseResult.success();
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseResult deleteSemesterById(@PathVariable String id) {
+        sysSemesterService.deleteSemesterById(Long.parseLong(id));
+        return ResponseResult.success();
     }
 }

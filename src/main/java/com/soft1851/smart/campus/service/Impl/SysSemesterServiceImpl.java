@@ -25,4 +25,19 @@ public class SysSemesterServiceImpl implements SysSemesterService {
     public List<SysSemester> findAll() {
         return sysSemesterRepository.findAll();
     }
+
+    @Override
+    public void insertSemester(SysSemester sysSemester) {
+        sysSemesterRepository.save(sysSemester);
+    }
+
+    @Override
+    public void deleteSemesterById(long id) {
+        sysSemesterRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateSemesterById(SysSemester sysSemester) {
+        sysSemesterRepository.updateSemesterById(sysSemester);
+    }
 }
