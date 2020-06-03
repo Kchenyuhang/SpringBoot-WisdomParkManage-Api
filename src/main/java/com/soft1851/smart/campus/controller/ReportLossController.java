@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -31,6 +32,18 @@ public class ReportLossController {
     @PostMapping("/loss/all")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
         return reportLossService.findAllByPage(pageDto);
+    }
+
+    /**
+     * 申请挂失
+     * @param pkReportLossId
+     * @param lossStatus
+     * @return
+     */
+    @PostMapping("/loss/statuschange")
+    ResponseResult updateLossStatus(@RequestParam("pk_report_loss_id")Long pkReportLossId,
+                                    @RequestParam("loss_status") Boolean lossStatus){
+        return  reportLossService.updateLossStatus(pkReportLossId, lossStatus);
     }
 
 }

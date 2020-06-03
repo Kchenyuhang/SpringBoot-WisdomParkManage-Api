@@ -74,4 +74,15 @@ public class CardController {
     ResponseResult findAllByJobNumber(@RequestParam("job_number") String  jobNumber){
         return orderService.findALLByJobNumer(jobNumber);
     }
+    /**
+     * 申请挂失
+     * @param pkCardId
+     * @param Status
+     * @return
+     */
+    @PostMapping("card/statuschange")
+    ResponseResult updateStatus(@RequestParam("pk_card_id")Long pkCardId,
+                                    @RequestParam("status") Boolean Status){
+        return service.updateStatus(pkCardId, Status);
+    }
 }

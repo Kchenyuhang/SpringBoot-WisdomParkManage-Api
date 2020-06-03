@@ -30,7 +30,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage(),
+                pageDto.getCurrentPage()-1,
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkCardId");
@@ -70,6 +70,11 @@ public class CardServiceImpl implements CardService {
             return ResponseResult.success(addCard);
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);
+    }
+
+    @Override
+    public ResponseResult updateStatus(Long pkCardId, Boolean Status) {
+        return ResponseResult.success(cardRepository.updateStatus(pkCardId,Status));
     }
 
 }
