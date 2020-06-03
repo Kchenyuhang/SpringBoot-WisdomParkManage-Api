@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -22,6 +25,7 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 @Table(name = "tower",indexes = {@Index(name = "name_index",columnList = "name")})
+@EntityListeners(AuditingEntityListener.class)
 public class Tower {
     /**
      * 主键
@@ -64,6 +68,7 @@ public class Tower {
     /**
      * 更新时间
      */
+    @LastModifiedDate
     @UpdateTimestamp
     @Column(name = "gmt_modified",nullable = false)
     private Timestamp gmtModified;

@@ -32,11 +32,16 @@ public class ReportLossServiceImpl implements ReportLossService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage(),
+                pageDto.getCurrentPage()-1,
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkReportLossId");
         Page<ReportLoss> reportLosses = reportLossRepository.findAll(pageable);
         return ResponseResult.success(reportLosses.getContent());
+    }
+
+    @Override
+    public ResponseResult updateLossStatus(Long pkReportLossId, Boolean lossStatus) {
+        return ResponseResult.success(reportLossRepository.updateLossStatus(pkReportLossId, lossStatus));
     }
 }

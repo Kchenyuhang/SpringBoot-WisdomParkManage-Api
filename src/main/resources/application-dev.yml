@@ -22,7 +22,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
+    #show-sql: true
   #redis配置数据
   redis:
     database: 0
