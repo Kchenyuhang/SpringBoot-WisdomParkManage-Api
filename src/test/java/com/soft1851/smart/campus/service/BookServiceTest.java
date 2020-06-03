@@ -14,8 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class BookServiceTest {
 
-        @Resource
+    @Resource
     private BookRepository bookRepository;
+    @Resource
+    private BookService bookService;
+
     @Test
     void deletedBatchSysBook() {
 ////        String s = "14";
@@ -26,11 +29,18 @@ class BookServiceTest {
         String[] array = arr.substring(1, arr.length() - 1).split("\\,");
         for (String id : array) {
             ids.add(Long.valueOf(id));
-            System.out.println(Long.valueOf(id)+100);
+            System.out.println(Long.valueOf(id) + 100);
         }
         System.out.println(ids);
 
         int i = bookRepository.deleteBatchBook(ids);
-        System.out.println("删除"+i+"条");
+        System.out.println("删除" + i + "条");
     }
+
+    @Test
+    void findAll() {
+        System.out.println("********************");
+        System.out.println("********************");
+    }
+
 }

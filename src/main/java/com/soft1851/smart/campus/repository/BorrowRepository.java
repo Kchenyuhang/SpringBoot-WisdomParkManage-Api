@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @Version 1.0
  **/
 public interface BorrowRepository extends JpaRepository<SysBorrow, Long> {
-    /**
-     * 查询本书名未还书籍的数量
-     * @param bookName
-     * @return
-     */
-    @Query(value = "SELECT COUNT(pk_borrow_id) from sys_borrow where borrow_book_name=?1 and is_returned=false ", nativeQuery = true)
-    int findBookNumberByBookName(String bookName);
+//    /**
+//     * 查询本书名未还书籍的数量
+//     * @param bookName
+//     * @return
+//     */
+//    @Query(value = "SELECT COUNT(pk_borrow_id) from sys_borrow where borrow_book_name=?1 and is_returned=false ", nativeQuery = true)
+//    int findBookNumberByBookName(String bookName);
 
 }
