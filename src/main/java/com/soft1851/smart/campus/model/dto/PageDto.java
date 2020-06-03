@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
  * @date 2020-05-26 15:55
  **/
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
