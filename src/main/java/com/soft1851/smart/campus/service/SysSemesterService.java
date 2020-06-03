@@ -22,6 +22,7 @@ public interface SysSemesterService {
 
     /**
      * 新增学期信息
+     *
      * @param sysSemester
      * @return
      */
@@ -29,6 +30,7 @@ public interface SysSemesterService {
 
     /**
      * 根据id删除学期信息
+     *
      * @param id
      * @return
      */
@@ -36,6 +38,7 @@ public interface SysSemesterService {
 
     /**
      * 根据id修改学期信息
+     *
      * @param sysSemester
      */
     void updateSemesterById(SysSemester sysSemester);
