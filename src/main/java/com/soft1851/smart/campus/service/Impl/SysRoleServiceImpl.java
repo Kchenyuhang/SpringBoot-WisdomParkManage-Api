@@ -124,7 +124,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public ResponseResult updateSysRoleSort(String sortList) {
-        // 将前端传过来的sortId字符串转换为数组形式
+            // 将前端传过来的sortId字符串转换为数组形式
         // 这个sortList的形式为[3,2,1,4] 含义：Id为3的元素 sortId为1，Id为2的元素 sortId为2
         String[] sortArray = null;
         sortArray = sortList.split(",");

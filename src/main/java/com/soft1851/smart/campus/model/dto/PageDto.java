@@ -1,7 +1,9 @@
 package com.soft1851.smart.campus.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Tao
@@ -12,6 +14,8 @@ import lombok.Data;
  **/
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageDto {
     private Object field;
     private int currentPage;
