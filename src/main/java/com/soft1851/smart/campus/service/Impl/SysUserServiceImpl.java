@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.model.dto.LoginDto;
@@ -12,6 +13,8 @@ import com.soft1851.smart.campus.service.SysUserService;
 import com.soft1851.smart.campus.utils.JWTUtil;
 import com.soft1851.smart.campus.utils.TreeNode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
@@ -72,4 +75,18 @@ public class SysUserServiceImpl implements SysUserService {
         List<TreeNode> menus = roleService.getRoleMenuByRoleId(roleId);
         return menus;
     }
+
+    @Override
+    public ResponseResult setPasswordPkUserId(String pkUserId) {
+        SysUser sysUser = sysUserRepository.findSysUserByPkUserId(pkUserId);
+        if (sysUser!=null){
+            return ResponseResult.success(sysUserRepository.setPasswordByPkUserId(pkUserId));
+        }else {
+            return ResponseResult.failure(ResultCode.USER_NOT_FOUND);
+        }
+    }
+
+
+
+
 }

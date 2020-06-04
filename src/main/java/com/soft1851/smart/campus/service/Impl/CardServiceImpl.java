@@ -77,4 +77,9 @@ public class CardServiceImpl implements CardService {
         return ResponseResult.success(cardRepository.updateStatus(pkCardId,Status));
     }
 
+    @Override
+    public ResponseResult findALLByJobNumberLikeAndCardBalanceLikeAndGmtCreateLike(PageDto pageDto) {
+        return null;
+    }
+
 }

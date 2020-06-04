@@ -26,4 +26,14 @@ public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update report_loss set loss_status = ?2 where pk_report_loss_id = ?1",nativeQuery = true)
     int updateLossStatus(Long pkReportLossId,Boolean lossStatus);
+
+    /**
+     * 根据id删除挂失信息
+     * @param pkReportLossId
+     * @return
+     */
+    @Transactional
+    @Modifying
+    @Query("delete from ReportLoss where pk_report_loss_id = ?1")
+    void deleteBypkReportLossId(Long pkReportLossId);
 }

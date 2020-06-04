@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.utils;
 
+import com.soft1851.smart.campus.model.vo.ExaminationVo;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,7 +14,7 @@ import java.util.Map;
  * @Date 2020/5/30
  * @Version 1.0
  */
-public class DataTypeChange {
+public class DataTypeChange<obj> {
 
     //object转换为map
     public static List<Map<String, Object>> objectToMap(Object[] objects) {
@@ -21,20 +23,54 @@ public class DataTypeChange {
         }
         List<Map<String, Object>> maps = new ArrayList<>();
         for (Object obj : objects) {
-        try {
-            Map<String, Object> map = new LinkedHashMap<>();
-            Field[] fields = obj.getClass().getDeclaredFields();
-            for (Field field : fields) {
-                //设置私有属性为true
-                field.setAccessible(true);
-                //获取字段名和字段值
-                map.put(field.getName(), field.get(obj));
+            try {
+                Map<String, Object> map = new LinkedHashMap<>();
+                Field[] fields = obj.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    //设置私有属性为true
+                    field.setAccessible(true);
+                    //获取字段名和字段值
+                    map.put(field.getName(), field.get(obj));
+                }
+                maps.add(map);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            maps.add(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         }
         return maps;
     }
+
+//    public static void changeObj<Ob> {
+//        if (obj == null) {
+//            return;
+//        }
+//        Class<?> clz = obj.getClass();
+//        Field[] fields = clz.getDeclaredFields();
+//        for (Field field : fields) {
+//            System.out.println(field);
+//        }
+//    }
+
+    public static void main(String[] args) {
+//        changeObj(new ExaminationVo());
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

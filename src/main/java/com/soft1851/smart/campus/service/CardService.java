@@ -56,4 +56,11 @@ public interface CardService {
      */
     ResponseResult updateStatus(Long pkCardId,Boolean Status);
 
+    /**
+     * 模糊分页查询卡片
+     * @param pageDto
+     * @return
+     */
+    ResponseResult findALLByJobNumberLikeAndCardBalanceLikeAndGmtCreateLike(PageDto pageDto);
+
 }

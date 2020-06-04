@@ -48,4 +48,14 @@ public class ExaminationController {
         pageDto.setCurrentPage(pageDto.getPageSize() * (pageDto.getCurrentPage() - 1));
         return examinationService.findAllByPage(pageDto);
     }
+
+    /**
+     * 统计出考务数据的总量接口
+     *
+     * @return
+     */
+    @GetMapping("/count")
+    public Long totalNum() {
+        return examinationService.countNum();
+    }
 }

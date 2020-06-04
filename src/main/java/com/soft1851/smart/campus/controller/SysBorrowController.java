@@ -36,6 +36,7 @@ public class SysBorrowController {
      */
     @PostMapping("book/record/time")
     ResponseResult getBorrowByTime(@RequestBody BorrowDto borrowDto) {
+        log.info(">>>>>>>>>>>>>>>" + borrowDto);
         return sysBorrowService.getBorrowByTime(borrowDto);
     }
 

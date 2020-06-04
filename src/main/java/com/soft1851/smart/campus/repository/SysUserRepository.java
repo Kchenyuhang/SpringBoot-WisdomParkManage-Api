@@ -56,4 +56,15 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
      * @return
      */
     SysUser findSysUserByPkUserId(String pkUserId);
+
+    /**
+     * 重置密码自动为123456
+     * @param pkUserId
+     * @return
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update first_smart_campus.sys_user u set u.sys_password=123456 where u.pk_user_id=?1",nativeQuery = true)
+    int setPasswordByPkUserId(String pkUserId);
+
 }
