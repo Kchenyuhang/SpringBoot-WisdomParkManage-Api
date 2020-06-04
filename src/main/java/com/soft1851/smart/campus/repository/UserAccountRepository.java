@@ -11,11 +11,7 @@ import java.util.List;
 /**
  * @author xunmi
  * @ClassName UserAccountRepository
-<<<<<<< HEAD
  * @Description 用户账号
-=======
- * @Description 用户相关操作的类
->>>>>>> 8ddd97f909f4ead9a33fba925bfc9c012bedcea3
  * @Date 2020/5/29
  * @Version 1.0
  **/
@@ -46,4 +42,11 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
     @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
     void deleteBatch(List<Long> ids);
 
+    /**
+     * 根据用户角色查询用户信息
+     * @param role
+     * @return
+     */
+    @Query("SELECT u FROM UserAccount u WHERE u.role = ?1")
+    List<UserAccount> getStudentInfo(String role);
 }
