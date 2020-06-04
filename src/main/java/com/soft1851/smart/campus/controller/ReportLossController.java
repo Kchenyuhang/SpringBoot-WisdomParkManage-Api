@@ -5,10 +5,7 @@ import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.service.ReportLossService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -44,6 +41,16 @@ public class ReportLossController {
     ResponseResult updateLossStatus(@RequestParam("pk_report_loss_id")Long pkReportLossId,
                                     @RequestParam("loss_status") Boolean lossStatus){
         return  reportLossService.updateLossStatus(pkReportLossId, lossStatus);
+    }
+
+    /**
+     * 删除挂失信息
+     * @param pkReportLossId
+     * @return
+     */
+    @GetMapping("/loss/deletion/{pk_card_id}")
+    ResponseResult deleteReportLoss(@RequestParam ("pk_report_loss_id") Long pkReportLossId){
+        return reportLossService.deleteReportLoss(pkReportLossId);
     }
 
 }

@@ -44,4 +44,11 @@ public class ReportLossServiceImpl implements ReportLossService {
     public ResponseResult updateLossStatus(Long pkReportLossId, Boolean lossStatus) {
         return ResponseResult.success(reportLossRepository.updateLossStatus(pkReportLossId, lossStatus));
     }
+
+    @Override
+    public ResponseResult deleteReportLoss(Long pkReportLossId) {
+        reportLossRepository.deleteBypkReportLossId(pkReportLossId);
+        return ResponseResult.success();
+
+    }
 }
