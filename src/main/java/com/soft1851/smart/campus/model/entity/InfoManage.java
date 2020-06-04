@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -19,6 +22,7 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class InfoManage {
 
     /**
@@ -55,12 +59,14 @@ public class InfoManage {
     /**
      * 创建时间
      */
+    @CreatedDate
     @Column(name = "gmt_create")
     private Timestamp gmtCreate;
 
     /**
      * 更新时间
      */
+    @LastModifiedDate
     @Column(name = "gmt_modified")
     private Timestamp gmtModified;
 

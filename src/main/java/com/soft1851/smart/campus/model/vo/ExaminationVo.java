@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.sql.Timestamp;
 
 /**
@@ -40,6 +39,7 @@ public class ExaminationVo {
     /**
      * 开始时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp startTime;
 
     /**
@@ -60,6 +60,7 @@ public class ExaminationVo {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp gmtCreate;
 
     /**

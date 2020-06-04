@@ -45,6 +45,7 @@ public class SysUserServiceImpl implements SysUserService {
         user.setSysUserPhoneNumber(admin.getSysUserPhoneNumber());
         user.setSysUserName(admin.getSysUserName());
         String code =  redisService.getValue(loginDto.getAccount(), String.class);
+        System.out.println("*****************"+loginDto);
         long roleId = sysUserRoleRepository.getRoleIdByPhoneNumber(loginDto.getAccount());
         System.out.println(">>>>>>>>>>>>角色id<<<<<<<<<<<<<<<<" + roleId);
         if(loginDto.getCode().equals(code)){
