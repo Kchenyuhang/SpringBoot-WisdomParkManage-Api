@@ -39,9 +39,9 @@ public class TowerController {
         return ResponseResult.success();
     }
 
-    @DeleteMapping("/id")
-    public ResponseResult deleteByTowerId(@RequestParam("towerId") long towerId) {
-        towerService.deleteTowerById(towerId);
+    @DeleteMapping("/id/{id}")
+    public ResponseResult deleteByTowerId(@PathVariable int id) {
+        towerService.deleteTowerById(id);
         return ResponseResult.success();
     }
 }
