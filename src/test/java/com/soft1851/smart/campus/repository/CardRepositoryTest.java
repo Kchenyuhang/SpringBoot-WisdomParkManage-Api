@@ -13,4 +13,5 @@ class CardRepositoryTest {
     void deleteByPkCardId() {
         cardRepository.deleteByPkCardId(3L);
     }
+
 }

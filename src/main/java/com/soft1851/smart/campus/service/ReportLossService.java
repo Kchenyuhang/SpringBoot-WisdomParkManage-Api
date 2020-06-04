@@ -25,4 +25,9 @@ public interface ReportLossService {
      * @return
      */
     ResponseResult updateLossStatus(Long pkReportLossId,Boolean lossStatus);
+    /**
+     * 删除挂失信息
+     * @return
+     */
+    ResponseResult deleteReportLoss(Long pkReportLossId);
 }
