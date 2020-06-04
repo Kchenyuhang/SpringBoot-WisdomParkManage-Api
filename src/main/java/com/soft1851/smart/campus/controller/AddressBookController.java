@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "addressBook")
-public class AddressController {
+public class AddressBookController {
     @Resource
     private AddressBookService addressBookService;
 
