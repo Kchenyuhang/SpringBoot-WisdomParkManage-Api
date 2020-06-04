@@ -5,7 +5,6 @@ import com.soft1851.smart.campus.model.entity.Tower;
 import com.soft1851.smart.campus.service.TowerService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.List;
 

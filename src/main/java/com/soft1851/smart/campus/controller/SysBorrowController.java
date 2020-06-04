@@ -1,7 +1,10 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BorrowDto;
+import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.service.SysBorrowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,5 +29,25 @@ public class SysBorrowController {
     ResponseResult findAllByPage(@RequestBody PageDto pageDto) {
         return sysBorrowService.findAllByPage(pageDto);
     }
+    /**
+     * 根据时间查询
+     * @param borrowDto
+     * @return
+     */
+    @PostMapping("book/record/time")
+    ResponseResult getBorrowByTime(@RequestBody BorrowDto borrowDto) {
+        log.info(">>>>>>>>>>>>>>>" + borrowDto);
+        return sysBorrowService.getBorrowByTime(borrowDto);
+    }
 
+
+    /**
+     * 添加借阅信息
+     * @param borrowInsertDto
+     * @return
+     */
+    @PostMapping("/book/record/increase")
+    ResponseResult borrowInsert(@RequestBody BorrowInsertDto borrowInsertDto) {
+        return sysBorrowService.borrowInsert(borrowInsertDto);
+    }
 }

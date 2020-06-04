@@ -75,7 +75,7 @@ public class CardController {
         return orderService.findALLByJobNumer(jobNumber);
     }
     /**
-     * 申请挂失
+     * 一卡通激活
      * @param pkCardId
      * @param Status
      * @return
