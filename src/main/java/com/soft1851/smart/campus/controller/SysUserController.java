@@ -40,4 +40,9 @@ public class SysUserController {
     public ResponseResult getMenus(@RequestParam("phoneNumber") String phoneNumber) {
         return ResponseResult.success((sysUserService.getSysUserMenu(phoneNumber)));
     }
+
+    @PutMapping("/reset/{id}")
+    public ResponseResult setPasswordByPkUserId(@PathVariable String id){
+        return sysUserService.setPasswordPkUserId(id);
+    }
 }
