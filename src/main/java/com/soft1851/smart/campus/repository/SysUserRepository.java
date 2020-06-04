@@ -31,7 +31,7 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
      * @param pkUserId
      * @return
      */
-    @Query(value = "SELECT ur.sys_user_id,ur.role_id,sr.role_name,su.sys_user_name,su.sys_user_phone_number,su.is_enabled,su.gmt_create " +
+    @Query(value = "SELECT ur.sys_user_id,ur.role_id,sr.role_name,su.sys_user_name,su.sys_user_phone_number,su.is_enabled,su.gmt_create,su.sys_user_avatar " +
             "FROM first_smart_campus.user_role ur " +
             "LEFT JOIN first_smart_campus.sys_role sr " +
             "ON ur.role_id = sr.pk_role_id " +

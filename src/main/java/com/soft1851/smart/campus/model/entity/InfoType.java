@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Description TODO
@@ -21,6 +22,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class InfoType {
 
     /**
@@ -45,12 +47,14 @@ public class InfoType {
     /**
      * 创建时间
      */
+    @CreatedDate
     @Column(name = "gmt_create")
     private Timestamp gmtCreate;
 
     /**
      * 更新时间
      */
+    @LastModifiedDate
     @Column(name = "gmt_modified")
     private Timestamp gmtModified;
 
@@ -65,7 +69,6 @@ public class InfoType {
      * 资讯消息
      */
 //    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "")
-    private List<InfoManage> infoManageList = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<InfoManage> infoManageList = new ArrayList<>();
 }

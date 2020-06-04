@@ -5,7 +5,6 @@ import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.exception.JwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +27,7 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler
+//    @ExceptionHandler
     @ResponseBody
     public ResponseResult dealWithException(Exception e) {
         return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);

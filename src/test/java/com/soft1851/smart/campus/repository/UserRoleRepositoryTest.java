@@ -1,6 +1,5 @@
 package com.soft1851.smart.campus.repository;
 
-import com.soft1851.smart.campus.model.entity.UserRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,6 +9,8 @@ import javax.annotation.Resource;
 class UserRoleRepositoryTest {
     @Resource
     private UserRoleRepository userRoleRepository;
+    @Resource
+    private SysUserRepository sysUserRepository;
 
 
     @Test
@@ -20,7 +21,8 @@ class UserRoleRepositoryTest {
 
     @Test
     void testFindUserRoleBySysUserId() {
-        UserRole userRole = userRoleRepository.findUserRoleBySysUserId("5b3a78d7-a290-403f-9b01-874013f53717");
-        System.out.println(userRole);
+       /* UserRole userRole = userRoleRepository.findUserRoleBySysUserId("5b3a78d7-a290-403f-9b01-874013f53717");
+        System.out.println(userRole);*/
+        System.out.println(sysUserRepository.getSysUserBySysUserPhoneNumber("123"));
     }
 }
