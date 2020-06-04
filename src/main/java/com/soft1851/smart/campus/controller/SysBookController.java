@@ -42,4 +42,5 @@ public class SysBookController {
     ResponseResult updatedBook(@RequestBody SysBookDto sysBookDto) {
         return bookService.updatedBook(sysBookDto);
     }
+
 }
