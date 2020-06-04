@@ -19,31 +19,36 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class SysBookDto {
     /**
+     * 图书名id
+     */
+    private Long id;
+    /**
      * 作者
      */
-    @NotNull
     private String author;
     /**
      * 封面
      */
-    @NotNull
     private String cover;
     /**
      * 类型
      */
-    @NotNull
     private String type;
     /**
      * 简介
      */
-    @NotNull
     private String description;
     /**
      * 书名
      */
-    @NotNull
     private String bookName;
+    /**
+     * 库存总数
+     */
+    private Integer bookNumber;
 
-    @NotNull
-    private int bookNumber;
+    /**
+     * 状态
+     */
+    private Boolean status;
 }

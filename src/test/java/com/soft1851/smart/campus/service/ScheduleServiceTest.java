@@ -36,4 +36,9 @@ class ScheduleServiceTest {
                 .build();
         scheduleService.increase(schedule);
     }
+
+    @Test
+    void testGetScheduleInfo() {
+        scheduleService.getScheduleInfo(1L, 1L, 1).forEach(System.out::println);
+    }
 }

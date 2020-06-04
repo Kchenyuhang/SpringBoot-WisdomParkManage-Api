@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,7 +58,9 @@ public class Examination {
 
     /**
      * 开始时间
+     * @JsonFormat pattern 添加前端时间格式化模板
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private Timestamp startTime;
 

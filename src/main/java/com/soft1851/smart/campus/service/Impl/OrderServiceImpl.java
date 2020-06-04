@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage(),
+                pageDto.getCurrentPage()-1,
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkOrderId");

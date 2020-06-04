@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.model.entity.SysBook;
 
@@ -27,4 +28,16 @@ public interface BookService {
      */
     ResponseResult deletedBatchSysBook(String ids);
 
+    /**
+     * 发现所有图书
+     * @return
+     */
+    ResponseResult findAllByPage(PageDto pageDto);
+
+    /**
+     * 更新图书信息
+     * @param sysBookDto
+     * @return
+     */
+    ResponseResult updatedBook(SysBookDto sysBookDto);
 }
