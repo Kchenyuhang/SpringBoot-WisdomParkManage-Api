@@ -45,13 +45,13 @@ public class Room {
     /**
      * 寝室长学号
      */
-    @Column(nullable = false,length = 20,unique = true)
+    @Column(length = 20)
     private String roomLeaderJobNumber;
 
     /**
      * 宿舍成员学号（逗号隔开，用户学号）
      */
-    @Column(nullable = false,unique = true)
+    @Column(unique = true)
     private String roomMemberJobNumber;
 
     /**
