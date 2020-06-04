@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author Tao
@@ -79,4 +80,6 @@ public class Tower {
     @Column(name = "is_deleted",nullable = false,length = 4)
     private Boolean isDeleted;
 
+    @OneToMany
+    private List<Room> rooms;
 }

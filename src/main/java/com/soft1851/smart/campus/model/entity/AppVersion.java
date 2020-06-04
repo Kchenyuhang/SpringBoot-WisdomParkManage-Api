@@ -28,6 +28,8 @@ public class AppVersion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pkAppVersionId;
 
+    @Column(name = "app_type", length = 32)
+    private String appType;
     /**
      * 当前的版本号
      */

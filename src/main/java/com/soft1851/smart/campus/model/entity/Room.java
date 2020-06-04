@@ -73,4 +73,8 @@ public class Room {
     @Column(nullable = false)
     private Boolean isDeleted;
 
+    /**
+     * 电费
+     */
+    private Double electricityBalance;
 }

@@ -5,7 +5,6 @@ import com.soft1851.smart.campus.model.entity.Tower;
 import com.soft1851.smart.campus.service.TowerService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -39,9 +38,9 @@ public class TowerController {
         return ResponseResult.success();
     }
 
-    @DeleteMapping("/id")
-    public ResponseResult deleteByTowerId(@RequestParam("towerId") long towerId) {
-        towerService.deleteTowerById(towerId);
+    @DeleteMapping("/id/{id}")
+    public ResponseResult deleteByTowerId(@PathVariable int id) {
+        towerService.deleteTowerById(id);
         return ResponseResult.success();
     }
 }
