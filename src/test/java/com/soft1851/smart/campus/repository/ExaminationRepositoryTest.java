@@ -1,23 +1,17 @@
 package com.soft1851.smart.campus.repository;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExaminationVo;
-import com.soft1851.smart.campus.utils.DataTypeChange;
 import org.junit.jupiter.api.Test;
 
-import org.mockito.internal.verification.Times;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,6 +48,15 @@ class ExaminationRepositoryTest {
                 .currentPage(0)
                 .build();
         // 将得到一个 List<Object> 对象，后续需要进行转换
-        examinationRepository.selectAll(pageDto);
+        List<Object> examinationVos = examinationRepository.selectAll(pageDto);
+        for (Object obj : examinationVos) {
+            Object[] rowArray = (Object[]) obj;
+            Timestamp startTime = new Timestamp(((Timestamp)rowArray[7]).getTime());
+            System.out.println(startTime);
+            ExaminationVo build1 = ExaminationVo.builder()
+                    .startTime(startTime)
+                    .build();
+            System.out.println(build1);
+        }
     }
 }
