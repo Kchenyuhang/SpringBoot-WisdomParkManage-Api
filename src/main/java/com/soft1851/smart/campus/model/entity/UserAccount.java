@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,6 +24,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "user_account",indexes = {@Index(name = "user_nameIndex",columnList = "user_name")})
 public class UserAccount {
     /**
@@ -100,12 +104,14 @@ public class UserAccount {
     /**
      * 创建时间
      */
+    @CreatedDate
     @Column(nullable = false)
     private Timestamp gmtCreate;
 
     /**
      * 修改时间
      */
+    @LastModifiedDate
     @UpdateTimestamp
     @Column(nullable = false)
     private Timestamp gmtModified;

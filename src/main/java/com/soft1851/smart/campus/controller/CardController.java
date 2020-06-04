@@ -30,7 +30,7 @@ public class CardController {
      * @param pageDto
      * @return
      */
-    @PostMapping("/card/all")
+    @PostMapping("/card/list")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
         return service.findAllByPage(pageDto);
     }
@@ -73,5 +73,16 @@ public class CardController {
     @GetMapping("/card/consume")
     ResponseResult findAllByJobNumber(@RequestParam("job_number") String  jobNumber){
         return orderService.findALLByJobNumer(jobNumber);
+    }
+    /**
+     * 申请挂失
+     * @param pkCardId
+     * @param Status
+     * @return
+     */
+    @PostMapping("card/statuschange")
+    ResponseResult updateStatus(@RequestParam("pk_card_id")Long pkCardId,
+                                    @RequestParam("status") Boolean Status){
+        return service.updateStatus(pkCardId, Status);
     }
 }

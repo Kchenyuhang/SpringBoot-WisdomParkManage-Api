@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageDto {
-    private Object field;
     private int currentPage;
     private int pageSize;
 }

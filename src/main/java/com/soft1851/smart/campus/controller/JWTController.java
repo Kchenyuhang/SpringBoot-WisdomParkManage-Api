@@ -1,13 +1,14 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.model.dto.LoginDto;
 import com.soft1851.smart.campus.repository.SysUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -19,35 +20,38 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
+@RequestMapping(value = "/user")
 public class JWTController {
 
     @Resource
     private SysUserRepository sysUserRepository;
 
-//    @PostMapping("/login")
-//    public ResponseResult login(@RequestParam("userId") String userId,
-//                                @RequestParam("password") String password) {
-//        SysUser user = sysUserRepository.getBySysUserId(Long.parseLong(userId));
-//        if (user.getPassword().equals(password)) {
-//            return ResponseResult.success(JWTUtil.getToken(userId, password));
-//        }else {
-//            throw new UnauthorizedException();
-//        }
-//    }
+    @PostMapping("/login")
+    public ResponseResult login(@RequestBody LoginDto loginDto) {
+        /*System.out.println(loginDto.getAccount());
+        SysUser user = sysUserRepository.getSysUserBySysUserPhoneNumber(loginDto.getAccount());
+        System.out.println(user);
+        if (user.getSysPassword().equals(loginDto.getPassword())) {
+            return ResponseResult.success(JWTUtil.getToken(loginDto.getAccount(), loginDto.getPassword()));
+        }else {
+            throw new UnauthorizedException();
+        }*/
+        return null;
+    }
 
     @GetMapping("/article")
     public ResponseResult article() {
         Subject subject = SecurityUtils.getSubject();
         //判断是否登录
         if (subject.isAuthenticated()) {
-            return ResponseResult.success( "你已经登录了");
+            return ResponseResult.success("你已经登录了");
         } else {
-            return ResponseResult.success("你还没有登陆");
+            return ResponseResult.failure(ResultCode.DATA_IS_WRONG);
         }
     }
 
     @GetMapping("setting")
-    @RequiresPermissions(value = "setting")
+    @RequiresPermissions(value = "权限管理")
     public ResponseResult requireAuth() {
         return ResponseResult.success("你拥有设置权限");
     }
@@ -57,8 +61,8 @@ public class JWTController {
         return ResponseResult.success("test");
     }
 
-    @GetMapping("other")
     //@RequiresPermissions(value = "other")
+    @GetMapping("other")
     public String require() {
         return "你拥有other权限";
     }

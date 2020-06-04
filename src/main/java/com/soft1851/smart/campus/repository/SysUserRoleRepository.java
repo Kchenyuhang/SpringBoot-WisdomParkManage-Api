@@ -21,4 +21,5 @@ public interface SysUserRoleRepository extends JpaRepository<UserRole, Long> {
             "WHERE m.sysUserId = u.pkUserId " +
             "AND u.sysUserPhoneNumber = ?1")
     long getRoleIdByPhoneNumber(String phoneNumber);
+
 }

@@ -19,4 +19,27 @@ public interface SysSemesterService {
      * @return
      */
     List<SysSemester> findAll();
+
+    /**
+     * 新增学期信息
+     *
+     * @param sysSemester
+     * @return
+     */
+    void insertSemester(SysSemester sysSemester);
+
+    /**
+     * 根据id删除学期信息
+     *
+     * @param id
+     * @return
+     */
+    void deleteSemesterById(long id);
+
+    /**
+     * 根据id修改学期信息
+     *
+     * @param sysSemester
+     */
+    void updateSemesterById(SysSemester sysSemester);
 }

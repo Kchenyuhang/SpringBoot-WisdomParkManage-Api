@@ -48,5 +48,12 @@ public interface CardService {
      * @return
      */
     ResponseResult insert(SysCard sysCard);
+    /**
+     * 校园卡激活
+     * @param pkCardId
+     * @param Status
+     * @return
+     */
+    ResponseResult updateStatus(Long pkCardId,Boolean Status);
 
 }

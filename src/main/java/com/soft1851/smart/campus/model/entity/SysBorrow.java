@@ -35,9 +35,9 @@ public class SysBorrow {
     private  String borrowUserName;
 
     /**
-     * 借阅人姓名
+     * 借阅人卡号
      */
-    @Column(nullable = false,unique = true,length = 32)
+    @Column(nullable = false,length = 32)
     private  String borrowUserNumber;
 
     /**
@@ -59,7 +59,7 @@ public class SysBorrow {
     private  String borrowBookId;
 
     /**
-     * 归还状态  0 未归还， 1 已归还）
+     * 归还状态 true 归还，false为归还
      */
     @Column(nullable = false,length = 4)
     private  Boolean isReturned;
