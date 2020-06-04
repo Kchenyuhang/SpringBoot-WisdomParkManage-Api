@@ -1,7 +1,6 @@
 package com.soft1851.smart.campus.model.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,7 +18,6 @@ import java.sql.Timestamp;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class SysCard {
     /**
      * 主键

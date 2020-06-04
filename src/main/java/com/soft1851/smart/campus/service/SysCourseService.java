@@ -5,7 +5,7 @@ import com.soft1851.smart.campus.model.entity.SysCourse;
 /**
  * @author xunmi
  * @ClassName SysCourseService
- * @Description TODO
+ * @Description 课程表中的课程业务逻辑层
  * @Date 2020/5/31
  * @Version 1.0
  **/

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author xunmi
  * @ClassName ScheduleService
- * @Description TODO
+ * @Description 课表业务逻辑层
  * @Date 2020/5/30
  * @Version 1.0
  **/

@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.config.shiro;
 
+
 import com.soft1851.smart.campus.model.entity.SysUser;
 import com.soft1851.smart.campus.repository.SysUserRepository;
 import com.soft1851.smart.campus.repository.SysUserRoleRepository;
@@ -18,6 +19,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @Description TODO
+ * @Author wf
+ * @Date 2020/5/19
+ * @Version 1.0
+ */
 /**
  * @Description TODO
  * @Author wf
@@ -82,15 +89,13 @@ public class CustomRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AccountException("用户名不正确");
         }
-        System.out.println(token);
-        System.out.println(phoneNumber);
         String password = user.getSysPassword();
         System.out.println(password);
         String roleId = JWTUtil.getRoleId(token);
-        System.out.println("角色id:" + roleId);
-        System.out.println("账号密码：" + password);
-        System.out.println("账号：" + phoneNumber);
-        System.out.println("token的值: " + token);
+        log.info("角色id:" + roleId);
+        log.info("账号密码：" + password);
+        log.info("账号：" + phoneNumber);
+        log.info("token的值: " + token);
         if (!JWTUtil.deToken(token, phoneNumber, password, roleId)) {
             throw new AuthenticationException("用户名或密码不正确");
         }
