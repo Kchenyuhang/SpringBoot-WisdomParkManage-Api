@@ -3,7 +3,6 @@ package com.soft1851.smart.campus.service;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExaminationVo;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -37,4 +36,11 @@ public interface ExaminationService {
      * @return
      */
     List<ExaminationVo> findAllByPage(PageDto pageDto);
+
+    /**
+     * 统计出考务数据的总数
+     *
+     * @return
+     */
+    Long countNum();
 }
