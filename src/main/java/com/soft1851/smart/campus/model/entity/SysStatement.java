@@ -29,19 +29,19 @@ public class SysStatement {
     private Long pkStatementId;
 
     /**
-     * 标题
+     * 类型
      */
     @Column(name = "statement_type")
     private String statementType;
 
     /**
-     * 内容
+     * 标题
      */
     @Column(name = "statement_title", length = 32)
     private String statementTitle;
 
     /**
-     * 用户id
+     * 内容
      */
     @Column(name = "statement_content", length = 32)
     private String statementContent;

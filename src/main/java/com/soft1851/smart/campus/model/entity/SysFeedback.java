@@ -53,6 +53,12 @@ public class SysFeedback {
     private Boolean isHandled;
 
     /**
+     * 图片内容
+     */
+    @Column(name = "pic_info")
+    private String picInfo;
+
+    /**
      * 创建时间
      */
     @Column(name = "gmt_create")

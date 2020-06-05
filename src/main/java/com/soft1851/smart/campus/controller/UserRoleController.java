@@ -56,6 +56,7 @@ public class UserRoleController {
      * @param adminUpdateDto
      * @return
      */
+    @PutMapping(value = "/modification")
     public ResponseResult modificationAdmin(@RequestBody AdminUpdateDto adminUpdateDto){
         return userRoleService.modificationAdmin(adminUpdateDto);
     }

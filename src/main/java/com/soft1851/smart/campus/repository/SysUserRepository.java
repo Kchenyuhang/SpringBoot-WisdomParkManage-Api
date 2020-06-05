@@ -31,7 +31,7 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
      * @param pkUserId
      * @return
      */
-    @Query(value = "SELECT ur.sys_user_id,ur.role_id,sr.role_name,su.sys_user_name,su.sys_user_phone_number,su.is_enabled,su.gmt_create " +
+    @Query(value = "SELECT ur.sys_user_id,ur.role_id,sr.role_name,su.sys_user_name,su.sys_user_phone_number,su.is_enabled,su.gmt_create,su.sys_user_avatar " +
             "FROM first_smart_campus.user_role ur " +
             "LEFT JOIN first_smart_campus.sys_role sr " +
             "ON ur.role_id = sr.pk_role_id " +
@@ -56,4 +56,15 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
      * @return
      */
     SysUser findSysUserByPkUserId(String pkUserId);
+
+    /**
+     * 重置密码自动为123456
+     * @param pkUserId
+     * @return
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "update first_smart_campus.sys_user u set u.sys_password=123456 where u.pk_user_id=?1",nativeQuery = true)
+    int setPasswordByPkUserId(String pkUserId);
+
 }

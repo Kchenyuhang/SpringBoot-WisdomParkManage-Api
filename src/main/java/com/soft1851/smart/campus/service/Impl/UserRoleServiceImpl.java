@@ -98,9 +98,6 @@ public class UserRoleServiceImpl implements UserRoleService {
             if (adminUpdateDto.getSysUserName() != null) {
                 sysUser.setSysUserName(adminUpdateDto.getSysUserName());
             }
-            if (adminUpdateDto.getSysPassword() != null) {
-                sysUser.setSysPassword(adminUpdateDto.getSysPassword());
-            }
             if (adminUpdateDto.getSysUserPhoneNumber() != null) {
                 sysUser.setSysUserPhoneNumber(adminUpdateDto.getSysUserPhoneNumber());
             }

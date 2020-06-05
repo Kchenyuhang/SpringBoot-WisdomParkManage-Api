@@ -67,6 +67,11 @@ public class ExaminationServiceImpl implements ExaminationService {
         return list;
     }
 
+    @Override
+    public Long countNum() {
+        return examinationRepository.count();
+    }
+
     /**
      * 为 examination对象补充属性值的方法
      *

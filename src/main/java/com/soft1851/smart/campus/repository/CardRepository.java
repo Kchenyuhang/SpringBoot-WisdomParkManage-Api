@@ -26,6 +26,9 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     Page<SysCard> findALL(Pageable pageable);
 
 
+
+
+
     /**
      * 根据Id查询一卡通信息
      * @param id
@@ -60,5 +63,7 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update sys_card set status = ?2 where pk_card_id = ?1",nativeQuery = true)
     int updateStatus(Long pkCardId,Boolean Status);
+
+
 
 }

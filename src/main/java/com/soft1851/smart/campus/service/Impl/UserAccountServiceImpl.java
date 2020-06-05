@@ -128,4 +128,14 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
         return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
     }
+
+    @Override
+    public List<UserAccount> getStudentInfo() {
+        return userAccountRepository.getStudentInfo("学生");
+    }
+
+    @Override
+    public List<UserAccount> getTeacherInfo() {
+        return userAccountRepository.getStudentInfo("教师");
+    }
 }

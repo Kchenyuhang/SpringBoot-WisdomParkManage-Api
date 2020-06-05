@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.model.entity.Room;
 import com.soft1851.smart.campus.model.vo.TowerVo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -41,5 +42,5 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
      * @param room
      */
     @Query(value = "UPDATE Room SET name=:#{#room.name}, towerId=:#{#room.towerId} WHERE id=:#{#room.id}")
-    void updateRoomById(Room room);
+    void updateRoomById(@Param("room") Room room);
 }
