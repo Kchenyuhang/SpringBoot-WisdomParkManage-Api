@@ -19,7 +19,7 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExaminationVo {
+public class ExaminationVo implements EntityVo {
 
     /**
      * 主键，

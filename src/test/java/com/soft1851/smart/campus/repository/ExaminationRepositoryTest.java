@@ -3,9 +3,11 @@ package com.soft1851.smart.campus.repository;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExaminationVo;
+import com.soft1851.smart.campus.utils.DataTypeChange;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.DataType;
 
 import javax.annotation.Resource;
 
@@ -47,16 +49,9 @@ class ExaminationRepositoryTest {
                 .pageSize(10)
                 .currentPage(0)
                 .build();
-        // 将得到一个 List<Object> 对象，后续需要进行转换
+        // 将得到一个 List<Object> 对象
         List<Object> examinationVos = examinationRepository.selectAll(pageDto);
-        for (Object obj : examinationVos) {
-            Object[] rowArray = (Object[]) obj;
-            Timestamp startTime = new Timestamp(((Timestamp)rowArray[7]).getTime());
-            System.out.println(startTime);
-            ExaminationVo build1 = ExaminationVo.builder()
-                    .startTime(startTime)
-                    .build();
-            System.out.println(build1);
-        }
+        // 调用工具类处理 List<Object> 对象
+        DataTypeChange.changeObj(examinationVos, ExaminationVo.class).forEach(System.out::println);
     }
 }
