@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
 
 
 @SpringBootTest
@@ -75,6 +76,7 @@ class ExaminationServiceTest {
                     .subjectId(1L)
                     .teacherName("张老师")
                     .type(type[i % 3])
+                    .finishTime(timestamp)
                     .build();
             examinationService.increaseInfo(examination);
         }
@@ -89,5 +91,10 @@ class ExaminationServiceTest {
                 .build();
         System.out.println("***************");
         examinationService.findAllByPage(pageDto).forEach(System.out::println);
+    }
+
+    @Test
+    void countNum() {
+        examinationService.countNum();
     }
 }

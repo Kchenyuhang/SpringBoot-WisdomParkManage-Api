@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Yujie_Zhao
@@ -79,4 +80,17 @@ public class UserAccountController {
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
         return userAccountService.updateUserAccount(userAccount);
     }
+
+    @ApiOperation(value = "获取教师信息", notes = "")
+    @GetMapping(value = "/teacher")
+    public List<UserAccount> getTeacherInfoByRole() {
+        return userAccountService.getTeacherInfo();
+    }
+
+    @ApiOperation(value = "获取学生信息", notes = "")
+    @GetMapping(value = "/student")
+    public List<UserAccount> getStudentInfoByRole() {
+        return userAccountService.getStudentInfo();
+    }
+
 }

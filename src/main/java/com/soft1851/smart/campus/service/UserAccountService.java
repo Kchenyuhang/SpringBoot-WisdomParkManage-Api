@@ -4,6 +4,8 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 
+import java.util.List;
+
 /**
  * @author Yujie_Zhao
  * @ClassName UserAccountService
@@ -47,4 +49,16 @@ public interface UserAccountService {
      * @return
      */
     ResponseResult updateUserAccount(UserAccount UserAccount);
+
+    /**
+     * 获取学生信息
+     * @return
+     */
+    List<UserAccount> getStudentInfo();
+
+    /**
+     * 获取教师信息
+     * @return
+     */
+    List<UserAccount> getTeacherInfo();
 }
