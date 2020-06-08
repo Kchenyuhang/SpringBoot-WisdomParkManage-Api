@@ -123,7 +123,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.60</version>
+            <version>1.2.70</version>
         </dependency>
         <!--hutool工具-->
         <dependency>
@@ -142,12 +142,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        <!--处理JSON格式-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.3</version>
-        </dependency>
+
     </dependencies>
 
 
