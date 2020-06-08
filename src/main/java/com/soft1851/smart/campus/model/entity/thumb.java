@@ -2,13 +2,14 @@ package com.soft1851.smart.campus.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * @ClassName thumb
- * @Description TODO
+ * @Description 点赞
  * @Author xiaobinggan
  * @Date 2020/6/8 1:01 下午
  * @Version 1.0
@@ -22,7 +23,6 @@ public class thumb {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pkThumbId;
-
 
     /**
      * 动态id
@@ -48,6 +48,7 @@ public class thumb {
      */
     @JsonIgnore
     @UpdateTimestamp
+    @LastModifiedDate
     @Column(nullable = false)
     private Timestamp gmtModified;
 

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 /**
  * @ClassName replyComment
- * @Description TODO
+ * @Description 回复评论
  * @Author xiaobinggan
  * @Date 2020/6/8 1:07 下午
  * @Version 1.0

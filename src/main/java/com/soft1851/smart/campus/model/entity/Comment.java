@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * @ClassName Comment
- * @Description TODO
+ * @Description 评论
  * @Author xiaobinggan
  * @Date 2020/6/8 1:05 下午
  * @Version 1.0
@@ -31,12 +31,18 @@ public class Comment {
     @Column(name = "dynamic_id", nullable = false)
     private Long dynamicId;
 
+
     /**
      * 用户id
      */
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    /**
+     * 评论内容
+     */
+    @Column(name = "content", nullable = false)
+    private String content = "";
     /**
      * 创建时间
      */
