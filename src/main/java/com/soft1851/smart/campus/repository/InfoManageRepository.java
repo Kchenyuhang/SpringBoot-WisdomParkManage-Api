@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.InfoManage;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author Yujie_Zhao
+ * @author Yujie_Zhao 田震修改
  * @ClassName InfoManageRepository
  * @Description TODO
  * @Date 2020/6/1  10:21
@@ -19,11 +20,21 @@ public interface InfoManageRepository extends JpaRepository<InfoManage, Long> {
 
 
     /**
-     * 根据id差咨询
+     * 根据id查询咨询
      * @param id
      * @return
      */
     InfoManage findByPkInfoManageId(Long id);
+
+    /**
+     * 根据id逻辑删除
+     * @param pkInfoManageId
+     */
+    @Modifying
+    @LastModifiedBy
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update info_manage set is_deleted = true where pk_info_manage_id = ?1",nativeQuery = true)
+    void  deleteByPkInfoManageId(Long pkInfoManageId);
 
     /**
      * 批量删除
@@ -31,7 +42,7 @@ public interface InfoManageRepository extends JpaRepository<InfoManage, Long> {
      */
     @Modifying
     @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
-    @Query("delete from InfoManage M where M.pkInfoManageId in (?1)")
+    @Query("update InfoManage v set v.isDeleted = true where v.pkInfoManageId in ?1")
     void deleteBatch(List<Long> ids);
 
 
