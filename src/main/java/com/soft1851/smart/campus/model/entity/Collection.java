@@ -56,4 +56,5 @@ public class Collection {
 //    @JsonIgnore
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
+
 }
