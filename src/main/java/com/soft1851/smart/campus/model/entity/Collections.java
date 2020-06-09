@@ -15,7 +15,7 @@ import java.sql.Timestamp;
  **/
 @Entity
 @Table(name = "collection")
-public class Collection {
+public class Collections {
     /**
      * 主键，策略为自增
      */

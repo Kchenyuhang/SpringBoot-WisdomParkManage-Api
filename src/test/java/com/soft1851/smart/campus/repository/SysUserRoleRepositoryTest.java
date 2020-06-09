@@ -21,6 +21,6 @@ class SysUserRoleRepositoryTest {
 
     @Test
     void getRoleIdByPhoneNumber() {
-        System.out.println(sysUserRoleRepository.getRoleIdByPhoneNumber("123"));
+        System.out.println(sysUserRoleRepository.getRoleIdByPhoneNumber("17826012342"));
     }
 }

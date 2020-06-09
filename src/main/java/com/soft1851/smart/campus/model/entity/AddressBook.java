@@ -22,7 +22,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-
 @Table(name = "address_book",indexes = {@Index(name = "phone_numberIndex",columnList = "phone_number")})
 public class AddressBook {
 

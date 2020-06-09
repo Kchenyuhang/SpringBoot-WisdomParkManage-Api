@@ -35,7 +35,7 @@ class ExaminationRepositoryTest {
                 .isDeleted(false)
                 .score(100)
                 .semester("2019-2020 第一学期")
-                .startTime(timestamp)
+                .testPeriod("2020-05-09 05:56:20~2020-05-09 06:56:20")
                 .subjectId(1L)
                 .teacherName("张老师")
                 .type("选修课")
