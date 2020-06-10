@@ -6,6 +6,7 @@ import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.service.SysBorrowService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @Slf4j
+@Api(value = "SysBorrowController", tags = "借阅记录管理接口")
 public class SysBorrowController {
     @Resource
     private SysBorrowService sysBorrowService;

@@ -3,9 +3,11 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.service.CardService;
 import com.soft1851.smart.campus.service.OrderService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
  **/
 @Slf4j
 @RestController
+@Api(tags = "校园卡管理接口")
 public class CardController {
     @Resource
     private CardService service;
@@ -48,12 +51,12 @@ public class CardController {
 
     /**
      * 删除一卡通信息
-     * @param pkCardId
+     * @param queryDto
      * @return
      */
-    @GetMapping("/card/deletion/{pk_card_id}")
-    ResponseResult deleteCard(@RequestParam ("pk_card_id") Long pkCardId){
-        return service.deleteCard(pkCardId);
+    @PutMapping("/card/id")
+    ResponseResult deleteCard(@RequestBody QueryDto queryDto){
+        return service.deleteCard(Long.parseLong(queryDto.getField().toString()));
     }
 
     /**
@@ -67,22 +70,20 @@ public class CardController {
     }
     /**
      * 查询清单明细
-     * @param jobNumber
+     * @param queryDto
      * @return
      */
-    @GetMapping("/card/consume")
-    ResponseResult findAllByJobNumber(@RequestParam("job_number") String  jobNumber){
-        return orderService.findALLByJobNumer(jobNumber);
+    @PostMapping("/card/consume")
+    ResponseResult findAllByJobNumber(@RequestBody QueryDto queryDto){
+        return orderService.findALLByJobNumer(queryDto.getField().toString());
     }
     /**
      * 一卡通激活
-     * @param pkCardId
-     * @param Status
+     * @param queryDto
      * @return
      */
-    @PostMapping("card/statuschange")
-    ResponseResult updateStatus(@RequestParam("pk_card_id")Long pkCardId,
-                                    @RequestParam("status") Boolean Status){
-        return service.updateStatus(pkCardId, Status);
+    @PutMapping("card/statuschange")
+    ResponseResult updateStatus(@RequestBody QueryDto queryDto){
+        return service.updateStatus(Long.parseLong(queryDto.getField().toString()), queryDto.getStatus());
     }
 }

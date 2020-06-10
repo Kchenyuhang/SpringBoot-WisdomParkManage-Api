@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.Tower;
 import com.soft1851.smart.campus.service.TowerService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/tower")
+@Api(value = "TowerController", tags = "楼栋用户管理接口")
 public class TowerController {
     @Resource
     private TowerService towerService;

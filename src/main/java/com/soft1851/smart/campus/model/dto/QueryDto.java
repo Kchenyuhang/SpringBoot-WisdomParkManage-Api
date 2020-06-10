@@ -10,5 +10,8 @@ import lombok.Data;
  */
 @Data
 public class QueryDto {
+
     private Object field;
+
+    private Boolean status;
 }

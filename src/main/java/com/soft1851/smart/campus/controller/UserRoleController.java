@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.AdminDto;
 import com.soft1851.smart.campus.model.dto.AdminUpdateDto;
 import com.soft1851.smart.campus.service.UserRoleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/admin")
+@Api(value = "UserRoleController", tags = "用户角色管理接口")
 public class UserRoleController {
     @Resource
     private UserRoleService userRoleService;

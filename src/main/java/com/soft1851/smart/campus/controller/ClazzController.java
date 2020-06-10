@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.model.entity.Clazz;
 import com.soft1851.smart.campus.service.ClazzService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/clazz")
+@Api(value = "ClazzController", tags = "班级管理接口")
 public class ClazzController {
 
     @Resource

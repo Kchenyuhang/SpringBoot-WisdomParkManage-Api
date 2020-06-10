@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.AddressBook;
 import com.soft1851.smart.campus.repository.AddressBookRepository;
 import com.soft1851.smart.campus.service.AddressBookService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "addressBook")
+@Api(value = "AddressBookController", tags = "通讯录管理接口")
 public class AddressBookController {
     @Resource
     private AddressBookService addressBookService;

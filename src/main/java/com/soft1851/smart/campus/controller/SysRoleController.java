@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.SysRole;
 import com.soft1851.smart.campus.service.SysRoleService;
+import io.swagger.annotations.Api;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping("/role")
+@Api(value = "SysRoleController", tags = "角色管理接口")
 public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
