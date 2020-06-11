@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * @author
  */
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing//自动更新时间
 public class SmartCampusApplication {
 
     public static void main(String[] args) {

@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-
 import java.sql.Timestamp;
 
 /**
@@ -22,7 +21,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)//自动更新时间的注释
+@DynamicUpdate(true)
 public class SysRole {
     //角色id
     @Id
@@ -43,12 +43,13 @@ public class SysRole {
 
 
     //创建时间
-    @Column(nullable = false)
+    @Column(nullable = false,updatable = false)
     private Timestamp gmtCreate;
 
-    //修改时间
-    @LastModifiedDate
-    @Column(nullable = false)
+    /**
+     * 修改时间
+     */
+    @Column( nullable = false)
     private Timestamp gmtModified;
 
     //是否删除（1 逻辑删除， 0 未删除）
