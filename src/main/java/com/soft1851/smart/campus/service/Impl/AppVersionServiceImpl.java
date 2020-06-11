@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.List;
  * @date 2020-06-03 8:15
  **/
 @Service
+@Transactional(rollbackOn =Exception.class )
 public class AppVersionServiceImpl implements AppVersionService {
     @Resource
     private AppVersionRepository appVersionRepository;

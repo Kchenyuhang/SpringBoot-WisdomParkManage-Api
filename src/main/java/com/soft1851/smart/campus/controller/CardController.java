@@ -8,8 +8,11 @@ import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.service.CardService;
 import com.soft1851.smart.campus.service.OrderService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -35,7 +38,7 @@ public class CardController {
      */
     @PostMapping("/card/list")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto){
-        return service.findAllByPage(pageDto);
+        return service.getAllSysCard(pageDto);
     }
 
 
@@ -44,7 +47,7 @@ public class CardController {
      * @param sysCard
      * @return
      */
-    @PutMapping("/card/modification")
+    @PostMapping("/card/modification")
     ResponseResult updateCard (@RequestBody SysCard sysCard){
         return service.updateCard(sysCard);
     }
@@ -54,7 +57,7 @@ public class CardController {
      * @param queryDto
      * @return
      */
-    @PutMapping("/card/id")
+    @PostMapping("/card/id")
     ResponseResult deleteCard(@RequestBody QueryDto queryDto){
         return service.deleteCard(Long.parseLong(queryDto.getField().toString()));
     }
@@ -82,8 +85,17 @@ public class CardController {
      * @param queryDto
      * @return
      */
-    @PutMapping("card/statuschange")
+    @PostMapping("card/statuschange")
     ResponseResult updateStatus(@RequestBody QueryDto queryDto){
         return service.updateStatus(Long.parseLong(queryDto.getField().toString()), queryDto.getStatus());
+    }
+    /**
+     * 批量删除挂失
+     * @return List<card>
+     */
+    @ApiOperation(value = "批量删除一卡通信息",notes = "")
+    @PostMapping(value = "card/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody QueryDto queryDto){
+        return service.deletedBatch(queryDto.getField().toString());
     }
 }
