@@ -1,6 +1,8 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
 import com.soft1851.smart.campus.model.entity.SysRole;
 import com.soft1851.smart.campus.service.SysRoleService;
 import io.swagger.annotations.Api;
@@ -23,13 +25,15 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
+
     /**
-     * 查询所有角色数据
+     * 分页查询所有
+     * @param pageDto
      * @return
      */
-    @GetMapping(value = "/all")
-    public ResponseResult findAllSysRole(){
-        return sysRoleService.findAllSysRole();
+    @PostMapping(value = "/all")
+    public ResponseResult findAllSysRoleByPage(@RequestBody PageDto pageDto){
+        return sysRoleService.findAllSysRoleByPage(pageDto);
     }
 
     /**
@@ -52,15 +56,27 @@ public class SysRoleController {
         return sysRoleService.deletedBatch(ids);
     }
 
+//    /**
+//     * 修改角色信息
+//     * @param sysRole
+//     * @return
+//     */
+//    @PutMapping(value = "/modification")
+//    public ResponseResult updateSysRole(@RequestBody SysRole sysRole){
+//        return sysRoleService.updateSysRole(sysRole);
+//    }
+
     /**
-     * 修改角色信息
-     * @param sysRole
+     * 修改角色信息(NEW)
+     * @param updateSysRoleDto
      * @return
      */
     @PutMapping(value = "/modification")
-    public ResponseResult updateSysRole(@RequestBody SysRole sysRole){
-        return sysRoleService.updateSysRole(sysRole);
+    public ResponseResult updateSysRole(@RequestBody UpdateSysRoleDto updateSysRoleDto){
+        return sysRoleService.updateSysRole(updateSysRoleDto);
     }
+
+
 
     /**
      * 新增角色信息
@@ -80,5 +96,16 @@ public class SysRoleController {
     @PutMapping("/modification/sort")
     public ResponseResult modificationSort(@Param("sortList") String sortList){
         return sysRoleService.updateSysRoleSort(sortList);
+    }
+
+
+    /**
+     * 分页查询所有系统角色（去除逻辑删除）
+     * @param pageDto
+     * @return
+     */
+    @PostMapping(value = "/all/new")
+    public ResponseResult getAllSysRole(@RequestBody PageDto pageDto){
+        return sysRoleService.getAllSysRole(pageDto);
     }
 }

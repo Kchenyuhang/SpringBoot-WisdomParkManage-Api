@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,18 +26,7 @@ class SysRoleServiceTest {
         System.out.println(responseResult);
     }
 
-    @Test
-    void updateSysRole() {
-        SysRole sysRole = SysRole.builder()
-                .pkRoleId(2L)
-                .roleDecoration("测试超级管理员")
-                .roleName("SuperAdmin")
-                .isDeleted(false)
-                .build();
-        ResponseResult responseResult = sysRoleService.updateSysRole(sysRole);
-        System.out.println(responseResult);
 
-    }
 
     @Test
     void increaseSysRole() {
@@ -52,5 +42,16 @@ class SysRoleServiceTest {
     void updateSysRoleSort() {
         ResponseResult responseResult = sysRoleService.updateSysRoleSort("1,6,2,10,12,11");
         System.out.println(responseResult);
+    }
+
+    @Test
+    void getAllSysRole() {
+        PageDto pageDto = PageDto.builder()
+                .currentPage(0)
+                .pageSize(1)
+                .build();
+
+        ResponseResult responseResult = sysRoleService.getAllSysRole(pageDto);
+
     }
 }
