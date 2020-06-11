@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.service.AppVersionService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping("/app")
+@Api(value = "AppVersionController"  ,tags = "App版本管理接口")
 public class AppVersionController {
     @Resource
     private AppVersionService appVersionService;

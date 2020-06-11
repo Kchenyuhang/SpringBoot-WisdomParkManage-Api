@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.service.SysFeedbackService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/feedback")
+@Api(value = "SysFeedbackController", tags = "反馈管理接口")
 public class SysFeedbackController {
     @Resource
     private SysFeedbackService sysFeedbackService;

@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.LoginDto;
 import com.soft1851.smart.campus.repository.SysUserRepository;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 @RequestMapping(value = "/user")
+@Api(value = "JWTController", tags = "JWT测试接口")
 public class JWTController {
 
     @Resource

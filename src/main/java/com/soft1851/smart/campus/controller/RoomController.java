@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.Room;
 import com.soft1851.smart.campus.model.vo.TowerVo;
 import com.soft1851.smart.campus.service.RoomService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/room")
+@Api(value = "RoomController" ,tags = "房间接口")
 public class RoomController {
     @Resource
     private RoomService roomService;

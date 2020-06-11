@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.ScheduleDto;
 import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.service.ScheduleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping("/timetable")
+@Api(value = "ScheduleController", tags = "课程表管理接口")
 public class ScheduleController {
 
     @Resource

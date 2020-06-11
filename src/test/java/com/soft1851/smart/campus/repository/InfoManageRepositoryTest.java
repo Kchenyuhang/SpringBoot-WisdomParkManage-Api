@@ -42,9 +42,10 @@ class InfoManageRepositoryTest {
     @Test
     void deleteBatch() {
         List<Long> ids = new ArrayList<Long>();
-        ids.add(201L);
-        ids.add(202L);
-        ids.add(203L);
+        for (int i = 1; i <= 134; i++) {
+            ids.add((long) i);
+        }
+        ids.add((long) 1);
         infoManageRepository.deleteBatch(ids);
     }
 
@@ -59,5 +60,10 @@ class InfoManageRepositoryTest {
                 .isDeleted(true)
                 .build();
         infoManageRepository.saveAndFlush(infoManage);
+    }
+
+    @Test
+    void deleteByPkInfoManageId() {
+        infoManageRepository.deleteByPkInfoManageId(((long) 1));
     }
 }

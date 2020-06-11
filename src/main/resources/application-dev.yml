@@ -36,3 +36,15 @@ spring:
         max-active: 8
         max-wait: 1ms
       shutdown-timeout: 100ms
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.soft1851.smart.campus.model.entity
+  global-config:
+    db-config:
+      # 主键策略 auto主键自增，input用户输入id，id_worker全局唯一的数字id，UUID全局唯一的UUID
+      id-type: auto
+      # 字段策略
+      field-strategy: not_empty
+      # 开启驼峰式
+      table-underline: true
+#      db_type: mysql

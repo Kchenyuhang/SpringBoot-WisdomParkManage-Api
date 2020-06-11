@@ -6,6 +6,7 @@ import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.model.entity.SysBook;
 import com.soft1851.smart.campus.service.BookService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @Slf4j
+@Api(tags = "图书管理接口")
 public class SysBookController {
     @Resource
     private BookService bookService;

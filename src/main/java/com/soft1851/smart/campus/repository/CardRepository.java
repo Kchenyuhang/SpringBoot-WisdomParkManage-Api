@@ -25,10 +25,6 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Query("select u from SysCard u")
     Page<SysCard> findALL(Pageable pageable);
 
-
-
-
-
     /**
      * 根据Id查询一卡通信息
      * @param id

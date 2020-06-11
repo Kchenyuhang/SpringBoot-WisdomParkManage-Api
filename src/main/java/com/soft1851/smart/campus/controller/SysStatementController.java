@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.service.SysStatementService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/statement")
+@Api(value = "SysStatementController", tags = "声明管理接口")
 public class SysStatementController {
     @Resource
     private SysStatementService sysStatementService;
