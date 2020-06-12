@@ -34,21 +34,21 @@ public class FleaTypeServiceImpl implements FleaTypeService {
     @Override
     public Map<String, Object> findAllType() {
         Map<String, Object> map = new TreeMap<>();
-        List<TreeNode> list = new ArrayList<>();
-        //查找所有的type
-        List<FleaType> types = fleaTypeRepository.findAll();
-        for (FleaType fleaType : types) {
-            //如果没有父节点
-            if (fleaType.getParentId() == 0) {
-                TreeNode treeNode = new TreeNode(fleaType.getPkFleaTypeId(), 0L, fleaType.getTypeName(), fleaType.getTypeCoverUrl(), fleaType.getTypeUrl(), new ArrayList<>());
-                list.add(treeNode);
-            } else {
-                TreeNode treeNode = new TreeNode(fleaType.getPkFleaTypeId(), fleaType.getParentId(), fleaType.getTypeName(), fleaType.getTypeCoverUrl(), fleaType.getTypeUrl(), new ArrayList<>());
-                list.add(treeNode);
-            }
-        }
-        List<TreeNode> trees = TreeBuilder.buildTreeByLoop(list);
-        map.put("types", trees);
+//        List<TreeNode> list = new ArrayList<>();
+//        //查找所有的type
+//        List<FleaType> types = fleaTypeRepository.findAll();
+//        for (FleaType fleaType : types) {
+//            //如果没有父节点
+//            if (fleaType.getParentId() == 0) {
+//                TreeNode treeNode = new TreeNode(fleaType.getPkFleaTypeId(), 0L, fleaType.getTypeName(), fleaType.getTypeCoverUrl(), fleaType.getTypeUrl(), new ArrayList<>());
+//                list.add(treeNode);
+//            } else {
+//                TreeNode treeNode = new TreeNode(fleaType.getPkFleaTypeId(), fleaType.getParentId(), fleaType.getTypeName(), fleaType.getTypeCoverUrl(), fleaType.getTypeUrl(), new ArrayList<>());
+//                list.add(treeNode);
+//            }
+//        }
+//        List<TreeNode> trees = TreeBuilder.buildTreeByLoop(list);
+//        map.put("types", trees);
         return map;
     }
 

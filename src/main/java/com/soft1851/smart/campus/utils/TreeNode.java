@@ -19,19 +19,30 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class TreeNode {
-    private Long pkFleaTypeId;
+    private Long pkMenuId;
+
     private Long parentId;
-    private String typeName;
-    private String typeCoverUrl;
-    private String typeUrl;
-    private List<TreeNode> subTypes;
 
+    private Integer type;
 
-    public TreeNode(Long pkFleaTypeId, Long parentId, String typeName, String typeCoverUrl, String typeUrl) {
-        this.pkFleaTypeId = pkFleaTypeId;
+    private String name;
+
+    private String icon;
+
+    private String path;
+
+    private Integer sort;
+
+    private List<TreeNode> subMenus;
+
+    public TreeNode(Long pkMenuId, Long parentId, Integer type,String name, String icon, String path, Integer sort) {
+        this.pkMenuId = pkMenuId;
         this.parentId = parentId;
-        this.typeName = typeName;
-        this.typeCoverUrl = typeCoverUrl;
-        this.typeUrl = typeUrl;
+        this.type = type;
+        this.name = name;
+        this.icon = icon;
+        this.path = path;
+        this.sort = sort;
     }
+
 }
