@@ -46,4 +46,23 @@ public class FleaController {
     @Resource
     private FleaCommentService fleaCommentService;
 
+    /**
+     * 根据id删除单个悬赏
+     * @param fleaRewardIdDto FleaRewardIdDto
+     * @return ResponseResult
+     */
+    @PostMapping(value = "reward/deleteOne")
+    public ResponseResult deleteOneRewardById(@RequestBody FleaRewardIdDto fleaRewardIdDto) {
+        return fleaRewardService.deleteOneById(fleaRewardIdDto);
+    }
+
+    /**
+     *
+     * @param fleaRewardBatchIdDto FleaRewardBatchIdDto
+     * @return ResponseResult
+     */
+    @PostMapping(value = "reward/batchDelete")
+    public ResponseResult batchDeleteRewardById(@RequestBody FleaRewardBatchIdDto fleaRewardBatchIdDto) {
+        return fleaRewardService.batchDeleteById(fleaRewardBatchIdDto);
+    }
 }
