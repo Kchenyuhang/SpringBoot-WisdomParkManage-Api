@@ -34,6 +34,12 @@ public interface CardService {
      */
     ResponseResult deleteCard(Long pkCardId);
 
+    /**
+     * 批量删除一卡通
+     * @param ids
+     * @return
+     */
+    ResponseResult deletedBatch(String ids);
 
     /**
      * 修改一卡通信息
@@ -56,11 +62,12 @@ public interface CardService {
      */
     ResponseResult updateStatus(Long pkCardId,Boolean Status);
 
+
     /**
-     * 模糊分页查询卡片
+     * 分页查询未被逻辑查询删除的一卡通信息数据
      * @param pageDto
      * @return
      */
-    ResponseResult findALLByJobNumberLikeAndCardBalanceLikeAndGmtCreateLike(PageDto pageDto);
+    ResponseResult getAllSysCard(PageDto pageDto);
 
 }

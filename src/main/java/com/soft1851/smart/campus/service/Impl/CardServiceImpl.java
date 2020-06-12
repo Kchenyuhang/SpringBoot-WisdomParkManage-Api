@@ -33,7 +33,7 @@ public class CardServiceImpl implements CardService {
                 pageDto.getCurrentPage()-1,
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
-                "pkCardId");
+                "pk_card_id");
         Page<SysCard> sysCards = cardRepository.findAll(pageable);
         return ResponseResult.success(sysCards.getContent());
     }
@@ -48,6 +48,24 @@ public class CardServiceImpl implements CardService {
     public ResponseResult deleteCard(Long pkCardId) {
         cardRepository.deleteByPkCardId(pkCardId);
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult deletedBatch(String ids) {
+        //判断是否有数据
+        if (ids.length() != 0) {
+            //将接收到的ids字符串，使用逗号分割
+            String[] idArr = ids.split(",");
+            List<Long> idsList = new ArrayList<Long>();
+            for (String id : idArr) {
+                //遍历所有id存入到list
+                idsList.add(Long.valueOf(id));
+            }
+            cardRepository.deleteBatch(idsList);
+            return ResponseResult.success("删除成功");
+        } else {
+            return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
+        }
     }
 
     @Override
@@ -77,9 +95,16 @@ public class CardServiceImpl implements CardService {
         return ResponseResult.success(cardRepository.updateStatus(pkCardId,Status));
     }
 
+
     @Override
-    public ResponseResult findALLByJobNumberLikeAndCardBalanceLikeAndGmtCreateLike(PageDto pageDto) {
-        return null;
+    public ResponseResult getAllSysCard(PageDto pageDto) {
+        Pageable pageable = PageRequest.of(
+                pageDto.getCurrentPage()-1,
+                pageDto.getPageSize(),
+                Sort.Direction.ASC,
+                "pk_card_id");
+        Page<SysCard> sysCards = cardRepository.getAllSysCard(pageable);
+        return ResponseResult.success(sysCards.getContent());
     }
 
 }

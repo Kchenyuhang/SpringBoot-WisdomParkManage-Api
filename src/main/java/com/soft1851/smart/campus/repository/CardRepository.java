@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @ClassName CardRepository
  * @Description TODO
@@ -26,6 +28,13 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     Page<SysCard> findALL(Pageable pageable);
 
     /**
+     * 查询一卡通所有信息
+     * @return
+     */
+    @Query("select u.isDeleted from SysCard u")
+    SysCard getAll();
+
+    /**
      * 根据Id查询一卡通信息
      * @param id
      * @return
@@ -37,10 +46,20 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
      * @param pkCardId
      * @return
      */
-    @Transactional
     @Modifying
-    @Query("delete from SysCard where pk_card_id = ?1")
+    @LastModifiedBy
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update sys_card set is_deleted = true where pk_card_id = ?1",nativeQuery = true)
     void deleteByPkCardId(Long pkCardId);
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    @Modifying
+    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
+    @Query("update SysCard v set v.isDeleted = true where v.pkCardId in ?1")
+    void deleteBatch(List<Long> ids);
 
     /**
      * 根据卡号查询一卡通信息
@@ -48,6 +67,7 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
      * @return
      */
     SysCard findByCardNumber(String cardNumber);
+
     /**
      * 状态激活
      * @param pkCardId
@@ -60,6 +80,11 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     @Query(value = "update sys_card set status = ?2 where pk_card_id = ?1",nativeQuery = true)
     int updateStatus(Long pkCardId,Boolean Status);
 
-
+    /**
+     * 分页查询未被逻辑查询删除的一卡通信息数据
+     * @return
+     */
+    @Query(value = "select * from sys_card where is_deleted =false ",nativeQuery = true)
+        Page<SysCard> getAllSysCard(Pageable pageable);
 
 }

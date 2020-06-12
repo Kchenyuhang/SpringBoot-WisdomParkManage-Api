@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author xunmi
@@ -49,4 +50,13 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     @Query("SELECT u FROM UserAccount u WHERE u.role = ?1")
     List<UserAccount> getStudentInfo(String role);
+
+    /**
+     * 根据手机号码查询用户数据
+     *
+     * @param cardNumber String
+     * @return Optional<UserAccount>
+     */
+    @Query(value = "select * from user_account as ua where ua.card_number=?1 ", nativeQuery = true)
+    Optional<UserAccount> findByCardNumber(String cardNumber);
 }

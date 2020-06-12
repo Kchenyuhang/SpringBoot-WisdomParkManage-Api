@@ -30,4 +30,19 @@ public interface ReportLossService {
      * @return
      */
     ResponseResult deleteReportLoss(Long pkReportLossId);
+
+    /**
+     * 批量删除信息
+     * @param ids
+     * @return
+     */
+    ResponseResult deletedBatch(String ids);
+
+    /**
+     * 分页查询未被逻辑查询删除的挂失信息数据
+     * @param pageDto
+     * @return
+     */
+    ResponseResult getAllReportLoss(PageDto pageDto);
+
 }
