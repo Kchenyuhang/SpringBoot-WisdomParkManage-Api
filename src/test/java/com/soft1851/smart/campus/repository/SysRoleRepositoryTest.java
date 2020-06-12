@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class SysRoleRepositoryTest {
@@ -44,4 +43,23 @@ class SysRoleRepositoryTest {
                 .build();
         sysRoleRepository.updateSysRole(updateSysRoleDto);
     }
+
+
+    @Test
+    void name() {
+        List<SysRole> sysRoleList = new ArrayList<>();
+        for (int i = 1; i <= 20 ;i++){
+            SysRole sysRole = SysRole.builder()
+                    .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                    .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                    .isDeleted(false)
+                    .roleDecoration("管理员"+i)
+                    .roleName("高级管理员"+i)
+                    .sort(i)
+                    .build();
+            sysRoleList.add(sysRole);
+        }
+        sysRoleRepository.saveAll(sysRoleList);
+    }
+
 }

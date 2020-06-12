@@ -1,7 +1,10 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
+import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.service.SysStatementService;
 import io.swagger.annotations.Api;
@@ -45,12 +48,12 @@ public class SysStatementController {
 
     /**
      * 修改声明
-     * @param sysStatement
+     * @param updateSysStatementDto
      * @return
      */
     @PutMapping(value = "/modification")
-    public ResponseResult modificationSysStatement(@RequestBody SysStatement sysStatement){
-        return sysStatementService.modificationSysStatement(sysStatement);
+    public ResponseResult modificationSysStatement(@RequestBody UpdateSysStatementDto updateSysStatementDto){
+        return sysStatementService.modificationSysStatement(updateSysStatementDto);
     }
 
 
@@ -74,5 +77,27 @@ public class SysStatementController {
     public ResponseResult deletedBatch(@PathVariable String ids){
         return sysStatementService.deletedBatch(ids);
     }
+
+
+    /**
+     * 逻辑删除声明
+     * @param singleParam
+     * @return
+     */
+    @DeleteMapping(value = "/deletion")
+    public ResponseResult deleteSysStatement(@RequestBody SingleParam singleParam){
+        return sysStatementService.deleteSysStatement(singleParam.getPkId());
+    }
+
+    /**
+     * 批量逻辑删除声明
+     * @param batchDeletionDto
+     * @return
+     */
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysStatementService.deleteBatchByPkStatementId(batchDeletionDto.getIds());
+    }
+
 
 }

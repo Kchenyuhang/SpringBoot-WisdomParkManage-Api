@@ -35,18 +35,6 @@ class SysStatementServiceTest {
     }
 
     @Test
-    void modificationSysStatement() {
-        SysStatement sysStatement = SysStatement.builder()
-                .pkStatementId((long)50)
-                .statementTitle("159")
-                .statementType("ubgyu")
-                .build();
-        ResponseResult responseResult = sysStatementService.modificationSysStatement(sysStatement);
-        System.out.println(responseResult);
-
-    }
-
-    @Test
     void deletedBatch() {
         ResponseResult responseResult = sysStatementService.deletedBatch("45,46,47");
         System.out.println(responseResult);

@@ -35,17 +35,7 @@ class SysFeedbackServiceTest {
         System.out.println(responseResult);
     }
 
-    @Test
-    void modificationSysFeedback() {
-        SysFeedback sysFeedback = SysFeedback.builder()
-                .pkFeedbackId((long)41)
-                .title("987")
-                .isHandled(false)
-                .content("987")
-                .build();
-        ResponseResult responseResult = sysFeedbackService.modificationSysFeedback(sysFeedback);
-        System.out.println(responseResult);
-    }
+
 
     @Test
     void deletionSysFeedback() {

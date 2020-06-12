@@ -111,13 +111,7 @@ public class SysRoleServiceImpl implements SysRoleService {
                 .roleDecoration(sysRole.getRoleDecoration())
                 .isDeleted(false)
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
-
-
-
-               .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
-
-
-
+                .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                 .sort(sysRole2.getSort() + 1)
                 .build();
         sysRoleRepository.save(sysRole1);

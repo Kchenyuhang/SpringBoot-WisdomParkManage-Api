@@ -25,7 +25,6 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
 
-
     /**
      * 分页查询所有
      * @param pageDto

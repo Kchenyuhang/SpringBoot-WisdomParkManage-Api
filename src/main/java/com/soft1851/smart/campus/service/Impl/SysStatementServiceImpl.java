@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.repository.SysStatementRepository;
 import com.soft1851.smart.campus.service.SysStatementService;
@@ -68,24 +69,12 @@ public class SysStatementServiceImpl implements SysStatementService {
     }
 
     @Override
-    public ResponseResult modificationSysStatement(SysStatement sysStatement) {
-        SysStatement sysStatement1 = sysStatementRepository.findSysStatementByPkStatementId(sysStatement.getPkStatementId());
-        if (sysStatement1!=null){
-            if (sysStatement.getStatementType()!=null){
-                sysStatement1.setStatementType(sysStatement.getStatementType());
-            }
-            if (sysStatement.getStatementTitle()!=null){
-                sysStatement1.setStatementTitle(sysStatement.getStatementTitle());
-            }
-            if (sysStatement.getStatementContent() !=null){
-                sysStatement1.setStatementContent(sysStatement.getStatementContent());
-            }
-            sysStatementRepository.saveAndFlush(sysStatement1);
-            return ResponseResult.success(sysStatement1);
-        }else {
-            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
-        }
+    public ResponseResult modificationSysStatement(UpdateSysStatementDto updateStatement) {
+        sysStatementRepository.updateSysStatement(updateStatement);
+        SysStatement sysStatement = sysStatementRepository.findSysStatementByPkStatementId(updateStatement.getPkStatementId());
+        return ResponseResult.success(sysStatement);
     }
+
 
     @Override
     public ResponseResult deletionSysStatement(Long sysPkSysStatement) {
@@ -110,6 +99,35 @@ public class SysStatementServiceImpl implements SysStatementService {
                 idsList.add(Long.valueOf(id));
             }
             sysStatementRepository.deleteBatch(idsList);
+            return ResponseResult.success();
+        } else {
+            return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
+        }
+    }
+
+    /**
+     * 逻辑删除
+     * @param sysPkSysStatement
+     * @return
+     */
+    @Override
+    public ResponseResult deleteSysStatement(Long sysPkSysStatement) {
+        sysStatementRepository.deleteSysStatement(sysPkSysStatement);
+        return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult deleteBatchByPkStatementId(String ids) {
+        //判断是否有数据
+        if (ids.length() != 0) {
+            //将接收到的ids字符串，使用逗号分割
+            String[] idArr = ids.split(",");
+            List<Long> idsList = new ArrayList<Long>();
+            for (String id : idArr) {
+                //遍历所有id存入到list
+                idsList.add(Long.valueOf(id));
+            }
+            sysStatementRepository.deleteBatchByPkStatementId(idsList);
             return ResponseResult.success();
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
