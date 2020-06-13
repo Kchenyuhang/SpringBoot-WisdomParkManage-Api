@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.BorrowDto;
-import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.UpdateBorrowDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.service.SysBorrowService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +30,10 @@ public class SysBorrowController {
     ResponseResult findAllByPage(@RequestBody PageDto pageDto) {
         return sysBorrowService.findAllByPage(pageDto);
     }
+
     /**
      * 根据时间查询
+     *
      * @param borrowDto
      * @return
      */
@@ -47,6 +46,7 @@ public class SysBorrowController {
 
     /**
      * 添加借阅信息
+     *
      * @param borrowInsertDto
      * @return
      */
@@ -57,11 +57,24 @@ public class SysBorrowController {
 
     /**
      * 修改借阅状态
+     *
      * @param updateBorrowDto
      * @return
      */
     @PostMapping(value = "/deletion")
-    public ResponseResult deleteSysFeedback(@RequestBody UpdateBorrowDto updateBorrowDto){
-        return sysBorrowService.deletedSysRole(updateBorrowDto.getId(),updateBorrowDto.getIsDeleted());
+    public ResponseResult deleteSysFeedback(@RequestBody UpdateBorrowDto updateBorrowDto) {
+        return sysBorrowService.deletedSysRole(updateBorrowDto.getId(), updateBorrowDto.getIsDeleted());
     }
+
+    /**
+     * 时间范围内的查询
+     * @param timeBorrowPageDto
+     * @return
+     */
+    @PostMapping(value = "/page")
+    public ResponseResult getSysBorrowsByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
+        return sysBorrowService.getSysBorrowsByTime(timeBorrowPageDto);
+    }
+
+
 }
