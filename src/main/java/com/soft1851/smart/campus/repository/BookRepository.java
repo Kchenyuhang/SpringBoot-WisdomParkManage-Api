@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysBook;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,15 +16,37 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface BookRepository extends JpaRepository<SysBook, Long> {
-
+    /**
+     * 根据id查询咨询
+     * @param id
+     * @return
+     */
+    SysBook findByPkBookId(Long id);
+    /**
+     * 根据书名查出对应的pk_book_id
+     * @param bookName
+     * @return
+     */
     @Query(value = "SELECT COUNT(pk_book_id) from sys_book where book_name=?1", nativeQuery = true)
     int findBookNumberByBookName(String bookName);
 
+    /**
+     * 根据书名修改数量
+     * @param bookName
+     * @param bookNumber
+     * @return
+     */
     @Transactional
     @Modifying
     @Query(value = "update sys_book set book_number=?2 where book_name=?1", nativeQuery = true)
     int setBookNumberByBookName(String bookName,int bookNumber);
 
+    /***
+     * 修改
+     * @param bookName
+     * @param bookResidueNumber
+     * @return
+     */
     @Transactional
     @Modifying
     @Query(value = "update sys_book set book_residue_number=?2 where book_name=?1", nativeQuery = true)
@@ -35,8 +58,17 @@ public interface BookRepository extends JpaRepository<SysBook, Long> {
      * @return
      */
     @Modifying
-    @Transactional(timeout = 10, rollbackFor = RuntimeException.class)
-    @Query(value = "delete from SysBook  s where s.pkBookId in (?1)")
+    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
+    @Query("update SysBook v set v.isDeleted = true where v.pkBookId in ?1")
     int deleteBatchBook(List<Long> ids);
+    /**
+     * 根据id逻辑删除
+     * @param pkBookId
+     */
+    @Modifying
+    @LastModifiedBy
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update sys_book set is_deleted = true where pk_book_id = ?1",nativeQuery = true)
+    void  deleteByPkBookId(Long pkBookId);
 
 }

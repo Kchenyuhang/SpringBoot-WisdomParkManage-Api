@@ -159,7 +159,7 @@ public class KaptchaUtil {
      * @param y 变量y
      */
     private static void add(int x, int y) {
-        result = null;
+//        result = null;
         result.append("x");
         result.append(x);
         result.append("&");

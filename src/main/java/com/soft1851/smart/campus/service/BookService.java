@@ -3,7 +3,6 @@ package com.soft1851.smart.campus.service;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
-import com.soft1851.smart.campus.model.entity.SysBook;
 
 /**
  * @Description TODO
@@ -20,6 +19,12 @@ public interface BookService {
      */
     ResponseResult increaseSysBook(SysBookDto sysBookDto);
 
+    /**
+     * 删除一个本
+     * @param pkBookid
+     * @return
+     */
+    ResponseResult deleteBook(Long pkBookid);
     /**
      * 批量删除图书
      *

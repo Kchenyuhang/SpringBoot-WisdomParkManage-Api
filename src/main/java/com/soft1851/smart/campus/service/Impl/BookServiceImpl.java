@@ -6,7 +6,6 @@ import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.model.entity.SysBook;
 import com.soft1851.smart.campus.repository.BookRepository;
-import com.soft1851.smart.campus.repository.BorrowRepository;
 import com.soft1851.smart.campus.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -59,6 +58,18 @@ public class BookServiceImpl implements BookService {
         return ResponseResult.success(ResultCode.SUCCESS);
     }
 
+    @Override
+    public ResponseResult deleteBook(Long pkBookid) {
+        //根据id查询角色数据是否存在 ，若存在进行删除，不存则返回 数据有误
+        SysBook sysBook = bookRepository.findByPkBookId(pkBookid);
+        if (sysBook != null) {
+            bookRepository.deleteById(pkBookid);
+            return ResponseResult.success("删除成功");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
     /**
      * 批量删除图书种类
      *
@@ -67,7 +78,6 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public ResponseResult deletedBatchSysBook(String idsArray) {
-//        String[] array = idsArray.substring(1, idsArray.length() - 1).split("\\,");
         String[] array = idsArray.split("\\,");
         System.out.println("idsArray"+idsArray);
         System.out.println("Array"+array);
