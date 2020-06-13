@@ -45,4 +45,11 @@ public interface BookService {
      * @return
      */
     ResponseResult updatedBook(SysBookDto sysBookDto);
+
+    /**
+     * 分页查询未被逻辑查询删除的图书信息数据
+     * @param pageDto
+     * @return
+     */
+    ResponseResult getAllSysBook(PageDto pageDto);
 }

@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysBook;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -70,5 +72,12 @@ public interface BookRepository extends JpaRepository<SysBook, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update sys_book set is_deleted = true where pk_book_id = ?1",nativeQuery = true)
     void  deleteByPkBookId(Long pkBookId);
+
+    /**
+     * 分页查询未被逻辑查询删除的一卡通信息数据
+     * @return
+     */
+    @Query(value = "select * from sys_book where is_deleted =false ",nativeQuery = true)
+    Page<SysBook> getAllSysBook(Pageable pageable);
 
 }

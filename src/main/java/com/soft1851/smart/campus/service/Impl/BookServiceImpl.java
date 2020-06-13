@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -96,7 +97,7 @@ public class BookServiceImpl implements BookService {
     public ResponseResult findAllByPage(PageDto pageDto) {
         //分页要减一
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage() - 1,
+                pageDto.getCurrentPage() ,
                 pageDto.getPageSize());
         Page<SysBook> sysBooks = bookRepository.findAll(pageable);
         System.out.println("*********************");
@@ -126,5 +127,16 @@ public class BookServiceImpl implements BookService {
                 .build();
          bookRepository.delete(oldBook);
         return ResponseResult.success(bookRepository.save(newBook));
+    }
+
+    @Override
+    public ResponseResult getAllSysBook(PageDto pageDto) {
+        Pageable pageable = PageRequest.of(
+                pageDto.getCurrentPage(),
+                pageDto.getPageSize(),
+                Sort.Direction.ASC,
+                "pk_book_id");
+        Page<SysBook> sysBooks = bookRepository.getAllSysBook(pageable);
+        return ResponseResult.success(sysBooks.getContent());
     }
 }

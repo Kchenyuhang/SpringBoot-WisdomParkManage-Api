@@ -27,6 +27,11 @@ public class SysBookController {
     @Resource
     private BookService bookService;
 
+    /**
+     * 新增图书
+     * @param sysBookDto
+     * @return
+     */
     @PostMapping("/book/increased")
     ResponseResult increasedBook(@RequestBody SysBookDto sysBookDto) {
         return bookService.increaseSysBook(sysBookDto);
@@ -50,12 +55,22 @@ public class SysBookController {
             return bookService.deletedBatchSysBook(bookBatchDeleteDto.getIds());
     }
 
+    /**
+     * 分页查询未被逻辑删除的图书信息
+     * @param pageDto
+     * @return
+     */
 
     @PostMapping("book/all")
     ResponseResult findAllByPage(@RequestBody PageDto pageDto) {
-        return bookService.findAllByPage(pageDto);
+        return bookService.getAllSysBook(pageDto);
     }
 
+    /**
+     * 修改图书信息
+     * @param sysBookDto
+     * @return
+     */
     @PostMapping("/book/updation")
     ResponseResult updatedBook(@RequestBody SysBookDto sysBookDto) {
         return bookService.updatedBook(sysBookDto);

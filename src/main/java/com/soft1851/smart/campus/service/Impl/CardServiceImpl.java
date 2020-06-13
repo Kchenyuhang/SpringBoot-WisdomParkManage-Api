@@ -32,7 +32,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage()-1,
+                pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pk_card_id");
@@ -106,7 +106,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult getAllSysCard(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage()-1,
+                pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pk_card_id");
