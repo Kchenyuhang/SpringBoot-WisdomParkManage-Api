@@ -59,7 +59,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 Sort.Direction.ASC,
                 "pkUserAccountId");
         Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
-        return ResponseResult.success(userAccountList);
+        return ResponseResult.success(userAccountList.getContent());
     }
 
     /**

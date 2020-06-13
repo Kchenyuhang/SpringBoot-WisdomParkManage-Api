@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage()-1,
+                pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pk_card_id");
@@ -84,8 +86,13 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult insert(SysCard sysCard) {
         if (cardRepository.findByCardNumber(sysCard.getCardNumber())==null){
-            SysCard addCard=cardRepository.save(sysCard);
-            return ResponseResult.success(addCard);
+            SysCard sysCard1=new SysCard();
+            sysCard1.setIsDeleted(false);
+            sysCard1.setStatus(false);
+             sysCard1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            sysCard1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            cardRepository.save(sysCard1);
+            return ResponseResult.success(ResultCode.SUCCESS);
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);
     }
@@ -99,7 +106,7 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult getAllSysCard(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage()-1,
+                pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pk_card_id");
