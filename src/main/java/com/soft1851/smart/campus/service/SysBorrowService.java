@@ -31,4 +31,13 @@ public interface SysBorrowService {
      * @return
      */
     ResponseResult borrowInsert(BorrowInsertDto borrowInsertDto);
+
+    /**
+     * 修改借阅状态
+     * @param id
+     * @param isDeleted
+     * @return
+     */
+    ResponseResult deletedSysRole(Long id,Boolean isDeleted);
+
 }
