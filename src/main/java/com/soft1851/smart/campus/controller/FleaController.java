@@ -47,6 +47,17 @@ public class FleaController {
     private FleaCommentService fleaCommentService;
 
     /**
+     * 分页查询所有悬赏
+     *
+     * @param pageDto PageDto
+     * @return Page<FleaReward>
+     */
+    @PostMapping(value = "reward/all")
+    public ResponseResult findAllReward(@RequestBody PageDto pageDto) {
+        return fleaRewardService.findAll(pageDto);
+    }
+
+    /**
      * 根据id删除单个悬赏
      *
      * @param fleaRewardIdDto FleaRewardIdDto

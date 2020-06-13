@@ -72,6 +72,4 @@ public class FleaUser {
      */
     @Column(nullable = false,length = 4)
     private Boolean isDeleted;
-
-
 }
