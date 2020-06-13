@@ -5,17 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
- * @author 倪涛涛
- * @version 1.0.0
- * @ClassName FleaOrderDto.java
- * @Description TODO
- * @createTime 2020年06月11日 14:39:00
+ * @Author yhChen
+ * @Description
+ * @Date 2020/6/12
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class FleaOrderDto {
-    private String pkFleaOrderId;
+public class FleaRewardBatchIdDto {
+    private List<Long> id;
 }

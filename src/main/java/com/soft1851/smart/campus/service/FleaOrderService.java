@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.FleaOrderBatchIdDto;
 import com.soft1851.smart.campus.model.dto.FleaOrderDto;
 
 /**
@@ -11,19 +12,20 @@ import com.soft1851.smart.campus.model.dto.FleaOrderDto;
  * @createTime 2020年06月09日 13:58:00
  */
 public interface FleaOrderService {
-    /**
-     * 新增订单
-     *
-     * @param fleaOrderDto
-     * @return
-     */
-    ResponseResult orderIncreased(FleaOrderDto fleaOrderDto);
 
     /**
      * 逻辑删除订单
      *
-     * @param fleaOrderDto
-     * @return
+     * @param fleaOrderDto FleaOrderDto
+     * @return ResponseResult
      */
     ResponseResult logicalDel(FleaOrderDto fleaOrderDto);
+
+    /**
+     * 批量逻辑删除
+     *
+     * @param fleaOrderBatchIdDto FleaOrderBatchIdDto
+     * @return ResponseResult
+     */
+    ResponseResult batchLogicalDel(FleaOrderBatchIdDto fleaOrderBatchIdDto);
 }
