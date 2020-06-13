@@ -58,11 +58,6 @@ public class SysBorrow {
     @Column(nullable = false,length = 50)
     private  String borrowBookId;
 
-    /**
-     * 归还状态 true 归还，false为归还
-     */
-    @Column(nullable = false,length = 4)
-    private  Boolean isReturned;
 
     /**
      * 创建时间
