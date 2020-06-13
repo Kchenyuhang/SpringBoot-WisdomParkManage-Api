@@ -24,9 +24,9 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
     /**
      * 根据搜索内容进行模糊查询
      *
-     * @param goodsName
-     * @param goodsDescription
-     * @return
+     * @param goodsName String
+     * @param goodsDescription String
+     * @return List<FleaGoods>
      */
     List<FleaGoods> findFleaGoodsByGoodsNameLikeOrGoodsDescriptionLike(String goodsName, String goodsDescription);
 
