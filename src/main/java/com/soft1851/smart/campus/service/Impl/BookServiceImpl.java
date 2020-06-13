@@ -6,7 +6,6 @@ import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.model.entity.SysBook;
 import com.soft1851.smart.campus.repository.BookRepository;
-import com.soft1851.smart.campus.repository.BorrowRepository;
 import com.soft1851.smart.campus.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
