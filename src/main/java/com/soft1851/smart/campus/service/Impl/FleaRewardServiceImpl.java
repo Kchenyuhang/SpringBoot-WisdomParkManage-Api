@@ -2,9 +2,7 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
-import com.soft1851.smart.campus.model.dto.FleaRewardDto;
-import com.soft1851.smart.campus.model.dto.FleaSearchDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.FleaReward;
 import com.soft1851.smart.campus.model.vo.RewardVo;
 import com.soft1851.smart.campus.repository.FleaRewardRepository;
@@ -87,5 +85,17 @@ public class FleaRewardServiceImpl implements FleaRewardService {
             fleaRewardRepository.deleteById(rewardId);
         }
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult deleteOneById(FleaRewardIdDto fleaRewardIdDto) {
+        fleaRewardRepository.deleteRewardByPkRewardId(fleaRewardIdDto.getFleaRewardId());
+        return ResponseResult.success("删除成功");
+    }
+
+    @Override
+    public ResponseResult batchDeleteById(FleaRewardBatchIdDto fleaRewardBatchIdDto) {
+        fleaRewardRepository.batchDelete(fleaRewardBatchIdDto.getId());
+        return ResponseResult.success("删除成功");
     }
 }
