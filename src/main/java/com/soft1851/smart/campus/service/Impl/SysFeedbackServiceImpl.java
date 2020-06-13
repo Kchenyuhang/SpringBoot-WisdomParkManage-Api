@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.repository.SysFeedbackRepository;
 import com.soft1851.smart.campus.service.SysFeedbackService;
@@ -72,24 +73,14 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
     /**
      * 修改反馈接口
      *
-     * @param sysFeedback
+     * @param updateSysFeedbackDto
      * @return
      */
     @Override
-    public ResponseResult modificationSysFeedback(SysFeedback sysFeedback) {
-        SysFeedback sysFeedback1 = sysFeedbackRepository.findSysFeedbackByPkFeedbackId(sysFeedback.getPkFeedbackId());
-        if (sysFeedback1 != null) {
-            sysFeedback1.setTitle(sysFeedback.getTitle());
-            sysFeedback1.setContent(sysFeedback.getContent());
-            sysFeedback1.setIsHandled(sysFeedback.getIsHandled());
-            if (sysFeedback.getContactWay() != null) {
-                sysFeedback1.setContactWay(sysFeedback.getContactWay());
-            }
-            sysFeedbackRepository.saveAndFlush(sysFeedback1);
-            return ResponseResult.success(sysFeedback1);
-        } else {
-            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
-        }
+    public ResponseResult modificationSysFeedback(UpdateSysFeedbackDto updateSysFeedbackDto) {
+        sysFeedbackRepository.updateSysFeedback(updateSysFeedbackDto);
+        SysFeedback sysFeedback = sysFeedbackRepository.findSysFeedbackByPkFeedbackId(updateSysFeedbackDto.getPkFeedbackId());
+        return ResponseResult.success(sysFeedback);
     }
 
     /**
@@ -127,6 +118,40 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
                 idsList.add(Long.valueOf(id));
             }
             sysFeedbackRepository.deleteBatch(idsList);
+            return ResponseResult.success();
+        } else {
+            return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
+        }
+    }
+
+    /**
+     * 逻辑删除
+     * @param pkFeedbackId
+     * @return
+     */
+    @Override
+    public ResponseResult deleteSysFeedback(Long pkFeedbackId) {
+        sysFeedbackRepository.deleteSysFeedback(pkFeedbackId);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 批量逻辑删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public ResponseResult deleteBatchByPkFeedbackId(String ids) {
+        //判断是否有数据
+        if (ids.length() != 0) {
+            //将接收到的ids字符串，使用逗号分割
+            String[] idArr = ids.split(",");
+            List<Long> idsList = new ArrayList<Long>();
+            for (String id : idArr) {
+                //遍历所有id存入到list
+                idsList.add(Long.valueOf(id));
+            }
+            sysFeedbackRepository.deleteBatchByPkFeedbackId(idsList);
             return ResponseResult.success();
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);

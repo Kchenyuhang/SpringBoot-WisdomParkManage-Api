@@ -1,7 +1,10 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
+import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.service.SysFeedbackService;
 import io.swagger.annotations.Api;
@@ -50,7 +53,7 @@ public class SysFeedbackController {
      * @return
      */
     @PutMapping(value = "/modification")
-    public ResponseResult modificationSysFeedback(@RequestBody SysFeedback sysFeedback){
+    public ResponseResult modificationSysFeedback(@RequestBody UpdateSysFeedbackDto sysFeedback){
         return sysFeedbackService.modificationSysFeedback(sysFeedback);
     }
 
@@ -65,6 +68,15 @@ public class SysFeedbackController {
         return sysFeedbackService.deletionSysFeedback(id);
     }
 
+    /**
+     * 逻辑删除反馈
+     * @param singleParam
+     * @return
+     */
+    @DeleteMapping(value = "/deletion")
+    public ResponseResult deleteSysFeedback(@RequestBody SingleParam singleParam){
+        return sysFeedbackService.deleteSysFeedback(singleParam.getPkId());
+    }
 
     /**
      * 批量删除反馈
@@ -76,4 +88,14 @@ public class SysFeedbackController {
         return sysFeedbackService.deletedBatch(ids);
     }
 
+
+    /**
+     * 批量逻辑删除反馈
+     * @param batchDeletionDto
+     * @return
+     */
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysFeedbackService.deleteBatchByPkFeedbackId(batchDeletionDto.getIds());
+    }
 }

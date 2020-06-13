@@ -133,6 +133,7 @@ public class KaptchaUtil {
         int operationalRules = random.nextInt(4);
         System.out.println("x的值: " + x);
         System.out.println("y的值: " + y);
+        System.out.println(result);
         if(result.length() > 0){
             result.delete(0, result.length() - 1);
         }
