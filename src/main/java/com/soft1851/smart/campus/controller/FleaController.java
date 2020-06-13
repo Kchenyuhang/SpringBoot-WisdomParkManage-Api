@@ -87,4 +87,15 @@ public class FleaController {
     public ResponseResult batchLogicalDelOrder(@RequestBody FleaOrderBatchIdDto fleaOrderBatchIdDto) {
         return fleaOrderService.batchLogicalDel(fleaOrderBatchIdDto);
     }
+
+    /**
+     * 分页查询所有用户
+     *
+     * @param pageDto PageDto
+     * @return ResponseResult
+     */
+    @PostMapping("user/all")
+    public ResponseResult findAllUser(@RequestBody PageDto pageDto) {
+        return fleaUserService.findAllUser(pageDto);
+    }
 }
