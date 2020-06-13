@@ -48,6 +48,7 @@ public class FleaController {
 
     /**
      * 根据id删除单个悬赏
+     *
      * @param fleaRewardIdDto FleaRewardIdDto
      * @return ResponseResult
      */
@@ -57,12 +58,33 @@ public class FleaController {
     }
 
     /**
-     *
      * @param fleaRewardBatchIdDto FleaRewardBatchIdDto
      * @return ResponseResult
      */
     @PostMapping(value = "reward/batchDelete")
     public ResponseResult batchDeleteRewardById(@RequestBody FleaRewardBatchIdDto fleaRewardBatchIdDto) {
         return fleaRewardService.batchDeleteById(fleaRewardBatchIdDto);
+    }
+
+    /**
+     * 逻辑删除单个订单
+     *
+     * @param fleaOrderDto FleaOrderDto
+     * @return ResponseResult
+     */
+    @PostMapping(value = "order/logicalDelOne")
+    public ResponseResult logicalDelOneOrder(@RequestBody FleaOrderDto fleaOrderDto) {
+        return fleaOrderService.logicalDel(fleaOrderDto);
+    }
+
+    /**
+     * 批量逻辑删除订单
+     *
+     * @param fleaOrderBatchIdDto FleaOrderBatchIdDto
+     * @return ResponseResult
+     */
+    @PostMapping(value = "order/batchLogicalDel")
+    public ResponseResult batchLogicalDelOrder(@RequestBody FleaOrderBatchIdDto fleaOrderBatchIdDto) {
+        return fleaOrderService.batchLogicalDel(fleaOrderBatchIdDto);
     }
 }
