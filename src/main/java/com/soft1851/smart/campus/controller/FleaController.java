@@ -46,4 +46,8 @@ public class FleaController {
     @Resource
     private FleaCommentService fleaCommentService;
 
+    @PostMapping("user/all")
+    public ResponseResult findAllUser(@RequestBody PageDto pageDto) {
+        return fleaUserService.findAllUser(pageDto);
+    }
 }
