@@ -17,6 +17,7 @@ import java.sql.Timestamp;
  **/
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SysCard {

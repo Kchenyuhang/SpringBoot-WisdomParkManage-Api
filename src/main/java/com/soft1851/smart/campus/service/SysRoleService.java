@@ -61,4 +61,10 @@ public interface SysRoleService {
      * @return
      */
     ResponseResult updateSysRole(UpdateSysRoleDto updateSysRoleDto);
+
+    /**
+     * 查询所有系统角色
+     * @return
+     */
+    ResponseResult findAllSysRole();
 }

@@ -28,7 +28,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
     String getUserName(String jobNumber);
 
     /**
-     * 根据id差咨询
+     * 根据id查用户数据
      * @param id
      * @return
      */
@@ -43,13 +43,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
     @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
     void deleteBatch(List<Long> ids);
 
-    /**
-     * 根据用户角色查询用户信息
-     * @param role
-     * @return
-     */
-    @Query("SELECT u FROM UserAccount u WHERE u.role = ?1")
-    List<UserAccount> getStudentInfo(String role);
+
 
     /**
      * 根据手机号码查询用户数据

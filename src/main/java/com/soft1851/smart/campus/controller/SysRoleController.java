@@ -107,4 +107,15 @@ public class SysRoleController {
     public ResponseResult getAllSysRole(@RequestBody PageDto pageDto){
         return sysRoleService.getAllSysRole(pageDto);
     }
+
+    /**
+     * 获取所有角色数据
+     * @return
+     */
+    @PostMapping(value = "/all/noPage")
+    public ResponseResult getAllSysRole(){
+        return sysRoleService.findAllSysRole();
+    }
+
+
 }

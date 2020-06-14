@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author Yujie_Zhao
@@ -24,7 +23,7 @@ import java.util.List;
 @RequestMapping(value = "/userAccount")
 @Api(value = "UserAccountController",tags = {"用户账号接口"})
 public class UserAccountController {
-
+;
     @Resource
     private UserAccountService userAccountService;
 
@@ -81,16 +80,31 @@ public class UserAccountController {
         return userAccountService.updateUserAccount(userAccount);
     }
 
-    @ApiOperation(value = "获取教师信息", notes = "")
-    @GetMapping(value = "/teacher")
-    public List<UserAccount> getTeacherInfoByRole() {
-        return userAccountService.getTeacherInfo();
+
+
+
+    /**
+     * 获取所有学生数据信息
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "获取所有学生数据信息",notes = "")
+    @PostMapping(value = "/student")
+    public ResponseResult getAllStudent(@RequestBody PageDto pageDto){
+        return userAccountService.getAllStudent(pageDto);
     }
 
-    @ApiOperation(value = "获取学生信息", notes = "")
-    @GetMapping(value = "/student")
-    public List<UserAccount> getStudentInfoByRole() {
-        return userAccountService.getStudentInfo();
+
+    /**
+     * 获取所有教师数据信息
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "获取所有教师数据信息",notes = "")
+    @PostMapping(value = "/teacher")
+    public ResponseResult getAllTeacher(@RequestBody PageDto pageDto){
+        return userAccountService.getAllTeacher(pageDto);
     }
+
 
 }
