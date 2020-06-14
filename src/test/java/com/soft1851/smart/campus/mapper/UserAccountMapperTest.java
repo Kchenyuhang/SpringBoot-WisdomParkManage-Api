@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.mapper;
 
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.model.vo.UserAccountVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,5 +22,11 @@ class UserAccountMapperTest {
                 .build();
         List<UserAccountVo> userAccountVos = userAccountMapper.getUserAccountVo(pageDto);
         System.out.println(userAccountVos);
+    }
+
+    @Test
+    void getUserAccountByJobNumber() {
+        UserAccount userAccount = userAccountMapper.getUserAccountByJobNumber("1802333101");
+        System.out.println(userAccount);
     }
 }

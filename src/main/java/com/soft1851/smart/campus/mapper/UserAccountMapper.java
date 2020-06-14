@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.mapper;
 
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.model.vo.UserAccountVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -44,4 +45,11 @@ public interface UserAccountMapper {
             "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
     List<UserAccountVo> getTeacherUserAccountVo(@Param("pageDto") PageDto pageDto);
 
+    /**
+     * 通过教工号查询用户数据
+     * @param jobNumber
+     * @return
+     */
+    @Select("SELECT * FROM user_account WHERE job_number = #{jobNumber} AND is_deleted = false")
+    UserAccount getUserAccountByJobNumber(String jobNumber);
 }

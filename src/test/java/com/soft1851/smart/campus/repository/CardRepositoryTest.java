@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.repository;
 
+import com.soft1851.smart.campus.model.entity.SysCard;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -37,4 +38,9 @@ class CardRepositoryTest {
         cardRepository.deleteBatch(ids);
     }
 
+    @Test
+    void getSysCardByJobNumber() {
+        SysCard sysCard = cardRepository.getSysCardByJobNumber("1802343315");
+        System.out.println(sysCard);
+    }
 }
