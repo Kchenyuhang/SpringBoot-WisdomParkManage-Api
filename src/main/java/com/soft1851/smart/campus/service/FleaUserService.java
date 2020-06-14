@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.FleaUserDto;
-import com.soft1851.smart.campus.model.dto.FleaUserIdDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.UpdateFleaUserDto;
+import com.soft1851.smart.campus.model.dto.*;
 
 /**
  * @author 倪涛涛
@@ -16,4 +13,7 @@ import com.soft1851.smart.campus.model.dto.UpdateFleaUserDto;
 public interface FleaUserService {
     //查询所有用户
     ResponseResult findAllUser(PageDto pageDto);
+
+    //模糊搜索
+    ResponseResult findUserByContent(FleaSearchDto fleaSearchDto);
 }

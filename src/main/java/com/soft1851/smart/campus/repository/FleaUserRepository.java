@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * @author 倪涛涛
  * @version 1.0.0
@@ -16,5 +18,6 @@ import org.springframework.data.jpa.repository.Query;
  * @createTime 2020年06月09日 13:54:00
  */
 public interface FleaUserRepository extends JpaRepository<FleaUser, Long> {
+    List<FleaUser> findFleaUsersByNicknameLikeOrUsernameLikeOrPhoneNumberLikeOrSexLikeOrJobNumberLike(String nickname, String username, String phoneNumber, String sex, String jobNumber);
 }
 

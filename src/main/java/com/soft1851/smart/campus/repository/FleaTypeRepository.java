@@ -29,4 +29,14 @@ public interface FleaTypeRepository extends JpaRepository<FleaType, Long> {
             "left join g.fleaType t " +
             "left join g.fleaUser u where t.pkFleaTypeId =:#{#typeDto.getTypeId()}")
     List<GoodsVo> getGoodsByTypeId(Pageable pageable, TypeDto typeDto);
+
+    /**
+     * 查找不是本id，类型或名称等于某值的FleaType
+     * @param pkFleaTypeId
+     * @param typeName
+     * @param typeUrl
+     * @return
+     */
+    List<FleaType> findFleaTypesByPkFleaTypeIdIsNotAndTypeNameEqualsOrTypeUrlEquals(Long pkFleaTypeId, String typeName, String typeUrl);
+
 }
