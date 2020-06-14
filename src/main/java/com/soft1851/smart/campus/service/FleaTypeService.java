@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.TypeDto;
+import com.soft1851.smart.campus.model.entity.FleaType;
 
 import java.util.Map;
 
@@ -25,4 +26,8 @@ public interface FleaTypeService {
      * @return
      */
     ResponseResult getGoodsByType(TypeDto typeDto);
+
+    ResponseResult typeDeletedById(Long pkId);
+
+    ResponseResult typeModify(FleaType fleaType);
 }
