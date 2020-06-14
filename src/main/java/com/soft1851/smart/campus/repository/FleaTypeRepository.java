@@ -20,8 +20,9 @@ public interface FleaTypeRepository extends JpaRepository<FleaType, Long> {
     /**
      * 根据分类ID查询商品
      *
-     * @param typeDto
-     * @return
+     * @param typeDto  TypeDto
+     * @param pageable Pageable
+     * @return List<GoodsVo>
      */
     @Query(value = "select new com.soft1851.smart.campus.model.vo.GoodsVo(g.goodsName,g.goodsPrice,g.goodsDescription,g.goodsMark,g.goodsImgUrl,g.goodsCreateTime,t.typeName,u.username)" +
             "from FleaGoods g " +

@@ -99,5 +99,4 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long> {
             "is_deleted=:#{#updateSysRoleDto.isDeleted} WHERE pk_role_id=:#{#updateSysRoleDto.pkRoleId}"
             ,nativeQuery = true)
     void updateSysRole(@Param("updateSysRoleDto") UpdateSysRoleDto updateSysRoleDto);
-
 }

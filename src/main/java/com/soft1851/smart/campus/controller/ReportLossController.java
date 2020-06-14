@@ -40,7 +40,8 @@ public class ReportLossController {
      */
     @PostMapping("/loss/statuschange")
     ResponseResult updateLossStatus(@RequestBody QueryDto queryDto){
-        return  reportLossService.updateLossStatus((Long) queryDto.getField(), queryDto.getStatus());
+        return  reportLossService.updateLossStatus(Long.parseLong(queryDto.getField().toString()),
+                queryDto.getStatus());
     }
 
     /**
@@ -50,7 +51,7 @@ public class ReportLossController {
      */
     @PostMapping("/loss/deletion/{pk_card_id}")
     ResponseResult deleteReportLoss(@RequestBody QueryDto queryDto){
-        return reportLossService.deleteReportLoss((Long) queryDto.getField());
+        return reportLossService.deleteReportLoss(Long.parseLong(queryDto.getField().toString()));
     }
     /**
      * 批量删除挂失

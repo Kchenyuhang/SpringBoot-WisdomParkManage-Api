@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author 倪涛涛
  * @version 1.0.0
@@ -18,8 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface FleaOrderRepository extends JpaRepository<FleaOrder, String> {
 
+    /**
+     * 逻辑删除
+     *
+     * @param orderId String
+     * @return int
+     */
     @Modifying
-    @Transactional
-    @Query("update FleaOrder set isDeleted = 1 where fleaGoods.pkFleaGoodsId =:#{#fleaOrderDto.getFleaGoodsPkFleaGoodsId()} and fleaUserBuyer.pkFleaUserId =:#{#fleaOrderDto.getFleaUserBuyerPkFleaUserId()}")
-    int logicalDel(@Param("fleaOrderDto") FleaOrderDto fleaOrderDto);
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query("update FleaOrder set isDeleted = 1 where pkFleaOrderId = ?1 ")
+    int logicalDel(String orderId);
+
+    /**
+     * 批量逻辑删除
+     *
+     * @param batchId List<String>
+     * @return int
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update FleaOrder set isDeleted = 1 where pkFleaOrderId in (:batchId)")
+    int batchLogicalDel(List<String> batchId);
 }
