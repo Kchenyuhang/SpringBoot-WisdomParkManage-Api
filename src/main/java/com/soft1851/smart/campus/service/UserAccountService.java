@@ -14,7 +14,7 @@ import com.soft1851.smart.campus.model.entity.UserAccount;
 public interface UserAccountService {
 
     /**
-     * 单个添加
+     * 新增用户数据
      *
      * @param userAccount
      * @return

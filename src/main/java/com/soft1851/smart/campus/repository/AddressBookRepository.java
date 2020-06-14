@@ -19,7 +19,7 @@ public interface AddressBookRepository extends JpaRepository<AddressBook, Long> 
      * @param userId
      * @return
      */
-    @Query("SELECT u, m.Address, m.gender FROM AddressBook u, UserAccount m " +
+    @Query("SELECT u, m.address, m.gender FROM AddressBook u, UserAccount m " +
             "WHERE u.userId=?1 AND u.phoneNumber=m.phoneNumber ")
     List<AddressBook> getAddressBookByUserId(String userId);
 }

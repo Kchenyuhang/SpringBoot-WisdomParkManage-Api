@@ -41,57 +41,69 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Resource
     private UserAccountMapper userAccountMapper;
+
+
     /**
      * 添加账号
-     * 需要参数：学号、地址、班级id、性别、手机号、姓名
+     * 需要参数：学号、地址、班级id、性别、手机号、姓名、角色
      * @param userAccount
      * @return
      */
     @Override
     public ResponseResult insertUserAccount(UserAccount userAccount) {
-        UserAccount selectUserAccount = userAccountRepository.findByPkUserAccountId(userAccount.getPkUserAccountId());
-        if (selectUserAccount!=null){
 
+        System.out.println("***************"+userAccount.getAddress());
+        //查询用户是否还存在
+        UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
+        //查询一卡通数据是否存在
+        SysCard selectSysCard = cardRepository.getSysCardByJobNumber(userAccount.getJobNumber());
+        //首先查询需要新增的用户是否已经存在,如果逻辑删除，符合条件可以重新添加数据
+        if (selectUserAccount == null) {
+            if (selectSysCard == null){
+                String pkUserAccountId = UUID.randomUUID().toString();
+                //新增一个学生同时新增一卡通数据
+                SysCard sysCard = SysCard.builder()
+                        .cardBalance(Double.valueOf(0))
+                        .cardNumber(userAccount.getJobNumber())
+                        .cardPassword("123456")
+                        .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                        .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                        .isDeleted(false)
+                        .jobNumber(userAccount.getJobNumber())
+                        .status(false)
+                        .build();
+                cardRepository.save(sysCard);
+
+                //新增学生数据
+                UserAccount userAccount1 = UserAccount.builder()
+                        .pkUserAccountId(pkUserAccountId)
+                        .address(userAccount.getAddress())
+                        .avatar("https://niit-student.oss-cn-beijing.aliyuncs.com/markdown/20200601182918.png")
+                        .cardNumber(userAccount.getJobNumber())
+                        .clazzId(userAccount.getClazzId())
+                        .gender(userAccount.getGender())
+                        .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                        .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                        .isDeleted(false)
+                        .jobNumber(userAccount.getJobNumber())
+                        .nickname("用户" + userAccount.getJobNumber())
+                        .password("123456")
+                        .phoneNumber(userAccount.getPhoneNumber())
+                        .role(userAccount.getRole())
+                        .status(false)
+                        .userAccount(userAccount.getJobNumber())
+                        .userName(userAccount.getUserName())
+                        .build();
+                userAccountRepository.save(userAccount1);
+                return ResponseResult.success();
+            }else {
+                return ResponseResult.failure(ResultCode.DATA_ALREADY_EXISTED);
+            }
+        } else {
+            //返回数据已存在
+            return ResponseResult.failure(ResultCode.DATA_ALREADY_EXISTED);
         }
-        String pkUserAccountId = UUID.randomUUID().toString();
-        //新增一个学生同时新增一卡通数据
-        SysCard sysCard = SysCard.builder()
-                .cardBalance(Double.valueOf(0))
-                .cardNumber(userAccount.getJobNumber())
-                .cardPassword("123456")
-                .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
-                .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
-                .isDeleted(false)
-                .jobNumber(userAccount.getJobNumber())
-                .status(false)
-                .build();
-        cardRepository.save(sysCard);
-
-        //新增学生数据
-        UserAccount userAccount1 = UserAccount.builder()
-                .pkUserAccountId(pkUserAccountId)
-                .Address(userAccount.getAddress())
-                .avatar("https://niit-student.oss-cn-beijing.aliyuncs.com/markdown/20200601182918.png")
-                .cardNumber(userAccount.getJobNumber())
-                .clazzId(userAccount.getClazzId())
-                .gender(userAccount.getGender())
-                .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
-                .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
-                .isDeleted(false)
-                .jobNumber(userAccount.getJobNumber())
-                .nickname("用户"+userAccount.getJobNumber())
-                .password("123456")
-                .phoneNumber(userAccount.getPhoneNumber())
-                .role("1")
-                .status(false)
-                .userAccount(userAccount.getJobNumber())
-                .userName(userAccount.getUserName())
-                .build();
-        userAccountRepository.save(userAccount1);
-
-        return ResponseResult.success();
     }
-
     /**
      * 分页查找账号
      * @param pageDto

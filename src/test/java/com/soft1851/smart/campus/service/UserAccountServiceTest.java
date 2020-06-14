@@ -18,7 +18,7 @@ class UserAccountServiceTest {
     void insertUserAccount() {
         UserAccount userAccount = UserAccount.builder()
                 .jobNumber("110110110")
-                .Address("江苏省-南京市-栖霞区")
+                .address("江苏省-南京市-栖霞区")
                 .clazzId(1)
                 .gender("男")
                 .phoneNumber("17826043211")

@@ -133,6 +133,6 @@ public class UserAccount {
     /**
      * 地址
      */
-    @Column()
-    private String Address;
+    @Column(nullable = false,length = 128)
+    private String address;
 }
