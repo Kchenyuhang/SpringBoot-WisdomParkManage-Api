@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.service.OrderService;
@@ -49,8 +50,8 @@ public class OrderController {
      */
     @ApiOperation(value = "批量删除一卡通信息",notes = "")
     @PostMapping(value = "order/deletionBath")
-    public ResponseResult deletedBatch(@RequestBody QueryDto queryDto){
-        return orderService.deletedBatch(queryDto.getField().toString());
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return orderService.deletedBatch(batchDeletionDto.getIds());
     }
 
 }

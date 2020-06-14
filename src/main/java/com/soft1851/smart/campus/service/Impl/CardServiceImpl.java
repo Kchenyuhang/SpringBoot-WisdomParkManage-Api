@@ -87,10 +87,14 @@ public class CardServiceImpl implements CardService {
     public ResponseResult insert(SysCard sysCard) {
         if (cardRepository.findByCardNumber(sysCard.getCardNumber())==null){
             SysCard sysCard1=new SysCard();
+            sysCard1.setJobNumber(sysCard.getJobNumber());
+            sysCard1.setCardNumber(sysCard.getCardNumber());
+            sysCard1.setCardBalance(sysCard.getCardBalance());
+            sysCard1.setCardPassword(sysCard.getCardPassword());
             sysCard1.setIsDeleted(false);
             sysCard1.setStatus(false);
              sysCard1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
-            sysCard1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            sysCard1.setGmtModified(Timestamp.valueOf(LocalDateTime.now()));
             cardRepository.save(sysCard1);
             return ResponseResult.success(ResultCode.SUCCESS);
         }

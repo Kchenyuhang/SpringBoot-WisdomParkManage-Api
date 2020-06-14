@@ -1,13 +1,16 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.service.ReportLossService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -59,8 +62,8 @@ public class ReportLossController {
      */
     @ApiOperation(value = "批量删除挂失信息",notes = "")
     @PostMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@RequestBody QueryDto queryDto){
-        return reportLossService.deletedBatch(queryDto.getField().toString());
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return reportLossService.deletedBatch(batchDeletionDto.getIds());
     }
 
 
