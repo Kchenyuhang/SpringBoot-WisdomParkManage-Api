@@ -34,7 +34,10 @@ public class SysRole {
     private String roleName;
 
     //角色描述
-    @Column(length = 32, nullable = false)
+    @Column(length = 32)
+    private String roleDescription;
+
+    @Column(nullable = false)
     private String roleDecoration;
 
     //排序字段
