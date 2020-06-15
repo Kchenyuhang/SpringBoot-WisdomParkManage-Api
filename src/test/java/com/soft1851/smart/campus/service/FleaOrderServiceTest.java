@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.model.dto.FleaOrderBatchIdDto;
 import com.soft1851.smart.campus.model.dto.FleaOrderDto;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,5 +41,13 @@ class FleaOrderServiceTest {
         batchId.add("3");
         fleaOrderBatchIdDto.setId(batchId);
         System.out.println(fleaOrderService.batchLogicalDel(fleaOrderBatchIdDto));
+    }
+
+    @Test
+    void findAll() {
+        PageDto pageDto = new PageDto();
+        pageDto.setCurrentPage(0);
+        pageDto.setPageSize(2);
+        log.info(String.valueOf(fleaOrderService.findAll(pageDto)));
     }
 }

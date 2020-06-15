@@ -3,6 +3,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.FleaOrderDto;
 import com.soft1851.smart.campus.model.entity.FleaOrder;
+import com.soft1851.smart.campus.model.vo.FleaOrderVo;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +43,18 @@ public interface FleaOrderRepository extends JpaRepository<FleaOrder, String> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update FleaOrder set isDeleted = 1 where pkFleaOrderId in (:batchId)")
     int batchLogicalDel(List<String> batchId);
+
+    /**
+     * 查询所有订单
+     *
+     * @param pageable Pageable
+     * @return List<FleaOrderVo>
+     */
+    @Query(value = "select new com.soft1851.smart.campus.model.vo.FleaOrderVo(fo.pkFleaOrderId,fg.goodsName,fg.goodsPrice," +
+            "fs.username,fb.username,fo.createTime,fg.goodsDescription,fg.goodsMark,fo.isDeleted) " +
+            "from FleaOrder fo " +
+            "left join fo.fleaGoods fg " +
+            "left join fo.fleaUserSeller fs " +
+            "left join fo.fleaUserBuyer fb ")
+    List<FleaOrderVo> findAllOrder(Pageable pageable);
 }

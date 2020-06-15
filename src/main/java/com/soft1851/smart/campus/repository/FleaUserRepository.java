@@ -1,12 +1,7 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.FleaUser;
-import com.soft1851.smart.campus.model.vo.FleaOrderVo;
-import com.soft1851.smart.campus.model.vo.GoodsVo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
