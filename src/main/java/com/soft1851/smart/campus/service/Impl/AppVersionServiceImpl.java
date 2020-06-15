@@ -44,9 +44,9 @@ public class AppVersionServiceImpl implements AppVersionService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkAppVersionId");
-        Page<AppVersion> appVersions = appVersionRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<AppVersion> appVersions = appVersionRepository.getAllAppVersion(pageable);
         return ResponseResult.success(appVersions.getContent());
     }
 

@@ -42,9 +42,9 @@ public class SysStatementServiceImpl implements SysStatementService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkStatementId");
-        Page<SysStatement> statementPage = sysStatementRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<SysStatement> statementPage = sysStatementRepository.getAllSysStatement(pageable);
         return ResponseResult.success(statementPage.getContent());
     }
 

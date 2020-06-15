@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -70,4 +72,13 @@ public interface SysStatementRepository extends JpaRepository<SysStatement, Long
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update first_smart_campus.sys_statement s set s.is_deleted = true where s.pk_statement_id in ?1",nativeQuery = true)
     int deleteBatchByPkStatementId(List<Long> ids);
+
+
+    /**
+     * 分页查询所有声明数据
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select * from first_smart_campus.sys_statement where is_deleted = false",nativeQuery = true)
+    Page<SysStatement> getAllSysStatement(Pageable pageable);
 }

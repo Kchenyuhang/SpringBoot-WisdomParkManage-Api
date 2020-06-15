@@ -43,10 +43,10 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkFeedbackId");
-        Page<SysFeedback> feedbacks = sysFeedbackRepository.findAll(pageable);
-        return ResponseResult.success(feedbacks.getContent());
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<SysFeedback> sysFeedbacks = sysFeedbackRepository.getAllSysFeedback(pageable);
+        return ResponseResult.success(sysFeedbacks.getContent());
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
                     .isDeleted(false)
                     .build();
             sysFeedbackRepository.save(sysFeedback1);
-            return ResponseResult.success();
+            return ResponseResult.success("新增反馈成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_NOT_COMPLETE);
         }

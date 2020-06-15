@@ -36,7 +36,7 @@ public class AppVersionController {
      * @param pageDto
      * @return
      */
-    @ApiOperation(value = "分页查询所有声明",notes = "")
+    @ApiOperation(value = "分页查询所有APP版本",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllAppVersion(@RequestBody PageDto pageDto) {
         return appVersionService.findAllAppVersion(pageDto);
