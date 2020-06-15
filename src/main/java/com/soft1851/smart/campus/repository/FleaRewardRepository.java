@@ -5,6 +5,7 @@ import com.soft1851.smart.campus.model.dto.FleaRewardBatchIdDto;
 import com.soft1851.smart.campus.model.entity.FleaReward;
 import com.soft1851.smart.campus.model.vo.FleaRewardVo;
 import com.soft1851.smart.campus.model.vo.RewardVo;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -60,7 +61,7 @@ public interface FleaRewardRepository extends JpaRepository<FleaReward, Long> {
             "fr.createTime,fr.isDeleted,fu.nickname,fu.username,fu.sex) " +
             "from FleaReward fr " +
             "left join fr.fleaUser fu ")
-    List<FleaRewardVo> findAllFleaReward(Pageable pageable);
+    Page<FleaRewardVo> findAllFleaReward(Pageable pageable);
 
     /**
      * 根据id修改isDeleted字段来删除
