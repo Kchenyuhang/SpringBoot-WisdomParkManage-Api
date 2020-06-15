@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 
 /**
@@ -24,10 +25,10 @@ public interface AppVersionService {
 
     /**
      * 修改App版本数据
-     * @param appVersion
+     * @param updateAppVersionDto
      * @return
      */
-    ResponseResult modificationAppVersion(AppVersion appVersion);
+    ResponseResult modificationAppVersion(UpdateAppVersionDto updateAppVersionDto);
 
     /**
      * 根据id删除App版本数据

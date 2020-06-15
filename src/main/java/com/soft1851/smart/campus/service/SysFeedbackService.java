@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 
 /**
@@ -24,10 +25,10 @@ public interface SysFeedbackService {
 
     /**
      * 修改反馈数据
-     * @param sysFeedback
+     * @param updateSysFeedbackDto
      * @return
      */
-    ResponseResult modificationSysFeedback(SysFeedback sysFeedback);
+    ResponseResult modificationSysFeedback(UpdateSysFeedbackDto updateSysFeedbackDto);
 
     /**
      * 根据id删除反馈数据
@@ -42,4 +43,18 @@ public interface SysFeedbackService {
      * @return
      */
     ResponseResult deletedBatch(String ids);
+
+    /**
+     * 逻辑删除
+     * @param pkFeedbackId
+     * @return
+     */
+    ResponseResult deleteSysFeedback(Long pkFeedbackId);
+
+    /**
+     * 批量删除声明数据
+     * @param ids
+     * @return
+     */
+    ResponseResult deleteBatchByPkFeedbackId(String ids);
 }

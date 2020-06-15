@@ -1,10 +1,18 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
+import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.service.SysFeedbackService;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -17,6 +25,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/feedback")
+@Api(value = "SysFeedbackController", tags = "反馈管理接口")
 public class SysFeedbackController {
     @Resource
     private SysFeedbackService sysFeedbackService;
@@ -27,6 +36,7 @@ public class SysFeedbackController {
      * @param pageDto
      * @return
      */
+    @ApiOperation(value = "分页查询所有反馈",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllSysFeedback(@RequestBody PageDto pageDto){
         return sysFeedbackService.findAllSysFeedback(pageDto);
@@ -37,6 +47,7 @@ public class SysFeedbackController {
      * @param sysFeedback
      * @return
      */
+    @ApiOperation(value = "新增反馈",notes = "")
     @PostMapping(value = "/increase")
     public ResponseResult increaseSysFeedback(@RequestBody SysFeedback sysFeedback){
         return sysFeedbackService.increaseSysFeedback(sysFeedback);
@@ -47,31 +58,53 @@ public class SysFeedbackController {
      * @param sysFeedback
      * @return
      */
-    @PutMapping(value = "/modification")
-    public ResponseResult modificationSysFeedback(@RequestBody SysFeedback sysFeedback){
+    @ApiOperation(value = "修改反馈",notes = "")
+    @PostMapping(value = "/modification")
+    public ResponseResult modificationSysFeedback(@RequestBody UpdateSysFeedbackDto sysFeedback){
         return sysFeedbackService.modificationSysFeedback(sysFeedback);
     }
 
 
+//    /**
+////     * 删除反馈
+////     * @param id
+////     * @return
+////     */
+////    @DeleteMapping(value = "/deletion/{id}")
+////    public ResponseResult deletedSysFeedback(@PathVariable Long id){
+////        return sysFeedbackService.deletionSysFeedback(id);
+////    }
+
     /**
-     * 删除反馈
-     * @param id
+     * 逻辑删除反馈
+     * @param singleParam
      * @return
      */
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deletedSysFeedback(@PathVariable Long id){
-        return sysFeedbackService.deletionSysFeedback(id);
+    @ApiOperation(value = "逻辑删除反馈",notes = "")
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteSysFeedback(@RequestBody SingleParam singleParam){
+        return sysFeedbackService.deleteSysFeedback(singleParam.getPkId());
     }
+
+//    /**
+//     * 批量删除反馈
+//     * @param ids
+//     * @return
+//     */
+//    @DeleteMapping(value = "/deletionBath/{ids}")
+//    public ResponseResult deletedBatch(@PathVariable String ids){
+//        return sysFeedbackService.deletedBatch(ids);
+//    }
 
 
     /**
-     * 批量删除反馈
-     * @param ids
+     * 批量逻辑删除反馈
+     * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return sysFeedbackService.deletedBatch(ids);
+    @ApiOperation(value = "批量逻辑删除反馈",notes = "")
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysFeedbackService.deleteBatchByPkFeedbackId(batchDeletionDto.getIds());
     }
-
 }

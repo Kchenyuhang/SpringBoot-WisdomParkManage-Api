@@ -1,10 +1,18 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
+import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.service.SysStatementService;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -17,6 +25,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/statement")
+@Api(value = "SysStatementController", tags = "声明管理接口")
 public class SysStatementController {
     @Resource
     private SysStatementService sysStatementService;
@@ -26,6 +35,7 @@ public class SysStatementController {
      * @param pageDto
      * @return
      */
+    @ApiOperation(value = "分页查询所有声明",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllStatement(@RequestBody PageDto pageDto){
         return sysStatementService.findAllStatement(pageDto);
@@ -36,6 +46,7 @@ public class SysStatementController {
      * @param sysStatement
      * @return
      */
+    @ApiOperation(value = "新增声明",notes = "")
     @PostMapping(value = "/increase")
     public ResponseResult increaseSysStatement(@RequestBody SysStatement sysStatement){
         return sysStatementService.increaseSysStatement(sysStatement);
@@ -43,34 +54,59 @@ public class SysStatementController {
 
     /**
      * 修改声明
-     * @param sysStatement
+     * @param updateSysStatementDto
      * @return
      */
-    @PutMapping(value = "/modification")
-    public ResponseResult modificationSysStatement(@RequestBody SysStatement sysStatement){
-        return sysStatementService.modificationSysStatement(sysStatement);
+    @ApiOperation(value = "修改声明",notes = "")
+    @PostMapping(value = "/modification")
+    public ResponseResult modificationSysStatement(@RequestBody UpdateSysStatementDto updateSysStatementDto){
+        return sysStatementService.modificationSysStatement(updateSysStatementDto);
     }
+
+
+//    /**
+//     * 删除声明
+//     * @param id
+//     * @return
+//     */
+//    @DeleteMapping(value = "/deletion/{id}")
+//    public ResponseResult deletedSysStatement(@PathVariable Long id){
+//        return sysStatementService.deletionSysStatement(id);
+//    }
+//
+//
+//    /**
+//     * 批量删除声明
+//     * @param ids
+//     * @return
+//     */
+//    @DeleteMapping(value = "/deletionBath/{ids}")
+//    public ResponseResult deletedBatch(@PathVariable String ids){
+//        return sysStatementService.deletedBatch(ids);
+//    }
 
 
     /**
-     * 删除声明
-     * @param id
+     * 逻辑删除声明
+     * @param singleParam
      * @return
      */
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deletedSysStatement(@PathVariable Long id){
-        return sysStatementService.deletionSysStatement(id);
+    @ApiOperation(value = "逻辑删除声明",notes = "")
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteSysStatement(@RequestBody SingleParam singleParam){
+        return sysStatementService.deleteSysStatement(singleParam.getPkId());
     }
-
 
     /**
-     * 批量删除声明
-     * @param ids
+     * 批量逻辑删除声明
+     * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return sysStatementService.deletedBatch(ids);
+    @ApiOperation(value = "批量逻辑删除声明",notes = "")
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysStatementService.deleteBatchByPkStatementId(batchDeletionDto.getIds());
     }
+
 
 }

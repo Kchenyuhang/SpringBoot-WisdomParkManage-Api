@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+
 @SpringBootTest
 class AppVersionServiceTest {
     @Resource
@@ -42,6 +43,18 @@ class AppVersionServiceTest {
     @Test
     void deletedBatch() {
         ResponseResult responseResult = appVersionService.deletedBatch("2,4,51");
+        System.out.println(responseResult);
+    }
+
+    @Test
+    void testDeletionAppVersion() {
+        ResponseResult responseResult = appVersionService.deletionAppVersion((long)103);
+        System.out.println(responseResult);
+    }
+
+    @Test
+    void testDeletedBatch() {
+        ResponseResult responseResult = appVersionService.deletedBatch("48,50");
         System.out.println(responseResult);
     }
 }

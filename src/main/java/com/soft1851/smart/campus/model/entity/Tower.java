@@ -79,7 +79,4 @@ public class Tower {
      */
     @Column(name = "is_deleted",nullable = false,length = 4)
     private Boolean isDeleted;
-
-    @OneToMany
-    private List<Room> rooms;
 }

@@ -31,7 +31,6 @@ public class Dynamic {
      * 主键，策略为自增
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String pkDynamicId;
 
     /**
@@ -39,6 +38,7 @@ public class Dynamic {
      */
     @Column(name = "user_id", nullable = false)
     private String userId;
+
     /**
      * 标题
      */

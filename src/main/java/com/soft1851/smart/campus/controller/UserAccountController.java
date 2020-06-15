@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author Yujie_Zhao
@@ -24,7 +23,7 @@ import java.util.List;
 @RequestMapping(value = "/userAccount")
 @Api(value = "UserAccountController",tags = {"用户账号接口"})
 public class UserAccountController {
-
+;
     @Resource
     private UserAccountService userAccountService;
 
@@ -38,16 +37,6 @@ public class UserAccountController {
         return userAccountService.findAllUserAccount(pageDto);
     }
 
-    /**
-     * 添加用户账号
-     * @param userAccount
-     * @return
-     */
-    @ApiOperation(value = "添加用户账号",notes = "")
-    @PostMapping(value = "/insert")
-    public ResponseResult insertInfoType(@RequestBody UserAccount userAccount){
-        return userAccountService.insertUserAccount(userAccount);
-    }
 
     /**
      * 删除用户账号
@@ -71,26 +60,53 @@ public class UserAccountController {
     }
 
     /**
-     * 修改资讯分类
+     * 修改用户信息
      * @param userAccount
      * @return
      */
-    @ApiOperation(value = "修改资讯分类",notes = "")
+    @ApiOperation(value = "修改用户信息",notes = "")
     @PutMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
         return userAccountService.updateUserAccount(userAccount);
     }
 
-    @ApiOperation(value = "获取教师信息", notes = "")
-    @GetMapping(value = "/teacher")
-    public List<UserAccount> getTeacherInfoByRole() {
-        return userAccountService.getTeacherInfo();
+
+
+
+    /**
+     * 获取所有学生数据信息
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "获取所有学生数据信息",notes = "")
+    @PostMapping(value = "/student")
+    public ResponseResult getAllStudent(@RequestBody PageDto pageDto){
+        return userAccountService.getAllStudent(pageDto);
     }
 
-    @ApiOperation(value = "获取学生信息", notes = "")
-    @GetMapping(value = "/student")
-    public List<UserAccount> getStudentInfoByRole() {
-        return userAccountService.getStudentInfo();
+
+    /**
+     * 获取所有教师数据信息
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "获取所有教师数据信息",notes = "")
+    @PostMapping(value = "/teacher")
+    public ResponseResult getAllTeacher(@RequestBody PageDto pageDto){
+        return userAccountService.getAllTeacher(pageDto);
     }
+
+
+    /**
+     * 新增用户数据信息
+     * @param userAccount
+     * @return
+     */
+    @ApiOperation(value = "新增学生数据信息",notes = "")
+    @PostMapping(value = "/insert")
+    public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
+        return userAccountService.insertUserAccount(userAccount);
+    }
+
 
 }

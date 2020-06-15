@@ -3,7 +3,9 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.AdminDto;
 import com.soft1851.smart.campus.model.dto.AdminUpdateDto;
+import com.soft1851.smart.campus.model.entity.SysUser;
 import com.soft1851.smart.campus.service.UserRoleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
  **/
 @RestController
 @RequestMapping(value = "/admin")
+@Api(value = "UserRoleController", tags = "用户角色管理接口")
 public class UserRoleController {
     @Resource
     private UserRoleService userRoleService;
@@ -25,7 +28,7 @@ public class UserRoleController {
      * 查询所有管理员数据
      * @return
      */
-    @GetMapping(value = "/all")
+    @PostMapping(value = "/all")
     public ResponseResult selectAllAdmin() {
         return userRoleService.selectAllAdmin();
     }
@@ -53,12 +56,12 @@ public class UserRoleController {
 
     /**
      * 修改系统用户名、密码、手机号、头像、账号状态、角色id
-     * @param adminUpdateDto
+     * @param adminDto
      * @return
      */
-    @PutMapping(value = "/modification")
-    public ResponseResult modificationAdmin(@RequestBody AdminUpdateDto adminUpdateDto){
-        return userRoleService.modificationAdmin(adminUpdateDto);
+    @PostMapping(value = "/modification")
+    public ResponseResult modificationAdmin(@RequestBody AdminDto adminDto){
+        return userRoleService.modificationAdmin(adminDto);
     }
 
 

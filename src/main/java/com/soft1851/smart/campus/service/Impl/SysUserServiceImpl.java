@@ -47,9 +47,10 @@ public class SysUserServiceImpl implements SysUserService {
         user.setSysUserAvatar(admin.getSysUserAvatar());
         user.setSysUserPhoneNumber(admin.getSysUserPhoneNumber());
         user.setSysUserName(admin.getSysUserName());
-        String code =  redisService.getValue(loginDto.getAccount(), String.class);
-        System.out.println("*****************"+loginDto);
-        long roleId = sysUserRoleRepository.getRoleIdByPhoneNumber(loginDto.getAccount());
+        String code =  redisService.getValue("code", String.class);
+        System.out.println("验证码: " + code);
+        System.out.println("*****************"+ loginDto);
+        long roleId = sysUserRoleRepository.getRoleIdByPhoneNumber(String.valueOf(loginDto.getAccount()));
         System.out.println(">>>>>>>>>>>>角色id<<<<<<<<<<<<<<<<" + roleId);
         if(loginDto.getCode().equals(code)){
             if (admin != null) {
@@ -86,7 +87,22 @@ public class SysUserServiceImpl implements SysUserService {
         }
     }
 
+    @Override
+    public int updateIsDeletedByPhoneNumber(String phoneNumber) {
+        int result = sysUserRepository.updateIsDeletedByPhoneNumber(true, phoneNumber);
+        if(result > 0){
+            return result;
+        }
+        throw new CustomException("逻辑删除异常", ResultCode.DATA_UPDATE_ERROR);
+    }
 
-
+    @Override
+    public int updateIsEnabledById(boolean isEnabled, String userId) {
+        int result = sysUserRepository.updateIsEnabledById(isEnabled, userId);
+        if(result > 0){
+            return result;
+        }
+        throw new CustomException("修改用户状态异常", ResultCode.DATA_UPDATE_ERROR);
+    }
 
 }

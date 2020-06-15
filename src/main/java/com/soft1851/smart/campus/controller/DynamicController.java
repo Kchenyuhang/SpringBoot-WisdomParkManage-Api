@@ -1,6 +1,8 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.DeletionDto;
 import com.soft1851.smart.campus.model.dto.DynamicDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.service.DynamicService;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author Yujie_Zhao
@@ -55,18 +56,18 @@ public class DynamicController {
      */
     @ApiOperation(value = "删除单个动态",notes = "")
     @PostMapping(value = "/deletion")
-    public ResponseResult deleteDynamic(@RequestBody String id){
-        return dynamicService.deleteDynamic(id);
+    public ResponseResult deleteDynamic(@RequestBody DeletionDto deletionDto){
+        return dynamicService.deleteDynamic(deletionDto.getId());
     }
 
     /**
      * 批量删除动态
      * @return
      */
-    @ApiOperation(value = "批量删除动态",notes = "")
+    @ApiOperation(value = "批量删除动态",notes = "入参为字符串，以逗号隔开")
     @PostMapping(value = "/deletionBath")
-    public ResponseResult deletedBatch(@RequestBody List<String> ids){
-        return dynamicService.deletedBatch(ids);
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return dynamicService.deletedBatch(batchDeletionDto.getIds());
     }
 
 

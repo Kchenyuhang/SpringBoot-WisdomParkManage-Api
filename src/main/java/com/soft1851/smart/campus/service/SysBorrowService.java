@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BorrowDto;
 import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 
 /**
  * @Description TODO
@@ -31,4 +32,20 @@ public interface SysBorrowService {
      * @return
      */
     ResponseResult borrowInsert(BorrowInsertDto borrowInsertDto);
+
+    /**
+     * 修改借阅状态
+     * @param id
+     * @param isDeleted
+     * @return
+     */
+    ResponseResult deletedSysRole(Long id,Boolean isDeleted);
+
+    /**
+     * 时间范围内的时间
+     * @param timeBorrowPageDto
+     * @return
+     */
+    ResponseResult getSysBorrowsByTime(TimeBorrowPageDto timeBorrowPageDto);
+
 }

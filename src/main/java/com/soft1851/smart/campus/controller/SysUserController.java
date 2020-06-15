@@ -2,8 +2,11 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.LoginDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.service.RedisService;
 import com.soft1851.smart.campus.service.SysUserService;
+import io.swagger.annotations.Api;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,6 +19,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping(value = "/sysUser")
+@Api(value = "SysUserController", tags = "系统用户管理接口")
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
@@ -44,5 +48,17 @@ public class SysUserController {
     @PutMapping("/reset/{id}")
     public ResponseResult setPasswordByPkUserId(@PathVariable String id){
         return sysUserService.setPasswordPkUserId(id);
+    }
+
+    @PostMapping("/single/id")
+    public ResponseResult updateUserIsEnabledById(@RequestBody QueryDto queryDto) {
+        sysUserService.updateIsEnabledById(queryDto.getStatus(), queryDto.getField().toString());
+        return ResponseResult.success();
+    }
+
+    @PostMapping("/deletion/phoneNumber")
+    public ResponseResult updateUserIsDeletedByPhoneNumber(@RequestBody QueryDto queryDto) {
+        sysUserService.updateIsDeletedByPhoneNumber(queryDto.getField().toString());
+        return ResponseResult.success();
     }
 }

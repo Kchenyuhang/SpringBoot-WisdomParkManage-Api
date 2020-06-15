@@ -1,17 +1,21 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
 import com.soft1851.smart.campus.model.entity.SysRole;
 
 /**
  * @author Tao
  */
 public interface SysRoleService {
+
+
     /**
-     * 查询全部角色数据
+     * 分页查询所有角色
      * @return
      */
-    ResponseResult findAllSysRole();
+    ResponseResult findAllSysRoleByPage();
 
     /**
      * 单个删除角色数据
@@ -27,12 +31,7 @@ public interface SysRoleService {
      */
     ResponseResult deletedBatch(String ids);
 
-    /**
-     * 修改角色数据
-     * @param sysRole
-     * @return
-     */
-    ResponseResult updateSysRole(SysRole sysRole);
+
 
     /**
      * 新增角色数据
@@ -47,4 +46,24 @@ public interface SysRoleService {
      * @return
      */
     ResponseResult updateSysRoleSort(String sortList);
+
+    /**
+     * 分页查询所有系统角色去除被逻辑删除的
+     * @param pageDto
+     * @return
+     */
+    ResponseResult getAllSysRole(PageDto pageDto);
+
+    /**
+     * 修改系统角色信息
+     * @param updateSysRoleDto
+     * @return
+     */
+    ResponseResult updateSysRole(UpdateSysRoleDto updateSysRoleDto);
+
+    /**
+     * 查询所有系统角色
+     * @return
+     */
+    ResponseResult findAllSysRole();
 }

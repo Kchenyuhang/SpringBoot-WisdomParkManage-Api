@@ -29,4 +29,13 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
      * @return
      */
     UserRole findUserRoleBySysUserId(String sysUserId);
+
+    /**
+     * 根据用户id修改用户角色
+     * @param sysUserId
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Modifying
+    @Query("UPDATE UserRole SET roleId = ?1 WHERE sysUserId = ?2")
+    int updateBySysUserId(long roleId, String sysUserId);
 }

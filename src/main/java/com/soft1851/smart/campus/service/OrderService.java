@@ -24,4 +24,23 @@ public interface OrderService {
      */
     ResponseResult findAllByPage(PageDto pageDto);
 
+    /**
+     * 分页查询未被逻辑查询删除的订单信息数据
+     * @param pageDto
+     * @return
+     */
+    ResponseResult getAllSysOrder(PageDto pageDto);
+
+    /**
+     * 删除订单信息
+     * @return
+     */
+    ResponseResult deleteOrder(Long pkOrderId);
+
+    /**
+     * 批量删除订单
+     * @param ids
+     * @return
+     */
+    ResponseResult deletedBatch(String ids);
 }

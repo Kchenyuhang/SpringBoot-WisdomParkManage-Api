@@ -2,8 +2,12 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.model.entity.UserAccount;
+import com.soft1851.smart.campus.model.vo.UserAccountVo;
+import com.soft1851.smart.campus.repository.CardRepository;
 import com.soft1851.smart.campus.repository.UserAccountRepository;
 import com.soft1851.smart.campus.service.UserAccountService;
 import org.springframework.data.domain.Page;
@@ -13,8 +17,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Yujie_Zhao
@@ -29,23 +36,74 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Resource
     private UserAccountRepository userAccountRepository;
 
+    @Resource
+    private CardRepository cardRepository;
+
+    @Resource
+    private UserAccountMapper userAccountMapper;
+
+
     /**
      * 添加账号
+     * 需要参数：学号、地址、班级id、性别、手机号、姓名、角色
      * @param userAccount
      * @return
      */
     @Override
     public ResponseResult insertUserAccount(UserAccount userAccount) {
-        userAccountRepository.save(userAccount);
-        if (userAccount.getPkUserAccountId()!=null){
-            return ResponseResult.success("添加成功");
-        }
-        else {
-            return ResponseResult.success(ResultCode.DATABASE_ERROR);
-        }
 
+        System.out.println("***************"+userAccount.getAddress());
+        //查询用户是否还存在
+        UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
+        //查询一卡通数据是否存在
+        SysCard selectSysCard = cardRepository.getSysCardByJobNumber(userAccount.getJobNumber());
+        //首先查询需要新增的用户是否已经存在,如果逻辑删除，符合条件可以重新添加数据
+        if (selectUserAccount == null) {
+            if (selectSysCard == null){
+                String pkUserAccountId = UUID.randomUUID().toString();
+                //新增一个学生同时新增一卡通数据
+                SysCard sysCard = SysCard.builder()
+                        .cardBalance(Double.valueOf(0))
+                        .cardNumber(userAccount.getJobNumber())
+                        .cardPassword("123456")
+                        .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                        .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                        .isDeleted(false)
+                        .jobNumber(userAccount.getJobNumber())
+                        .status(false)
+                        .build();
+                cardRepository.save(sysCard);
+
+                //新增学生数据
+                UserAccount userAccount1 = UserAccount.builder()
+                        .pkUserAccountId(pkUserAccountId)
+                        .address(userAccount.getAddress())
+                        .avatar("https://niit-student.oss-cn-beijing.aliyuncs.com/markdown/20200601182918.png")
+                        .cardNumber(userAccount.getJobNumber())
+                        .clazzId(userAccount.getClazzId())
+                        .gender(userAccount.getGender())
+                        .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                        .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                        .isDeleted(false)
+                        .jobNumber(userAccount.getJobNumber())
+                        .nickname("用户" + userAccount.getJobNumber())
+                        .password("123456")
+                        .phoneNumber(userAccount.getPhoneNumber())
+                        .role(userAccount.getRole())
+                        .status(false)
+                        .userAccount(userAccount.getJobNumber())
+                        .userName(userAccount.getUserName())
+                        .build();
+                userAccountRepository.save(userAccount1);
+                return ResponseResult.success();
+            }else {
+                return ResponseResult.failure(ResultCode.DATA_ALREADY_EXISTED);
+            }
+        } else {
+            //返回数据已存在
+            return ResponseResult.failure(ResultCode.DATA_ALREADY_EXISTED);
+        }
     }
-
     /**
      * 分页查找账号
      * @param pageDto
@@ -59,7 +117,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 Sort.Direction.ASC,
                 "pkUserAccountId");
         Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
-        return ResponseResult.success(userAccountList);
+        return ResponseResult.success(userAccountList.getContent());
     }
 
     /**
@@ -129,13 +187,27 @@ public class UserAccountServiceImpl implements UserAccountService {
         return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
     }
 
+    /**
+     * 获取所有学生数据
+     * @param pageDto
+     * @return
+     */
     @Override
-    public List<UserAccount> getStudentInfo() {
-        return userAccountRepository.getStudentInfo("学生");
+    public ResponseResult getAllStudent(PageDto pageDto) {
+        List<UserAccountVo> userAccountVos = userAccountMapper.getUserAccountVo(pageDto);
+        return ResponseResult.success(userAccountVos);
     }
 
+    /**
+     * 获取所有教师数据
+     * @param pageDto
+     * @return
+     */
     @Override
-    public List<UserAccount> getTeacherInfo() {
-        return userAccountRepository.getStudentInfo("教师");
+    public ResponseResult getAllTeacher(PageDto pageDto) {
+        List<UserAccountVo> userAccountVos = userAccountMapper.getTeacherUserAccountVo(pageDto);
+        return ResponseResult.success(userAccountVos);
     }
+
+
 }

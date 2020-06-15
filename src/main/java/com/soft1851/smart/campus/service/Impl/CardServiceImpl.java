@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,10 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage()-1,
+                pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
-                "pkCardId");
+                "pk_card_id");
         Page<SysCard> sysCards = cardRepository.findAll(pageable);
         return ResponseResult.success(sysCards.getContent());
     }
@@ -48,6 +50,24 @@ public class CardServiceImpl implements CardService {
     public ResponseResult deleteCard(Long pkCardId) {
         cardRepository.deleteByPkCardId(pkCardId);
         return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult deletedBatch(String ids) {
+        //判断是否有数据
+        if (ids.length() != 0) {
+            //将接收到的ids字符串，使用逗号分割
+            String[] idArr = ids.split(",");
+            List<Long> idsList = new ArrayList<Long>();
+            for (String id : idArr) {
+                //遍历所有id存入到list
+                idsList.add(Long.valueOf(id));
+            }
+            cardRepository.deleteBatch(idsList);
+            return ResponseResult.success("删除成功");
+        } else {
+            return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
+        }
     }
 
     @Override
@@ -66,8 +86,17 @@ public class CardServiceImpl implements CardService {
     @Override
     public ResponseResult insert(SysCard sysCard) {
         if (cardRepository.findByCardNumber(sysCard.getCardNumber())==null){
-            SysCard addCard=cardRepository.save(sysCard);
-            return ResponseResult.success(addCard);
+            SysCard sysCard1=new SysCard();
+            sysCard1.setJobNumber(sysCard.getJobNumber());
+            sysCard1.setCardNumber(sysCard.getCardNumber());
+            sysCard1.setCardBalance(sysCard.getCardBalance());
+            sysCard1.setCardPassword(sysCard.getCardPassword());
+            sysCard1.setIsDeleted(false);
+            sysCard1.setStatus(false);
+             sysCard1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            sysCard1.setGmtModified(Timestamp.valueOf(LocalDateTime.now()));
+            cardRepository.save(sysCard1);
+            return ResponseResult.success(ResultCode.SUCCESS);
         }
         return ResponseResult.failure(ResultCode.DATABASE_ERROR);
     }
@@ -77,9 +106,16 @@ public class CardServiceImpl implements CardService {
         return ResponseResult.success(cardRepository.updateStatus(pkCardId,Status));
     }
 
+
     @Override
-    public ResponseResult findALLByJobNumberLikeAndCardBalanceLikeAndGmtCreateLike(PageDto pageDto) {
-        return null;
+    public ResponseResult getAllSysCard(PageDto pageDto) {
+        Pageable pageable = PageRequest.of(
+                pageDto.getCurrentPage(),
+                pageDto.getPageSize(),
+                Sort.Direction.ASC,
+                "pk_card_id");
+        Page<SysCard> sysCards = cardRepository.getAllSysCard(pageable);
+        return ResponseResult.success(sysCards.getContent());
     }
 
 }

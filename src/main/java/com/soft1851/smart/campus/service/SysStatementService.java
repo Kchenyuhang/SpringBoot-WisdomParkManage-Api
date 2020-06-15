@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 
 /**
@@ -24,10 +25,10 @@ public interface SysStatementService {
 
     /**
      * 修改声明数据
-     * @param sysStatement
+     * @param updateStatement
      * @return
      */
-    ResponseResult modificationSysStatement(SysStatement sysStatement);
+    ResponseResult modificationSysStatement(UpdateSysStatementDto updateStatement);
 
     /**
      * 删除声明数据根绝id
@@ -42,4 +43,18 @@ public interface SysStatementService {
      * @return
      */
     ResponseResult deletedBatch(String ids);
+
+    /**
+     * 逻辑删除
+     * @param sysPkSysStatement
+     * @return
+     */
+    ResponseResult deleteSysStatement(Long sysPkSysStatement);
+
+    /**
+     * 批量逻辑删除数据
+     * @param ids
+     * @return
+     */
+    ResponseResult deleteBatchByPkStatementId(String ids);
 }

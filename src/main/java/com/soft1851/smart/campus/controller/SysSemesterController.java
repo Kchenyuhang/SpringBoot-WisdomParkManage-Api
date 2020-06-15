@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.SysSemester;
 import com.soft1851.smart.campus.service.SysSemesterService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/semester")
+@Api(value = "SysSemesterController", tags = "学期管理接口")
 public class SysSemesterController {
 
     @Resource

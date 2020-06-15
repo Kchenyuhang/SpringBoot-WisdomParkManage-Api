@@ -58,7 +58,7 @@ public class Examination {
      * 开始时间
      */
     @Column(nullable = false)
-    private Timestamp startTime;
+    private String testPeriod;
 
     /**
      * 地点

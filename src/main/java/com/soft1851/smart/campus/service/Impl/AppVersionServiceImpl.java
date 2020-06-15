@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 import com.soft1851.smart.campus.repository.AppVersionRepository;
 import com.soft1851.smart.campus.service.AppVersionService;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @date 2020-06-03 8:15
  **/
 @Service
+@Transactional(rollbackOn =Exception.class )
 public class AppVersionServiceImpl implements AppVersionService {
     @Resource
     private AppVersionRepository appVersionRepository;
@@ -56,7 +59,7 @@ public class AppVersionServiceImpl implements AppVersionService {
     @Override
     public ResponseResult increaseAppVersion(AppVersion appVersion) {
         //查找最低版本号
-        AppVersion minAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdAsc();
+        AppVersion minAppVersion = appVersionRepository.findMinVersionMessage();
         //查询所有版本id 进行批量修改的操作
         List<Long> ids = appVersionRepository.selectAllPkAppVersionId();
         appVersionRepository.updateMaxVersion(appVersion.getCurrentVersion(), ids);
@@ -87,25 +90,19 @@ public class AppVersionServiceImpl implements AppVersionService {
 
     /**
      * 修改版本数据
-     *
-     * @param appVersion
+     * @param updateAppVersionDto
      * @return
      */
     @Override
-    public ResponseResult modificationAppVersion(AppVersion appVersion) {
-        //查询出
-        AppVersion appVersion1 = appVersionRepository.findAppVersionByPkAppVersionId(appVersion.getPkAppVersionId());
-        if (appVersion1 != null) {
-            appVersion1.setAppType(appVersion.getAppType());
-            appVersion1.setDownloadLink(appVersion.getDownloadLink());
-            appVersion1.setVersionDescription(appVersion.getVersionDescription());
-            appVersion1.setCurrentVersion(appVersion.getCurrentVersion());
-        }
-        return null;
+    public ResponseResult modificationAppVersion(UpdateAppVersionDto updateAppVersionDto) {
+        appVersionRepository.updateAppVersion(updateAppVersionDto);
+        AppVersion appVersion  = appVersionRepository.findAppVersionByPkAppVersionId(updateAppVersionDto.getPkAppVersionId());
+        return ResponseResult.success(appVersion);
     }
 
+
     /**
-     * 单个删除
+     * 逻辑删除
      *
      * @param id
      * @return
@@ -115,26 +112,26 @@ public class AppVersionServiceImpl implements AppVersionService {
         //需要删除的APP版本号
         AppVersion appVersion = appVersionRepository.findAppVersionByPkAppVersionId(id);
         //查询最高版本的数据
-        AppVersion maxAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdDesc();
+        AppVersion maxAppVersion = appVersionRepository.findMaxVersionMessage();
         //查询最低版本的数据
-        AppVersion minAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdAsc();
+        AppVersion minAppVersion = appVersionRepository.findMinVersionMessage();
         //判断数据存在
         if (appVersion != null) {
             //判断即将被删除的APP版本的数据是否为最高版本的数据
             if ((appVersion.getCurrentVersion()).equals(maxAppVersion.getCurrentVersion())) {
                 //当前删除的为最高版本数据
-                appVersionRepository.deleteByPkAppVersionId(id);
+                appVersionRepository.setIsDeletedByPkAppVersionId(id);
                 //修改其他所有版本数据的最高版本号
-                AppVersion updateMaxAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdDesc();
+                AppVersion updateMaxAppVersion = appVersionRepository.findMaxVersionMessage();
                 List<Long> ids = appVersionRepository.selectAllPkAppVersionId();
                 appVersionRepository.updateMaxVersion(updateMaxAppVersion.getCurrentVersion(), ids);
                 return ResponseResult.success();
                 //判断即将被删除的APP版本号是否为最低版本号
             } else if ((appVersion.getCurrentVersion()).equals(minAppVersion.getCurrentVersion())) {
                 //当前删除的为最高版本数据
-                appVersionRepository.deleteByPkAppVersionId(id);
+                appVersionRepository.setIsDeletedByPkAppVersionId(id);
                 //修改其他所有版本数据的最低版本号
-                AppVersion updateMinAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdAsc();
+                AppVersion updateMinAppVersion = appVersionRepository.findMinVersionMessage();
                 List<Long> ids = appVersionRepository.selectAllPkAppVersionId();
                 appVersionRepository.updateMinVersion(updateMinAppVersion.getCurrentVersion(), ids);
                 return ResponseResult.success();
@@ -165,10 +162,10 @@ public class AppVersionServiceImpl implements AppVersionService {
                 //遍历所有id存入到list
                 idsList.add(Long.valueOf(id));
             }
-            appVersionRepository.deleteBatch(idsList);
+            appVersionRepository.deleteBatchAppVersion(idsList);
             //批量删除完成后 查询目前的最高版本号和最低版本号
-            AppVersion maxAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdDesc();
-            AppVersion minAppVersion = appVersionRepository.findTopByOrderByPkAppVersionIdAsc();
+            AppVersion maxAppVersion = appVersionRepository.findMaxVersionMessage();
+            AppVersion minAppVersion = appVersionRepository.findMinVersionMessage();
             List<Long> versionIds = appVersionRepository.selectAllPkAppVersionId();
             //修改最高最低的版本所有数据
             appVersionRepository.updateMinVersion(minAppVersion.getCurrentVersion(), versionIds);

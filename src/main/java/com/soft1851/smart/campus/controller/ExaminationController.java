@@ -6,6 +6,7 @@ import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.EntityVo;
 import com.soft1851.smart.campus.model.vo.ExaminationVo;
 import com.soft1851.smart.campus.service.ExaminationService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/examination")
+@Api(value = "ExaminationController" ,tags = "考务管理接口")
 public class ExaminationController {
 
     @Resource

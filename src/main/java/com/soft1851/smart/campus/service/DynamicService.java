@@ -5,8 +5,6 @@ import com.soft1851.smart.campus.model.dto.DynamicDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Dynamic;
 
-import java.util.List;
-
 /**
  * @author Yujie_Zhao
  * @ClassName DynamicService
@@ -43,7 +41,7 @@ public interface DynamicService {
      * @param ids
      * @return
      */
-    ResponseResult deletedBatch(List<String> ids);
+    ResponseResult deletedBatch(String ids);
 
     /**
      * 修改咨询
