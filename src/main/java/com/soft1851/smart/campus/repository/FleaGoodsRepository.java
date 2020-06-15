@@ -24,12 +24,18 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
     /**
      * 根据搜索内容进行模糊查询
      *
-     * @param goodsName
-     * @param goodsDescription
-     * @return
+     * @param goodsName String
+     * @param goodsDescription String
+     * @return List<FleaGoods>
      */
     List<FleaGoods> findFleaGoodsByGoodsNameLikeOrGoodsDescriptionLike(String goodsName, String goodsDescription);
 
+    /**
+     * 分页查询所有商品
+     *
+     * @param pageable Pageable
+     * @return List<GoodsVo>
+     */
     @Query(value = "select new com.soft1851.smart.campus.model.vo.GoodsVo(g.goodsName,g.goodsPrice,g.goodsDescription,g.goodsMark,g.goodsImgUrl,g.goodsCreateTime,t.typeName,u.username)" +
             "from FleaGoods g " +
             "left join g.fleaType t " +

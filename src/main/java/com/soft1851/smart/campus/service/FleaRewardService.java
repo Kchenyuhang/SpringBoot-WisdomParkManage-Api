@@ -27,7 +27,7 @@ public interface FleaRewardService {
      * @param pageDto PageDto
      * @return Page<FleaReward>
      */
-    Page<FleaReward> findAll(PageDto pageDto);
+    ResponseResult findAll(PageDto pageDto);
 
     /**
      * 查出最新的两条悬赏数据
@@ -35,7 +35,6 @@ public interface FleaRewardService {
      * @return ResponseResult
      */
     ResponseResult getRewardTopThree();
-
 
     /**
      * 添加悬赏
