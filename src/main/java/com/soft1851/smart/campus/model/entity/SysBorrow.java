@@ -72,9 +72,23 @@ public class SysBorrow {
     @CreationTimestamp
     private  Timestamp gmtModified;
 
+
+    /**
+     * 还书时间
+     */
+    @Column(nullable = false)
+    @CreationTimestamp
+    private  Timestamp gmtReturn;
+
     /**
      * 删除标志
      */
     @Column(nullable = false,length = 4)
     private  Boolean isDeleted;
+
+    /**
+     * 归还标志
+     */
+    @Column(nullable = false,length = 4)
+    private  Boolean isReturned;
 }

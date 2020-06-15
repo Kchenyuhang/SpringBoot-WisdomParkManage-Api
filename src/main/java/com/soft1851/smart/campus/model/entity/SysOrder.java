@@ -26,7 +26,7 @@ public class SysOrder {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer pkOrderId;
+    private Long pkOrderId;
 
     /**
      * 卡号
