@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.SysFeedbackMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.repository.SysFeedbackRepository;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
 
     @Resource
     private SysFeedbackRepository sysFeedbackRepository;
+    @Resource
+    private SysFeedbackMapper sysFeedbackMapper;
 
     /**
      * 分页查询所有
@@ -156,5 +161,18 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getSysFeedbackByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
+        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        List<SysFeedback> sysFeedbacks = null;
+        try {
+            sysFeedbacks = sysFeedbackMapper.getSysFeedbackByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(sysFeedbacks);
     }
 }

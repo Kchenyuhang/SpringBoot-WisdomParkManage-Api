@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.AppVersionMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 import com.soft1851.smart.campus.repository.AppVersionRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ import java.util.List;
 public class AppVersionServiceImpl implements AppVersionService {
     @Resource
     private AppVersionRepository appVersionRepository;
+    @Resource
+    private AppVersionMapper appVersionMapper;
 
     /**
      * 分页查询所有版本号
@@ -174,5 +179,18 @@ public class AppVersionServiceImpl implements AppVersionService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getAppVersionsByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
+        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        List<AppVersion> appVersionList = null;
+        try {
+            appVersionList = appVersionMapper.getAppVersionByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(appVersionList);
     }
 }

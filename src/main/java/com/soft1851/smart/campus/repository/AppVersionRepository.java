@@ -155,4 +155,6 @@ public interface AppVersionRepository extends JpaRepository<AppVersion, Long> {
      */
     @Query(value = "select * from first_smart_campus.app_version where is_deleted = false",nativeQuery = true)
     Page<AppVersion> getAllAppVersion(Pageable pageable);
-}
+
+
+   }

@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.SysStatementMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.repository.SysStatementRepository;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ import java.util.List;
 public class SysStatementServiceImpl implements SysStatementService {
     @Resource
     private SysStatementRepository sysStatementRepository;
+    @Resource
+    private SysStatementMapper sysStatementMapper;
 
     /**
      * 分页查询所有声明数据
@@ -132,5 +137,18 @@ public class SysStatementServiceImpl implements SysStatementService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getSysStatementsByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
+        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        List<SysStatement> sysStatements = null;
+        try {
+            sysStatements = sysStatementMapper.getSysStatementByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(sysStatements);
     }
 }
