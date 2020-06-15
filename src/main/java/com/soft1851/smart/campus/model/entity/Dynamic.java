@@ -1,7 +1,13 @@
 package com.soft1851.smart.campus.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -13,17 +19,25 @@ import java.sql.Timestamp;
  * @Date 2020/6/8 10:40 上午
  * @Version 1.0
  **/
-@Table(name = "dynamic",
-        indexes = {@Index(name = "titleIndex", columnList = "title")})
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Dynamic {
 
     /**
      * 主键，策略为自增
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pkDynamicId;
+    private String pkDynamicId;
+
+    /**
+     * 用户id
+     */
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 
     /**
      * 标题
@@ -58,7 +72,7 @@ public class Dynamic {
     /**
      * 创建时间
      */
-    //@JsonIgnore
+    @CreatedDate
     @Column(nullable = false)
     private Timestamp gmtCreate;
 
@@ -66,14 +80,13 @@ public class Dynamic {
      * 修改时间
      */
     @JsonIgnore
-    @UpdateTimestamp
+    @LastModifiedDate
     @Column(nullable = false)
     private Timestamp gmtModified;
 
     /**
      * 删除标志（0 逻辑删除， 1 未删除）
      */
-//    @JsonIgnore
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
 

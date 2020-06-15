@@ -42,6 +42,17 @@ public class FleaController {
     private FleaCommentService fleaCommentService;
 
     /**
+     * 分页查询所有悬赏
+     *
+     * @param pageDto PageDto
+     * @return Page<FleaReward>
+     */
+    @PostMapping(value = "reward/all")
+    public ResponseResult findAllReward(@RequestBody PageDto pageDto) {
+        return fleaRewardService.findAll(pageDto);
+    }
+
+    /**
      * 根据id删除单个悬赏
      *
      * @param fleaRewardIdDto FleaRewardIdDto
@@ -53,12 +64,25 @@ public class FleaController {
     }
 
     /**
+     * 批量逻辑删除悬赏
+     *
      * @param fleaRewardBatchIdDto FleaRewardBatchIdDto
      * @return ResponseResult
      */
     @PostMapping(value = "reward/batchDelete")
     public ResponseResult batchDeleteRewardById(@RequestBody FleaRewardBatchIdDto fleaRewardBatchIdDto) {
         return fleaRewardService.batchDeleteById(fleaRewardBatchIdDto);
+    }
+
+    /**
+     * 分页查询所有订单信息
+     *
+     * @param pageDto PageDto
+     * @return ResponseResult
+     */
+    @PostMapping(value = "order/all")
+    public ResponseResult findAllOrder(@RequestBody PageDto pageDto) {
+        return fleaOrderService.findAll(pageDto);
     }
 
     /**
@@ -105,12 +129,12 @@ public class FleaController {
     }
 
     @PostMapping("type/delete")
-    public ResponseResult typeDeleted(@RequestBody SingleParam singleParam){
+    public ResponseResult typeDeleted(@RequestBody SingleParam singleParam) {
         return fleaTypeService.typeDeletedById(singleParam.getPkId());
     }
 
     @PostMapping("type/modify")
-    public ResponseResult typeModify(@RequestBody FleaType fleaType){
+    public ResponseResult typeModify(@RequestBody FleaType fleaType) {
         return fleaTypeService.typeModify(fleaType);
     }
 

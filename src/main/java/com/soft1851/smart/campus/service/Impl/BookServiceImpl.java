@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.model.entity.SysBook;
@@ -59,13 +60,22 @@ public class BookServiceImpl implements BookService {
         return ResponseResult.success(ResultCode.SUCCESS);
     }
 
+    /**
+     * 逻辑删除一本书
+     * @param pkBookId
+     * @return
+     */
     @Override
-    public ResponseResult deleteBook(Long pkBookid) {
+    public ResponseResult deleteBook(Long pkBookId) {
         //根据id查询角色数据是否存在 ，若存在进行删除，不存则返回 数据有误
-        SysBook sysBook = bookRepository.findByPkBookId(pkBookid);
+        SysBook sysBook = bookRepository.findByPkBookId(pkBookId);
         if (sysBook != null) {
-            bookRepository.deleteById(pkBookid);
-            return ResponseResult.success("删除成功");
+            if (sysBook.getBookNumber().equals(sysBook.getBookResidueNumber())){
+                bookRepository.deleteByPkBookId(pkBookId);
+                return ResponseResult.success("删除成功");
+            }else {
+                throw new CustomException("存在未归还书籍,无法进行删除", ResultCode.DATABASE_ERROR);
+            }
         } else {
             return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
         }

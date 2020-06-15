@@ -1,32 +1,32 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.DynamicDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.entity.InfoManage;
-import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
+import com.soft1851.smart.campus.model.entity.Dynamic;
 
 /**
  * @author Yujie_Zhao
- * @ClassName InfoManageService
- * @Description 资讯
- * @Date 2020/6/1  10:21
+ * @ClassName DynamicService
+ * @Description 动态资讯
+ * @Date 2020/6/12  15:24
  * @Version 1.0
  **/
-public interface InfoManageService {
+public interface DynamicService {
 
 
     /**
      * 单个添加
-     * @param infoManageTypeIdVo
+     * @param dynamicDto
      * @return
      */
-    ResponseResult insertInfoManage(InfoManageTypeIdVo infoManageTypeIdVo);
+    ResponseResult insertDynamic(DynamicDto dynamicDto);
 
     /**
      * 查询所有咨讯
      * @return
      */
-    ResponseResult findAllInfo(PageDto pageDto);
+    ResponseResult findAllDynamic(PageDto pageDto);
 
 
     /**
@@ -34,7 +34,7 @@ public interface InfoManageService {
      * @param id
      * @return
      */
-    ResponseResult deleteInfoManage(Long id);
+    ResponseResult deleteDynamic(String id);
 
     /**
      * 批量删除咨询
@@ -45,8 +45,9 @@ public interface InfoManageService {
 
     /**
      * 修改咨询
-     * @param infoManage
+     * @param dynamic
      * @return
      */
-    ResponseResult updateInfoManage(InfoManage infoManage);
+    ResponseResult updateDynamic(Dynamic dynamic);
+
 }

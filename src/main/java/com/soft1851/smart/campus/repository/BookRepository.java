@@ -80,4 +80,6 @@ public interface BookRepository extends JpaRepository<SysBook, Long> {
     @Query(value = "select * from sys_book where is_deleted =false ",nativeQuery = true)
     Page<SysBook> getAllSysBook(Pageable pageable);
 
+
+
 }

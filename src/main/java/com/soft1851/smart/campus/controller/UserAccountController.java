@@ -60,11 +60,11 @@ public class UserAccountController {
     }
 
     /**
-     * 修改资讯分类
+     * 修改用户信息
      * @param userAccount
      * @return
      */
-    @ApiOperation(value = "修改资讯分类",notes = "")
+    @ApiOperation(value = "修改用户信息",notes = "")
     @PutMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
         return userAccountService.updateUserAccount(userAccount);
