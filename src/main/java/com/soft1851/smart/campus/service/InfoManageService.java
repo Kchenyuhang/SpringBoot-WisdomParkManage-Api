@@ -8,7 +8,7 @@ import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
 /**
  * @author Yujie_Zhao
  * @ClassName InfoManageService
- * @Description TODO
+ * @Description 资讯
  * @Date 2020/6/1  10:21
  * @Version 1.0
  **/
