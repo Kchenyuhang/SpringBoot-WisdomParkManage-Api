@@ -57,4 +57,5 @@ class AppVersionServiceTest {
         ResponseResult responseResult = appVersionService.deletedBatch("48,50");
         System.out.println(responseResult);
     }
+
 }

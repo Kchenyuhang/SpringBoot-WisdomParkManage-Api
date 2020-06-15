@@ -26,7 +26,7 @@ public interface UserAccountMapper {
             "FROM user_account u " +
             "LEFT JOIN clazz c " +
             "ON u.clazz_id = c.pk_clazz_id " +
-            "WHERE u.role = 1 " +
+            "WHERE u.role = 1 AND u.is_deleted = false " +
             "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
     List<UserAccountVo> getUserAccountVo(@Param("pageDto") PageDto pageDto);
 
@@ -41,7 +41,7 @@ public interface UserAccountMapper {
             "FROM user_account u " +
             "LEFT JOIN clazz c " +
             "ON u.clazz_id = c.pk_clazz_id " +
-            "WHERE u.role = 2 " +
+            "WHERE u.role = 2 AND u.is_deleted = false " +
             "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
     List<UserAccountVo> getTeacherUserAccountVo(@Param("pageDto") PageDto pageDto);
 
