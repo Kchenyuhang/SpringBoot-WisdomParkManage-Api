@@ -7,6 +7,7 @@ import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.dto.SysBookDto;
 import com.soft1851.smart.campus.service.BookService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,10 +38,11 @@ public class SysBookController {
         return bookService.increaseSysBook(sysBookDto);
     }
     /**
-     * 删除一卡通信息
+     * 逻辑删除图书数据
      * @param queryDto
      * @return
      */
+    @ApiOperation(value = "逻辑删除图书数据",notes = "")
     @PostMapping("/book/id")
     ResponseResult deleteCard(@RequestBody QueryDto queryDto){
         return bookService.deleteBook(Long.parseLong(queryDto.getField().toString()));

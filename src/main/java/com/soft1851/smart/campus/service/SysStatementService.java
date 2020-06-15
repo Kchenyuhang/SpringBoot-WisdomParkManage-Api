@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 
@@ -57,4 +58,11 @@ public interface SysStatementService {
      * @return
      */
     ResponseResult deleteBatchByPkStatementId(String ids);
+
+    /**
+     * 时间范围内的时间
+     * @param timeBorrowPageDto
+     * @return
+     */
+    ResponseResult getSysStatementsByTime(TimeBorrowPageDto timeBorrowPageDto);
 }

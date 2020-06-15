@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimeBorrowPageDto {
-    private String startTime;
-    private String endTime;
+    private String time;
     private int currentPage;
     private int pageSize;
 }

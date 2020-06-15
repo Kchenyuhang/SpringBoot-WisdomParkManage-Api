@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.SingleParam;
-import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 import com.soft1851.smart.campus.service.AppVersionService;
 import io.swagger.annotations.Api;
@@ -36,7 +33,7 @@ public class AppVersionController {
      * @param pageDto
      * @return
      */
-    @ApiOperation(value = "分页查询所有声明",notes = "")
+    @ApiOperation(value = "分页查询所有APP版本",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllAppVersion(@RequestBody PageDto pageDto) {
         return appVersionService.findAllAppVersion(pageDto);
@@ -89,5 +86,16 @@ public class AppVersionController {
     @PostMapping(value = "/deletionBath")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto) {
         return appVersionService.deletedBatch(batchDeletionDto.getIds());
+    }
+
+    /**
+     * 时间范围内的查询
+     * @param timeBorrowPageDto
+     * @return
+     */
+    @PostMapping(value = "/page")
+    @ApiOperation(value = "时间范围内的查询App版本号",notes = "")
+    public ResponseResult getAppVersionsByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
+        return appVersionService.getAppVersionsByTime(timeBorrowPageDto);
     }
 }

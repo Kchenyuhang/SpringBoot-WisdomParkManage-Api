@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.model.dto.FleaRewardBatchIdDto;
 import com.soft1851.smart.campus.model.dto.FleaRewardIdDto;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.repository.FleaRewardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -41,5 +42,13 @@ class FleaRewardServiceTest {
         batchId.add(11L);
         fleaRewardBatchIdDto.setId(batchId);
         System.out.println(fleaRewardService.batchDeleteById(fleaRewardBatchIdDto));
+    }
+
+    @Test
+    void findAll() {
+        PageDto pageDto = new PageDto();
+        pageDto.setCurrentPage(0);
+        pageDto.setPageSize(3);
+        log.info(String.valueOf(fleaRewardService.findAll(pageDto)));
     }
 }

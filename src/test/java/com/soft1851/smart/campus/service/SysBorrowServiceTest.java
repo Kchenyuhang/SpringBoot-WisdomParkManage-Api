@@ -54,8 +54,7 @@ class SysBorrowServiceTest {
         TimeBorrowPageDto timeBorrowPageDto = TimeBorrowPageDto.builder()
                 .currentPage(1)
                 .pageSize(2)
-                .startTime(startTime)
-                .endTime(endTime)
+                .time(startTime)
                 .build();
         ResponseResult responseResult = sysBorrowService.getSysBorrowsByTime(timeBorrowPageDto);
         System.out.println(responseResult);

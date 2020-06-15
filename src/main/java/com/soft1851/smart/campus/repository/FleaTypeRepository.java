@@ -38,5 +38,10 @@ public interface FleaTypeRepository extends JpaRepository<FleaType, Long> {
      * @return
      */
     List<FleaType> findFleaTypesByPkFleaTypeIdIsNotAndTypeNameEqualsOrTypeUrlEquals(Long pkFleaTypeId, String typeName, String typeUrl);
-
+    /**
+     * 类型名称等于某值的FleaType
+     * @param typeName
+     * @return
+     */
+    List<FleaType> findFleaTypesByTypeNameEqualsOrTypeUrlEquals(String typeName, String typeUrl);
 }
