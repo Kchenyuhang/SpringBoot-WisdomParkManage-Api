@@ -5,6 +5,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.FleaGoods;
 import com.soft1851.smart.campus.model.entity.FleaReward;
+import com.soft1851.smart.campus.model.entity.FleaType;
 import com.soft1851.smart.campus.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -108,5 +109,26 @@ public class FleaController {
     @PostMapping("user/all")
     public ResponseResult findAllUser(@RequestBody PageDto pageDto) {
         return fleaUserService.findAllUser(pageDto);
+    }
+
+    @PostMapping("user/find")
+    public ResponseResult findUserByContent(@RequestBody FleaSearchDto fleaSearchDto) {
+        return fleaUserService.findUserByContent(fleaSearchDto);
+    }
+
+    @PostMapping("type/all")
+    public ResponseResult findTypeAll() {
+        return ResponseResult.success(fleaTypeService.findAllType());
+    }
+
+    @PostMapping("type/delete")
+    public ResponseResult typeDeleted(@RequestBody SingleParam singleParam){
+        return fleaTypeService.typeDeletedById(singleParam.getPkId());
+    }
+
+
+    @PostMapping("type/modify")
+    public ResponseResult typeModify(@RequestBody FleaType fleaType){
+        return fleaTypeService.typeModify(fleaType);
     }
 }

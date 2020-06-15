@@ -4,8 +4,6 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 
-import java.util.List;
-
 /**
  * @author Yujie_Zhao
  * @ClassName UserAccountService
@@ -16,7 +14,8 @@ import java.util.List;
 public interface UserAccountService {
 
     /**
-     * 单个添加
+     * 新增用户数据
+     *
      * @param userAccount
      * @return
      */
@@ -24,6 +23,7 @@ public interface UserAccountService {
 
     /**
      * 查询所有账号
+     *
      * @return
      */
     ResponseResult findAllUserAccount(PageDto pageDto);
@@ -31,6 +31,7 @@ public interface UserAccountService {
 
     /**
      * 单个删除账号
+     *
      * @param id
      * @return
      */
@@ -38,6 +39,7 @@ public interface UserAccountService {
 
     /**
      * 批量删除账号
+     *
      * @param ids
      * @return
      */
@@ -45,20 +47,25 @@ public interface UserAccountService {
 
     /**
      * 修改账号
+     *
      * @param UserAccount
      * @return
      */
     ResponseResult updateUserAccount(UserAccount UserAccount);
 
     /**
-     * 获取学生信息
+     * 获取所有学生数据
+     *
+     * @param pageDto
      * @return
      */
-    List<UserAccount> getStudentInfo();
-
+    ResponseResult getAllStudent(PageDto pageDto);
     /**
-     * 获取教师信息
+     * 获取所有教师数据
+     *
+     * @param pageDto
      * @return
      */
-    List<UserAccount> getTeacherInfo();
+    ResponseResult getAllTeacher(PageDto pageDto);
+
 }

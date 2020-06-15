@@ -8,16 +8,17 @@ import lombok.NoArgsConstructor;
 /**
  * @author Tao
  * @version 1.0
- * @ClassName UpdateSysRoleDto
+ * @ClassName TimeBorrowPageDto
  * @Description TODO
- * @date 2020-06-11 11:27
+ * @date 2020-06-13 20:53
  **/
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateSysRoleDto {
-    private Long pkRoleId;
-    private String roleName;
-    private String roleDescription;
+public class TimeBorrowPageDto {
+    private String startTime;
+    private String endTime;
+    private int currentPage;
+    private int pageSize;
 }

@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminDto {
-    private String sysUserName;
-    private String sysPassword;
-    private String sysUserPhoneNumber;
-    private Long roleId;
+    private String userId;
+    private String name;
+    private String role;
+    private String phoneNumber;
+    private Boolean isEnabled;
 }

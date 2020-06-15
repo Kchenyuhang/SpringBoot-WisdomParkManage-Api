@@ -99,7 +99,7 @@ public class UserAccount {
      * 校园卡号
      */
     @Column(nullable = false, unique = true,length = 32)
-    private Integer cardNumber;
+    private String cardNumber;
 
     /**
      * 创建时间
@@ -133,6 +133,6 @@ public class UserAccount {
     /**
      * 地址
      */
-    @Column()
-    private String Address;
+    @Column(nullable = false,length = 128)
+    private String address;
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+
 @SpringBootTest
 class SysRoleServiceTest {
 
@@ -53,5 +54,11 @@ class SysRoleServiceTest {
 
         ResponseResult responseResult = sysRoleService.getAllSysRole(pageDto);
 
+    }
+
+    @Test
+    void findAllSysRole() {
+        ResponseResult responseResult = sysRoleService.findAllSysRole();
+        System.out.println(responseResult);
     }
 }

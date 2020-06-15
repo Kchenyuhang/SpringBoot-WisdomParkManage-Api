@@ -1,9 +1,11 @@
 package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.mapper.SysBorrowMapper;
 import com.soft1851.smart.campus.model.dto.BorrowDto;
 import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.entity.SysBorrow;
 import com.soft1851.smart.campus.repository.SysBorrowRepository;
 import com.soft1851.smart.campus.service.SysBorrowService;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +28,8 @@ import java.util.List;
 public class SysBorrowServiceImpl implements SysBorrowService {
     @Resource
     private SysBorrowRepository sysBorrowRepository;
+    @Resource
+    private SysBorrowMapper sysBorrowMapper;
 
     @Override
     public ResponseResult findAllByPage(PageDto pageDto) {
@@ -76,6 +81,24 @@ public class SysBorrowServiceImpl implements SysBorrowService {
     public ResponseResult deletedSysRole(Long id, Boolean isDeleted) {
         sysBorrowRepository.setIsDeletedByPkBorrowId(id,isDeleted);
         return ResponseResult.success();
+    }
+
+    /**
+     * 查询时间内的数据
+     * @param timeBorrowPageDto
+     * @return
+     */
+    @Override
+    public ResponseResult getSysBorrowsByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
+        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        List<SysBorrow> sysBorrowList = null;
+        try {
+            sysBorrowList = sysBorrowMapper.getSysBorrowsByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(sysBorrowList);
     }
 
 

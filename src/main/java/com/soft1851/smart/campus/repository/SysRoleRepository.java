@@ -21,7 +21,7 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long> {
      * 查询所有角色,省去被逻辑删除的数据
      * @return
      */
-    @Query("select r from SysRole r where r.isDeleted=false order by sort asc ")
+    @Query("select r from SysRole r where r.isDeleted=false order by r.sort asc ")
     List<SysRole> findAllRole();
 
     /**
@@ -94,9 +94,8 @@ public interface SysRoleRepository extends JpaRepository<SysRole, Long> {
      */
     @Transactional(rollbackFor = RuntimeException.class)
     @Modifying
-    @Query(value = "UPDATE first_smart_campus.sys_role SET role_name=:#{#updateSysRoleDto.roleName}," +
-            "role_decoration=:#{#updateSysRoleDto.roleDecoration}," +
-            "is_deleted=:#{#updateSysRoleDto.isDeleted} WHERE pk_role_id=:#{#updateSysRoleDto.pkRoleId}"
-            ,nativeQuery = true)
+    @Query(value = "UPDATE SysRole SET roleName=:#{#updateSysRoleDto.roleName}, " +
+            "roleDescription=:#{#updateSysRoleDto.roleDescription} " +
+            "WHERE pkRoleId =:#{#updateSysRoleDto.pkRoleId}")
     void updateSysRole(@Param("updateSysRoleDto") UpdateSysRoleDto updateSysRoleDto);
 }

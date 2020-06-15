@@ -13,10 +13,9 @@ public interface SysRoleService {
 
     /**
      * 分页查询所有角色
-     * @param pageDto
      * @return
      */
-    ResponseResult findAllSysRoleByPage(PageDto pageDto);
+    ResponseResult findAllSysRoleByPage();
 
     /**
      * 单个删除角色数据
@@ -61,4 +60,10 @@ public interface SysRoleService {
      * @return
      */
     ResponseResult updateSysRole(UpdateSysRoleDto updateSysRoleDto);
+
+    /**
+     * 查询所有系统角色
+     * @return
+     */
+    ResponseResult findAllSysRole();
 }

@@ -7,14 +7,19 @@ import javax.annotation.Resource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @Description TODO
+ * @Author wf
+ * @Date 2020/6/15
+ * @Version 1.0
+ */
 @SpringBootTest
-class SysSemesterServiceTest {
-
+class RoleServiceTest {
     @Resource
-    private SysSemesterService sysSemesterService;
+    private RoleService roleService;
 
     @Test
-    void findAll() {
-        sysSemesterService.findAll().forEach(System.out::println);
+    void getRoleMenuByRoleId() {
+        System.out.println(roleService.getRoleMenuByRoleId((long)2));
     }
 }

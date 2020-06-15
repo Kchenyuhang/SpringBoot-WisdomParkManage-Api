@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.SysRoleMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
 import com.soft1851.smart.campus.model.entity.SysRole;
@@ -14,11 +15,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tao
@@ -33,22 +36,25 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Resource
     private SysRoleRepository sysRoleRepository;
 
+    @Resource
+    private SysRoleMapper sysRoleMapper;
 
     /**
      * 分页查询所有
      *
-     * @param pageDto
      * @return
      */
     @Override
-    public ResponseResult findAllSysRoleByPage(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(
+    public ResponseResult findAllSysRoleByPage() {
+        /*Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkRoleId");
         Page<SysRole> sysRoles = sysRoleRepository.findAll(pageable);
-        return ResponseResult.success(sysRoles.getContent());
+        return ResponseResult.success(sysRoles.getContent());*/
+        List<SysRole> sysRoles = sysRoleRepository.findAllRole();
+        return ResponseResult.success(sysRoles);
     }
 
     /**
@@ -108,8 +114,9 @@ public class SysRoleServiceImpl implements SysRoleService {
         SysRole sysRole1 = SysRole.builder()
 //                .pkRoleId()
                 .roleName(sysRole.getRoleName())
-                .roleDecoration(sysRole.getRoleDecoration())
+                .roleDescription(sysRole.getRoleDescription())
                 .isDeleted(false)
+                .roleDecoration("测试")
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                 .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                 .sort(sysRole2.getSort() + 1)
@@ -162,7 +169,17 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public ResponseResult updateSysRole(UpdateSysRoleDto updateSysRoleDto) {
         sysRoleRepository.updateSysRole(updateSysRoleDto);
-        SysRole sysRole = sysRoleRepository.findByPkRoleId(updateSysRoleDto.getPkRoleId());
-        return ResponseResult.success(sysRole);
+        return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult findAllSysRole() {
+        List<Map> mapList = null;
+        try {
+            mapList =  sysRoleMapper.getAllSysRole();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(mapList);
     }
 }
