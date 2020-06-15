@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.FleaRewardBatchIdDto;
 import com.soft1851.smart.campus.model.entity.FleaReward;
+import com.soft1851.smart.campus.model.vo.FleaRewardVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,5 +39,11 @@ class FleaRewardRepositoryTest {
         idList.add(14L);
         fleaRewardBatchIdDto.setId(idList);
         System.out.println(fleaRewardRepository.batchDelete(fleaRewardBatchIdDto.getId()));
+    }
+
+    @Test
+    void findAll() {
+//        List<FleaRewardVo> fleaRewardVos = fleaRewardRepository.findAllFleaReward();
+//        fleaRewardVos.forEach(System.out::println);
     }
 }
