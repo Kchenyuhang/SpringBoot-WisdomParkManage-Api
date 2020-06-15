@@ -14,19 +14,21 @@ class UserAccountMapperTest {
 
     @Resource
     private UserAccountMapper userAccountMapper;
-    @Test
-    void getUserAccountVo() {
-        PageDto pageDto = PageDto.builder()
-                .currentPage(1)
-                .pageSize(3)
-                .build();
-        List<UserAccountVo> userAccountVos = userAccountMapper.getUserAccountVo(pageDto);
-        System.out.println(userAccountVos);
-    }
+//    @Test
+//    void getUserAccountVo() {
+//        PageDto pageDto = PageDto.builder()
+//                .currentPage(1)
+//                .pageSize(3)
+//                .build();
+//        List<UserAccountVo> userAccountVos = userAccountMapper.getTeacherUserAccountVo(pageDto);
+//        System.out.println(userAccountVos);
+//    }
 
     @Test
     void getUserAccountByJobNumber() {
         UserAccount userAccount = userAccountMapper.getUserAccountByJobNumber("1802333101");
         System.out.println(userAccount);
     }
+
+
 }
