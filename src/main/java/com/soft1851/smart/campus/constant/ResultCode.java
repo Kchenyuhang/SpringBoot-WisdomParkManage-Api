@@ -44,6 +44,7 @@ public enum ResultCode {
     DATA_IS_WRONG(50002, "数据有误"),
     DATA_ALREADY_EXISTED(50003, "数据已存在"),
     DATABASE_ERROR(50004, "数据库操作异常"),
+    DATA_UPDATE_ERROR(50005, "数据修改异常"),
 
 
     /* 服务器或系统错误：50001-599999 */

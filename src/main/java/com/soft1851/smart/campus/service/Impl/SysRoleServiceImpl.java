@@ -42,18 +42,19 @@ public class SysRoleServiceImpl implements SysRoleService {
     /**
      * 分页查询所有
      *
-     * @param pageDto
      * @return
      */
     @Override
-    public ResponseResult findAllSysRoleByPage(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(
+    public ResponseResult findAllSysRoleByPage() {
+        /*Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkRoleId");
         Page<SysRole> sysRoles = sysRoleRepository.findAll(pageable);
-        return ResponseResult.success(sysRoles.getContent());
+        return ResponseResult.success(sysRoles.getContent());*/
+        List<SysRole> sysRoles = sysRoleRepository.findAllRole();
+        return ResponseResult.success(sysRoles);
     }
 
     /**
@@ -113,8 +114,9 @@ public class SysRoleServiceImpl implements SysRoleService {
         SysRole sysRole1 = SysRole.builder()
 //                .pkRoleId()
                 .roleName(sysRole.getRoleName())
-                .roleDecoration(sysRole.getRoleDecoration())
+                .roleDescription(sysRole.getRoleDescription())
                 .isDeleted(false)
+                .roleDecoration("测试")
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                 .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                 .sort(sysRole2.getSort() + 1)
@@ -167,8 +169,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public ResponseResult updateSysRole(UpdateSysRoleDto updateSysRoleDto) {
         sysRoleRepository.updateSysRole(updateSysRoleDto);
-        SysRole sysRole = sysRoleRepository.findByPkRoleId(updateSysRoleDto.getPkRoleId());
-        return ResponseResult.success(sysRole);
+        return ResponseResult.success();
     }
 
     @Override

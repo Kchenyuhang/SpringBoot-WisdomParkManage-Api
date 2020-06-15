@@ -4,8 +4,10 @@ import com.soft1851.smart.campus.model.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -67,4 +69,32 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
     @Query(value = "update first_smart_campus.sys_user u set u.sys_password=123456 where u.pk_user_id=?1",nativeQuery = true)
     int setPasswordByPkUserId(String pkUserId);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE SysUser SET isEnabled = ?1 WHERE pkUserId = ?2")
+    int updateIsEnabledById (boolean isEnabled, String userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE SysUser SET isDeleted = ?1 WHERE sysUserPhoneNumber = ?2")
+    int updateIsDeletedByPhoneNumber (boolean isDeleted, String phoneNumber);
+
+    /**
+     *查询所有未删除数据
+     * @return
+     */
+    List<SysUser> getSysUserByIsDeleted(boolean isDeleted);
+
+    /**
+     * 修改用户信息
+     * @param sysUser
+     * @return
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Modifying
+    @Query("UPDATE SysUser SET sysUserName = :#{#sysUser.sysUserName}, " +
+            "sysUserPhoneNumber=:#{#sysUser.sysUserPhoneNumber}, " +
+            "isEnabled = :#{#sysUser.isEnabled} " +
+            "WHERE pkUserId = :#{#sysUser.pkUserId}")
+    int updateSysUserInfo(@Param("sysUser") SysUser sysUser);
 }

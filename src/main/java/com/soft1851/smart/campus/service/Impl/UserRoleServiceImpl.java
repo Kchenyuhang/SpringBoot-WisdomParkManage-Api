@@ -5,8 +5,11 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.AdminDto;
 import com.soft1851.smart.campus.model.dto.AdminUpdateDto;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
+import com.soft1851.smart.campus.model.entity.SysRoleMenu;
 import com.soft1851.smart.campus.model.entity.SysUser;
 import com.soft1851.smart.campus.model.entity.UserRole;
+import com.soft1851.smart.campus.repository.SysRoleMenuRepository;
 import com.soft1851.smart.campus.repository.SysUserRepository;
 import com.soft1851.smart.campus.repository.UserRoleRepository;
 import com.soft1851.smart.campus.service.UserRoleService;
@@ -15,10 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Tao
@@ -33,12 +33,14 @@ public class UserRoleServiceImpl implements UserRoleService {
     private SysUserRepository sysUserRepository;
     @Resource
     private UserRoleRepository userRoleRepository;
+    @Resource
+    private SysRoleMenuRepository sysRoleMenuRepository;
 
     //查询所有管理员数据信息
     @Override
     public ResponseResult selectAllAdmin() {
         List<Map> mapList = new ArrayList<Map>();
-        List<SysUser> sysUsers = sysUserRepository.findAll();
+        List<SysUser> sysUsers = sysUserRepository.getSysUserByIsDeleted(false);
         sysUsers.forEach(sysUser -> {
             Map admin = sysUserRepository.selectAdminById(sysUser.getPkUserId());
             mapList.add(admin);
@@ -48,7 +50,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public ResponseResult increaseAdmin(AdminDto adminDto) {
-        //只需要密码、用户名、手机号
+        //只需要密码、用户名、手机号,激活状态
         String userId = UUID.randomUUID().toString();
         System.out.println("***用户表***" + userId);
         SysUser sysUser1 = SysUser.builder()
@@ -56,12 +58,12 @@ public class UserRoleServiceImpl implements UserRoleService {
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                 .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                 .isDeleted(false)
-                .isEnabled(true)
+                .isEnabled(adminDto.getIsEnabled())
                 .salt("xyz")
-                .sysPassword(adminDto.getSysPassword())
+                .sysPassword("123456")
                 .sysUserAvatar("https://niit-student.oss-cn-beijing.aliyuncs.com/markdown/20200601182918.png")
-                .sysUserName(adminDto.getSysUserName())
-                .sysUserPhoneNumber(adminDto.getSysUserPhoneNumber())
+                .sysUserName(adminDto.getName())
+                .sysUserPhoneNumber(adminDto.getPhoneNumber())
                 .build();
         sysUserRepository.save(sysUser1);
         System.out.println("***用户角色关联表***" + userId);
@@ -69,7 +71,7 @@ public class UserRoleServiceImpl implements UserRoleService {
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                 .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                 .isDeleted(false)
-                .roleId(adminDto.getRoleId())
+                .roleId(Long.parseLong(adminDto.getRole()))
                 .sysUserId(userId)
                 .build();
         userRoleRepository.save(userRole);
@@ -91,30 +93,32 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public ResponseResult modificationAdmin(AdminUpdateDto adminUpdateDto) {
-        SysUser sysUser = sysUserRepository.findSysUserByPkUserId(adminUpdateDto.getPkUserId());
-        UserRole userRole = userRoleRepository.findUserRoleBySysUserId(adminUpdateDto.getPkUserId());
-        if (sysUser != null) {
-            if (adminUpdateDto.getSysUserName() != null) {
-                sysUser.setSysUserName(adminUpdateDto.getSysUserName());
-            }
-            if (adminUpdateDto.getSysUserPhoneNumber() != null) {
-                sysUser.setSysUserPhoneNumber(adminUpdateDto.getSysUserPhoneNumber());
-            }
-            if (adminUpdateDto.getSysUserAvatar() != null) {
-                sysUser.setSysUserAvatar(adminUpdateDto.getSysUserAvatar());
-            }
-            if (adminUpdateDto.getIsEnabled() != null) {
-                sysUser.setIsEnabled(adminUpdateDto.getIsEnabled());
-            }
-            sysUserRepository.saveAndFlush(sysUser);
-            if (adminUpdateDto.getRoleId() != null) {
-                userRole.setRoleId(adminUpdateDto.getRoleId());
-                userRoleRepository.saveAndFlush(userRole);
-            }
-            return ResponseResult.success();
-        } else {
-            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+    public ResponseResult modificationAdmin(AdminDto adminDto) {
+        SysUser user = SysUser.builder()
+                .sysUserName(adminDto.getName())
+                .sysUserPhoneNumber(adminDto.getPhoneNumber())
+                .isEnabled(adminDto.getIsEnabled())
+                .pkUserId(adminDto.getUserId())
+                .build();
+        int result = sysUserRepository.updateSysUserInfo(user);
+        int result1 =userRoleRepository.updateBySysUserId(Long.parseLong(adminDto.getRole().toString()), adminDto.getUserId());
+        return ResponseResult.success();
+    }
+
+    @Override
+    public ResponseResult insertUserRole(DoubleFieldDto doubleFieldDto) {
+        String menuId = doubleFieldDto.getFirstField();
+        String[] menuIds = menuId.substring(1, menuId.length()-1).split(",");
+        for (int i = 0, len = menuIds.length; i < len; i++) {
+            SysRoleMenu roleMenu = SysRoleMenu.builder()
+                    .pkRoleId(Long.parseLong(doubleFieldDto.getSecondField()))
+                    .menuId(Long.parseLong(menuIds[i]))
+                    .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                    .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                    .isDeleted(false)
+                    .build();
+           sysRoleMenuRepository.save(roleMenu);
         }
+        return ResponseResult.success();
     }
 }

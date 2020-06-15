@@ -35,4 +35,18 @@ public interface SysUserService {
      */
     ResponseResult setPasswordPkUserId(String pkUserId);
 
+
+    /**
+     * 逻辑删除系统用户
+     * @param phoneNumber
+     * @return
+     */
+    int updateIsDeletedByPhoneNumber(String phoneNumber);
+
+    /**
+     * 修改用户的状态
+     * @param userId
+     * @return
+     */
+    int updateIsEnabledById(boolean isEnabled, String userId);
 }

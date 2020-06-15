@@ -19,6 +19,5 @@ import lombok.NoArgsConstructor;
 public class UpdateSysRoleDto {
     private Long pkRoleId;
     private String roleName;
-    private String roleDecoration;
-    private Boolean isDeleted;
+    private String roleDescription;
 }
