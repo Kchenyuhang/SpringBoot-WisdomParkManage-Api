@@ -3,22 +3,16 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.*;
-import com.soft1851.smart.campus.model.entity.FleaGoods;
-import com.soft1851.smart.campus.model.entity.FleaReward;
 import com.soft1851.smart.campus.model.entity.FleaType;
 import com.soft1851.smart.campus.service.*;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author 倪涛涛
@@ -115,9 +109,13 @@ public class FleaController {
         return fleaTypeService.typeDeletedById(singleParam.getPkId());
     }
 
-
     @PostMapping("type/modify")
     public ResponseResult typeModify(@RequestBody FleaType fleaType){
         return fleaTypeService.typeModify(fleaType);
+    }
+
+    @PostMapping("type/increased")
+    public ResponseResult typeIncreased(@RequestBody FleaTypeIncreasedDto fleaTypeIncreasedDto) {
+        return fleaTypeService.typeIncreased(fleaTypeIncreasedDto);
     }
 }

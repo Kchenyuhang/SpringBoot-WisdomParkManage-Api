@@ -26,9 +26,9 @@ spring:
   #redis配置数据
   redis:
     database: 0
-    password:
+#    password:
     port: 6379
-    host: localhost
+    host: 101.37.31.188
     lettuce:
       pool:
         min-idle: 5
