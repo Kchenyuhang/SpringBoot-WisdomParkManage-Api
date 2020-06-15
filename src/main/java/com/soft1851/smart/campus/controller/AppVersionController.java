@@ -43,7 +43,7 @@ public class AppVersionController {
      * @param updateAppVersionDto
      * @return
      */
-    @PutMapping(value = "/modification")
+    @PostMapping(value = "/modification")
     public ResponseResult updateAppVersion(@RequestBody UpdateAppVersionDto updateAppVersionDto) {
         return appVersionService.modificationAppVersion(updateAppVersionDto);
     }
@@ -65,7 +65,7 @@ public class AppVersionController {
      * @param singleParam
      * @return
      */
-    @DeleteMapping(value = "/deletion")
+    @PostMapping(value = "/deletion")
     public ResponseResult deleteAppVersion(@RequestBody SingleParam singleParam) {
         return appVersionService.deletionAppVersion(singleParam.getPkId());
     }
