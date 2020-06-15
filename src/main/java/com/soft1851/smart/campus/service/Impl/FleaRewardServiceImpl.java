@@ -41,10 +41,10 @@ public class FleaRewardServiceImpl implements FleaRewardService {
     }
 
     @Override
-    public Page<FleaReward> findAll(PageDto pageDto) {
+    public ResponseResult findAll(PageDto pageDto) {
         //创建分页构建器   按照时间降序排序
-        Pageable pageable = PageRequest.of(pageDto.getCurrentPage(), pageDto.getPageSize(), Sort.Direction.DESC, "createTime");
-        return fleaRewardRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageDto.getCurrentPage(), pageDto.getPageSize());
+        return ResponseResult.success(fleaRewardRepository.findAllFleaReward(pageable));
     }
 
     @Override

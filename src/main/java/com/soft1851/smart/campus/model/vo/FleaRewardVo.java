@@ -10,20 +10,20 @@ import java.util.Date;
 /**
  * @Author yhChen
  * @Description
- * @Date 2020/6/11
+ * @Date 2020/6/13
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FleaOrderVo {
-    private String pkFleaOrderId;
-    private String goodsName;
-    private Double goodsPrice;
-    private String goodsSeller;
-    private String goodsBuyer;
-    private Date orderCreateTime;
-    private String goodsDescription;
-    private String goodsMark;
+public class FleaRewardVo {
+    private Long pkFleaRewardId;
+    private String title;
+    private String description;
+    private String imageUrl;
+    private Date createTime;
     private Boolean isDeleted;
+    private String nickname;
+    private String username;
+    private String sex;
 }
