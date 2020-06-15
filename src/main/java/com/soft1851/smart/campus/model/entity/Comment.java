@@ -1,20 +1,30 @@
 package com.soft1851.smart.campus.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * @ClassName Comment
- * @Description TODO
+ * @Description 评论
  * @Author xiaobinggan
  * @Date 2020/6/8 1:05 下午
  * @Version 1.0
  **/
 @Entity
-@Table(name = "comment")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     /**
@@ -22,25 +32,31 @@ public class Comment {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pkCommentId;
+    private String pkCommentId;
 
 
     /**
      * 动态id
      */
     @Column(name = "dynamic_id", nullable = false)
-    private Long dynamicId;
+    private String dynamicId;
+
 
     /**
      * 用户id
      */
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private String userId;
 
+    /**
+     * 评论内容
+     */
+    @Column(name = "content", nullable = false)
+    private String content = "";
     /**
      * 创建时间
      */
-    //@JsonIgnore
+    @CreatedDate
     @Column(nullable = false)
     private Timestamp gmtCreate;
 
@@ -48,7 +64,7 @@ public class Comment {
      * 修改时间
      */
     @JsonIgnore
-    @UpdateTimestamp
+    @LastModifiedDate
     @Column(nullable = false)
     private Timestamp gmtModified;
 
