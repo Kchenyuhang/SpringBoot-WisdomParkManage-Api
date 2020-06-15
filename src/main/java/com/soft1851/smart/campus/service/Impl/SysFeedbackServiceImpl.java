@@ -80,7 +80,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
     public ResponseResult modificationSysFeedback(UpdateSysFeedbackDto updateSysFeedbackDto) {
         sysFeedbackRepository.updateSysFeedback(updateSysFeedbackDto);
         SysFeedback sysFeedback = sysFeedbackRepository.findSysFeedbackByPkFeedbackId(updateSysFeedbackDto.getPkFeedbackId());
-        return ResponseResult.success(sysFeedback);
+        return ResponseResult.success();
     }
 
     /**

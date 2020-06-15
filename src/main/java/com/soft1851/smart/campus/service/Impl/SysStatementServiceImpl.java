@@ -61,6 +61,7 @@ public class SysStatementServiceImpl implements SysStatementService {
                     .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                     .isDeleted(false)
                     .build();
+            System.out.println(sysStatement1);
             sysStatementRepository.save(sysStatement1);
             return ResponseResult.success();
         }else {
@@ -89,6 +90,7 @@ public class SysStatementServiceImpl implements SysStatementService {
 
     @Override
     public ResponseResult deletedBatch(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
@@ -118,6 +120,7 @@ public class SysStatementServiceImpl implements SysStatementService {
 
     @Override
     public ResponseResult deleteBatchByPkStatementId(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割

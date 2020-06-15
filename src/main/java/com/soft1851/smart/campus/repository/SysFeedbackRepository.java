@@ -45,9 +45,8 @@ public interface SysFeedbackRepository extends JpaRepository<SysFeedback, Long> 
      */
     @Transactional(rollbackFor = RuntimeException.class)
     @Modifying
-    @Query(value = "UPDATE first_smart_campus.sys_feedback SET pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}," +
-            "title=:#{#updateSysFeedbackDto.title},content=:#{#updateSysFeedbackDto.content}," +
-            "contact_way=:#{#updateSysFeedbackDto.contactWay} WHERE pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}",nativeQuery = true)
+    @Query(value = "UPDATE first_smart_campus.sys_feedback SET " +
+            "is_handled =:#{#updateSysFeedbackDto.isHandled} WHERE pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}",nativeQuery = true)
     void updateSysFeedback(@Param("updateSysFeedbackDto") UpdateSysFeedbackDto updateSysFeedbackDto);
 
 

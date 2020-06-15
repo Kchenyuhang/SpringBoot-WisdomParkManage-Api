@@ -51,6 +51,7 @@ public class AppVersionController {
     @ApiOperation(value = "修改版本数据信息",notes = "")
     @PostMapping(value = "/modification")
     public ResponseResult updateAppVersion(@RequestBody UpdateAppVersionDto updateAppVersionDto) {
+        System.out.println(updateAppVersionDto);
         return appVersionService.modificationAppVersion(updateAppVersionDto);
     }
 
@@ -89,6 +90,4 @@ public class AppVersionController {
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto) {
         return appVersionService.deletedBatch(batchDeletionDto.getIds());
     }
-
-
 }

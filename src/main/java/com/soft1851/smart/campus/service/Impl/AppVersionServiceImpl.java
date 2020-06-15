@@ -153,6 +153,7 @@ public class AppVersionServiceImpl implements AppVersionService {
      */
     @Override
     public ResponseResult deletedBatch(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
