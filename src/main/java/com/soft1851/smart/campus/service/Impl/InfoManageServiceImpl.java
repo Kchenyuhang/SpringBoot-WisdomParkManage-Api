@@ -140,12 +140,7 @@ public class InfoManageServiceImpl implements InfoManageService {
         //判断时候为空
         InfoManage infoManage1 = infoManageRepository.findByPkInfoManageId(infoManage.getPkInfoManageId());
         if (infoManage1 != null) {
-            infoManage1.setTitle(infoManage.getTitle());
-            infoManage1.setCover(infoManage.getCover());
             infoManage1.setText(infoManage.getText());
-            infoManage1.setIsTop(infoManage.getIsTop());
-            infoManage1.setGmtCreate(infoManage1.getGmtCreate());
-            infoManage1.setIsDeleted(infoManage.getIsDeleted());
             infoManageRepository.saveAndFlush(infoManage1);
             return ResponseResult.success("修改成功" + infoManage1);
         } else {
