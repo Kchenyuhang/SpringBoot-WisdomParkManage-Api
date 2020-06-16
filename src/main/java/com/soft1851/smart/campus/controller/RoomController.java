@@ -23,7 +23,7 @@ public class RoomController {
     @Resource
     private RoomService roomService;
 
-    @GetMapping(value = "/list")
+    @PostMapping(value = "/list")
     public List<TowerVo> selectAll() {
         return roomService.selectAll();
     }

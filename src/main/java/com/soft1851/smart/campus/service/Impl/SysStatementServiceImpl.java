@@ -1,8 +1,11 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.SysStatementMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.repository.SysStatementRepository;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,6 +34,8 @@ import java.util.List;
 public class SysStatementServiceImpl implements SysStatementService {
     @Resource
     private SysStatementRepository sysStatementRepository;
+    @Resource
+    private SysStatementMapper sysStatementMapper;
 
     /**
      * 分页查询所有声明数据
@@ -61,6 +67,7 @@ public class SysStatementServiceImpl implements SysStatementService {
                     .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
                     .isDeleted(false)
                     .build();
+            System.out.println(sysStatement1);
             sysStatementRepository.save(sysStatement1);
             return ResponseResult.success();
         }else {
@@ -89,6 +96,7 @@ public class SysStatementServiceImpl implements SysStatementService {
 
     @Override
     public ResponseResult deletedBatch(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
@@ -118,6 +126,7 @@ public class SysStatementServiceImpl implements SysStatementService {
 
     @Override
     public ResponseResult deleteBatchByPkStatementId(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
@@ -132,5 +141,21 @@ public class SysStatementServiceImpl implements SysStatementService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getSysStatementsByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        JSONArray times = JSONArray.parseArray(timeBorrowPageDto.getTime());
+        String startTime = times.get(0).toString();
+        String endTime = times.get(1).toString();
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
+        List<SysStatement> sysStatements = null;
+        try {
+            sysStatements = sysStatementMapper.getSysStatementByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(sysStatements);
     }
 }

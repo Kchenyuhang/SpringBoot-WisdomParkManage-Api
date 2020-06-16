@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.FleaTypeIncreasedDto;
 import com.soft1851.smart.campus.model.dto.TypeDto;
 import com.soft1851.smart.campus.model.entity.FleaType;
 
@@ -30,4 +31,6 @@ public interface FleaTypeService {
     ResponseResult typeDeletedById(Long pkId);
 
     ResponseResult typeModify(FleaType fleaType);
+
+    ResponseResult typeIncreased(FleaTypeIncreasedDto fleaTypeIncreasedDto);
 }

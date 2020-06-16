@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description TODO
@@ -24,6 +27,30 @@ public class TowerServiceImpl implements TowerService {
     @Override
     public List<Tower> findAll() {
         return towerRepository.findAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByType() {
+        List<Tower> towers = towerRepository.findAll();
+        List<Map<String, Object>> towerTypes = new LinkedList<>();
+        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
+        map.put("name", "教学楼");
+        map1.put("name", "宿舍楼");
+        towerTypes.add(map);
+        towerTypes.add(map1);
+        List<Tower> teachTowers = new LinkedList<>();
+        List<Tower> roomTowers = new LinkedList<>();
+        towers.forEach(tower -> {
+            if(tower.getType() == 1){
+                roomTowers.add(tower);
+            }else {
+                teachTowers.add(tower);
+            }
+        });
+        towerTypes.get(0).put("childTowers", teachTowers);
+        towerTypes.get(1).put("childTowers", roomTowers);
+        return towerTypes;
     }
 
     @Override

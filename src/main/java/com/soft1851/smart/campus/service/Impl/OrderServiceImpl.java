@@ -4,6 +4,7 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateOrderDto;
 import com.soft1851.smart.campus.model.entity.SysOrder;
 import com.soft1851.smart.campus.repository.OrderRepository;
 import com.soft1851.smart.campus.service.OrderService;
@@ -28,39 +29,51 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private OrderRepository orderRepository;
 
+    /**
+     * 根据学号查询订单记录
+     * @param jobNumber
+     * @return
+     */
     @Override
     public ResponseResult findALLByJobNumer(String jobNumber) {
         List<SysOrder> sysOrderList=orderRepository.findAllByJobNumber(jobNumber);
-
         return ResponseResult.success(sysOrderList);
     }
 
-    @Override
-    public ResponseResult findAllByPage(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(
-                pageDto.getCurrentPage(),
-                pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pk_order_id");
-        Page<SysOrder> sysOrders = orderRepository.findAll(pageable);
-        return ResponseResult.success(sysOrders.getContent());
-    }
 
+
+    /**
+     * 查询所有订单数据
+     * @param pageDto
+     * @return
+     */
     @Override
     public ResponseResult getAllSysOrder(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pk_order_id");
+                Sort.Direction.DESC,
+                "gmt_create");
         Page<SysOrder> sysOrders = orderRepository.getAllSysOrder(pageable);
         return ResponseResult.success(sysOrders.getContent());
     }
 
+    /**
+     * 删除单个订单数据
+     * @param pkOrderId
+     * @return
+     */
     @Override
     public ResponseResult deleteOrder(Long pkOrderId) {
-        orderRepository.deleteByPkOrderId(pkOrderId);
-        return ResponseResult.success();
+        SysOrder sysOrder = orderRepository.findByPkOrderId(pkOrderId);
+        if (sysOrder!=null){
+            orderRepository.deleteByPkOrderId(pkOrderId);
+            return ResponseResult.success("删除成功");
+        } else {
+            return  ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+
+
     }
 
     @Override
@@ -75,10 +88,22 @@ public class OrderServiceImpl implements OrderService {
                 idsList.add(Long.valueOf(id));
             }
             orderRepository.deleteBatch(idsList);
-            return ResponseResult.success("删除成功");
+            return ResponseResult.success("批量删除成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    /**
+     * 修改金额和订单描述
+     * @param updateOrderDto
+     * @return
+     */
+    @Override
+    public ResponseResult updateOrder(UpdateOrderDto updateOrderDto) {
+        orderRepository.updateSysOrder(updateOrderDto);
+        SysOrder sysOrder = orderRepository.findByPkOrderId(updateOrderDto.getPkOrderId());
+        return ResponseResult.success(sysOrder);
     }
 
 }
