@@ -43,8 +43,6 @@ public class FleaController {
     @Resource
     private FleaOrderService fleaOrderService;
     @Resource
-    private FleaCollectionService fleaCollectionService;
-    @Resource
     private FleaCommentService fleaCommentService;
 
     /**
@@ -143,5 +141,40 @@ public class FleaController {
     @PostMapping("type/modify")
     public ResponseResult typeModify(@RequestBody FleaType fleaType) {
         return fleaTypeService.typeModify(fleaType);
+    }
+
+    @PostMapping("/goods/all")
+    public ResponseResult getGoods(@RequestBody PageDto pageDto){
+        return fleaGoodsService.getGoodsByTime(pageDto);
+    }
+
+    /**
+     *
+     * @param fleaGoodsDto
+     * @return
+     */
+    @PostMapping(value = "goods/logicalDel")
+    public ResponseResult deleteGoodsById(@RequestBody FleaGoodsDto fleaGoodsDto) {
+        return fleaGoodsService.logical(fleaGoodsDto.getPkFleaGoodsId());
+    }
+
+    @PostMapping(value = "goods/batchLogical")
+    public ResponseResult batchLogicalGoods(@RequestBody FleaRewardBatchIdDto fleaRewardBatchIdDto) {
+        return fleaGoodsService.batchLogicalDel(fleaRewardBatchIdDto);
+    }
+
+    @PostMapping("/comment/del")
+    public ResponseResult delOne(@RequestBody FleaCommentDto commentDto){
+        return fleaCommentService.delComment(commentDto);
+    }
+
+    @PostMapping("/comment/all")
+    public ResponseResult getAll(@RequestBody PageDto pageDto){
+        return fleaCommentService.getAll(pageDto);
+    }
+
+    @PostMapping("/comment/batchDel")
+    public ResponseResult batchDel(@RequestBody FleaRewardBatchIdDto idDto){
+        return fleaCommentService.batchDel(idDto);
     }
 }

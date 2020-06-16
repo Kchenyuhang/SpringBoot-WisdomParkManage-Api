@@ -65,4 +65,8 @@ public class FleaGoodsVo {
      * 商品发布人名字
      */
     private String username;
+    /**
+     * 判断标签
+     */
+    private Boolean isDeleted;
 }
