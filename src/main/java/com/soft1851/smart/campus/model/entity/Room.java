@@ -77,4 +77,10 @@ public class Room {
      * 电费
      */
     private Double electricityBalance;
+
+    /**
+     * 房间单元名
+     */
+    @Column(name = "unit_id")
+    private Long unitId;
 }

@@ -114,6 +114,7 @@ public class SysFeedbackController {
     @PostMapping(value = "/page")
     @ApiOperation(value = "时间范围内的查询反馈",notes = "")
     public ResponseResult getSysFeedbackByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
+        System.out.println(timeBorrowPageDto);
         return sysFeedbackService.getSysFeedbackByTime(timeBorrowPageDto);
     }
 

@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.mapper.SysFeedbackMapper;
@@ -85,7 +87,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
     public ResponseResult modificationSysFeedback(UpdateSysFeedbackDto updateSysFeedbackDto) {
         sysFeedbackRepository.updateSysFeedback(updateSysFeedbackDto);
         SysFeedback sysFeedback = sysFeedbackRepository.findSysFeedbackByPkFeedbackId(updateSysFeedbackDto.getPkFeedbackId());
-        return ResponseResult.success(sysFeedback);
+        return ResponseResult.success();
     }
 
     /**
@@ -165,11 +167,16 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
 
     @Override
     public ResponseResult getSysFeedbackByTime(TimeBorrowPageDto timeBorrowPageDto) {
-        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
-        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        JSONArray times = JSONArray.parseArray(timeBorrowPageDto.getTime());
+        System.out.println(times);
+        String startTime = times.get(0).toString();
+        String endTime = times.get(1).toString();
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
         List<SysFeedback> sysFeedbacks = null;
         try {
             sysFeedbacks = sysFeedbackMapper.getSysFeedbackByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+            System.out.println(sysFeedbacks);
         } catch (SQLException e) {
             e.printStackTrace();
         }

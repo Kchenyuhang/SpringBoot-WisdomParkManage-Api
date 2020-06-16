@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.mapper.SysBorrowMapper;
 import com.soft1851.smart.campus.model.dto.BorrowDto;
@@ -91,8 +92,11 @@ public class SysBorrowServiceImpl implements SysBorrowService {
      */
     @Override
     public ResponseResult getSysBorrowsByTime(TimeBorrowPageDto timeBorrowPageDto) {
-        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
-        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        JSONArray times = JSONArray.parseArray(timeBorrowPageDto.getTime());
+        String startTime = times.get(0).toString();
+        String endTime = times.get(1).toString();
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
         List<SysBorrow> sysBorrowList = null;
         try {
             sysBorrowList = sysBorrowMapper.getSysBorrowsByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());

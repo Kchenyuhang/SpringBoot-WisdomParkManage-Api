@@ -158,6 +158,7 @@ public class AppVersionServiceImpl implements AppVersionService {
      */
     @Override
     public ResponseResult deletedBatch(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
@@ -183,8 +184,11 @@ public class AppVersionServiceImpl implements AppVersionService {
 
     @Override
     public ResponseResult getAppVersionsByTime(TimeBorrowPageDto timeBorrowPageDto) {
-        Timestamp timestamp = Timestamp.valueOf(timeBorrowPageDto.getStartTime());
-        Timestamp timestamp1 = Timestamp.valueOf(timeBorrowPageDto.getEndTime());
+        String[] times = timeBorrowPageDto.getTime().split(",");
+        String startTime = times[0];
+        String endTime = times[1];
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
         List<AppVersion> appVersionList = null;
         try {
             appVersionList = appVersionMapper.getAppVersionByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
