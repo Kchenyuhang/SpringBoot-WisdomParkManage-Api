@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.InfoManage;
 import com.soft1851.smart.campus.model.entity.InfoMangeType;
 import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
@@ -27,13 +28,14 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class InfoManageServiceImpl  implements InfoManageService {
+public class InfoManageServiceImpl implements InfoManageService {
 
     @Resource
     private InfoManageRepository infoManageRepository;
 
     @Resource
     private InfoManageTypeRepository infoManageTypeRepository;
+
 
     /***
      * 添加咨询
@@ -52,16 +54,16 @@ public class InfoManageServiceImpl  implements InfoManageService {
         infoManageRepository.save(infoManage);
         //获取其返回的自增主键
         Long id = infoManage.getPkInfoManageId();
-        System.out.println("返回的id："+id);
+        System.out.println("返回的id：" + id);
         //添加成功之后再存入关系表
-        if(id!=null){
-            InfoMangeType infoMangeType =new  InfoMangeType();
+        if (id != null) {
+            InfoMangeType infoMangeType = new InfoMangeType();
             infoMangeType.setTypeId(infoManageTypeIdVo.getTypeId());
             infoMangeType.setInfoId(id);
             infoMangeType.setIsDeleted(true);
             infoManageTypeRepository.save(infoMangeType);
             return ResponseResult.success("添加成功");
-        }else {
+        } else {
             return ResponseResult.success(ResultCode.DATABASE_ERROR);
         }
     }
@@ -69,6 +71,7 @@ public class InfoManageServiceImpl  implements InfoManageService {
 
     /**
      * 分页查询咨询
+     *
      * @param pageDto
      * @return
      */
@@ -81,10 +84,12 @@ public class InfoManageServiceImpl  implements InfoManageService {
                 "pkInfoManageId");
         Page<InfoManage> infoManagePage = infoManageRepository.findAll(pageable);
         return ResponseResult.success(infoManagePage.getContent());
+
     }
 
     /**
      * 单个删除咨询
+     *
      * @param id
      * @return
      */
@@ -102,6 +107,7 @@ public class InfoManageServiceImpl  implements InfoManageService {
 
     /**
      * 批量删除咨询
+     *
      * @param ids
      * @return
      */
@@ -124,7 +130,8 @@ public class InfoManageServiceImpl  implements InfoManageService {
     }
 
     /**
-     *修改咨询
+     * 修改咨询
+     *
      * @param infoManage
      * @return
      */
@@ -132,7 +139,7 @@ public class InfoManageServiceImpl  implements InfoManageService {
     public ResponseResult updateInfoManage(InfoManage infoManage) {
         //判断时候为空
         InfoManage infoManage1 = infoManageRepository.findByPkInfoManageId(infoManage.getPkInfoManageId());
-        if (infoManage1!=null){
+        if (infoManage1 != null) {
             infoManage1.setTitle(infoManage.getTitle());
             infoManage1.setCover(infoManage.getCover());
             infoManage1.setText(infoManage.getText());
@@ -140,8 +147,24 @@ public class InfoManageServiceImpl  implements InfoManageService {
             infoManage1.setGmtCreate(infoManage1.getGmtCreate());
             infoManage1.setIsDeleted(infoManage.getIsDeleted());
             infoManageRepository.saveAndFlush(infoManage1);
-            return ResponseResult.success("修改成功"+infoManage1);
-        }else {
+            return ResponseResult.success("修改成功" + infoManage1);
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    /**
+     * 修改置顶状态
+     * @param queryDto
+     * @return
+     */
+    @Override
+    public ResponseResult changeInfoMange(QueryDto queryDto) {
+        InfoManage infoManage = infoManageRepository.findByPkInfoManageId(Long.valueOf(queryDto.getFiled1()));
+        if (infoManage != null) {
+            infoManageRepository.changeIsTop(infoManage.getPkInfoManageId(), queryDto.getStatus());
+            return ResponseResult.success();
+        } else {
             return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
         }
     }

@@ -45,5 +45,17 @@ public interface InfoManageRepository extends JpaRepository<InfoManage, Long> {
     @Query("update InfoManage v set v.isDeleted = true where v.pkInfoManageId in ?1")
     void deleteBatch(List<Long> ids);
 
+    /**
+     * 改变置顶状态
+     * @param pkInfoManageId
+     * @param isTop
+     */
+    @Modifying
+    @LastModifiedBy
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update InfoManage set isTop = ?2 where pkInfoManageId = ?1")
+    void changeIsTop(Long pkInfoManageId,Boolean isTop);
+
+
 
 }

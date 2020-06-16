@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.InfoManage;
 import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
 import com.soft1851.smart.campus.service.InfoManageService;
@@ -78,5 +79,16 @@ public class InfoManageController {
     @PutMapping(value = "/modification")
     public ResponseResult updateInfoManage(@RequestBody InfoManage infoManage){
         return infoManageService.updateInfoManage(infoManage);
+    }
+
+    /**
+     *
+     * @param queryDto
+     * @return
+     */
+    @ApiOperation(value = "修改资讯置顶状态",notes = "请求参数id/isTop")
+    @PostMapping(value = "/isTop")
+    public ResponseResult changeInfoMange(@RequestBody QueryDto queryDto){
+        return infoManageService.changeInfoMange(queryDto);
     }
 }
