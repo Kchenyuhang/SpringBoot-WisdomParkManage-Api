@@ -1,13 +1,14 @@
-package com.soft1851.smart.campus.mapper;
+package com.soft1851.smart.campus.repository;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
 @SpringBootTest
-class SysRoleMapperTest {
+class ReportLossRepositoryTest {
 
     @Resource
-    private SysRoleMapper sysRoleMapper;
+    private ReportLossRepository reportLossRepository;
+
 
 }

@@ -57,4 +57,7 @@ public interface ReportLossRepository extends JpaRepository<ReportLoss, Long> {
     @Query(value = "select * from report_loss where is_deleted =false ",nativeQuery = true)
     Page<ReportLoss> getAllReportLoss(Pageable pageable);
 
+
+
+
 }

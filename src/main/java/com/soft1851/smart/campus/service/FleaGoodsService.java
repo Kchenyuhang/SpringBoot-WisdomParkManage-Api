@@ -13,10 +13,6 @@ import org.springframework.data.domain.Page;
  * @createTime 2020年06月09日 13:58:00
  */
 public interface FleaGoodsService {
-    /**
-     * 模糊查询所有商品
-     */
-    Page<FleaGoods> findFleaGoodsByContent(FleaSearchDto fleaSearchDto);
 
     /**
      * 根据时间分页查询商品
@@ -25,42 +21,19 @@ public interface FleaGoodsService {
      */
     ResponseResult getGoodsByTime(PageDto pageDto);
 
-    /**
-     * 根据商品id查询指定商品信息；
-     *
-     * @param goodIdDto GoodIdDto
-     * @return ResponseResult
-     */
-    ResponseResult findGoodById(GoodIdDto goodIdDto);
 
     /**
-     * 修改商品
-     *
-     * @param fleaGoodsDto FleaGoodsDto
-     * @return ResponseResult
+     * 根据商品ID删除商品
+     * @param pkGoodsId
+     * @return
      */
-    ResponseResult updateGood(FleaGoodsDto fleaGoodsDto);
+    ResponseResult logical(Long pkGoodsId);
 
     /**
-     * 下架商品
+     * 批量逻辑删除
      *
-     * @param soldOutGoodDto SoldOutGoodDto
+     * @param fleaRewardBatchIdDto
      * @return ResponseResult
      */
-    ResponseResult soldOutGood(SoldOutGoodDto soldOutGoodDto);
-
-    /**
-     * 添加商品
-     *
-     * @param saveGoodDto SaveGoodDto
-     * @return ResponseResult
-     */
-    ResponseResult saveGoods(SaveGoodDto saveGoodDto);
-
-    /**
-     * 查询top前五的标签
-     *
-     * @return ResponseResult
-     */
-    ResponseResult findTopFiveMark();
+    ResponseResult batchLogicalDel(FleaRewardBatchIdDto fleaRewardBatchIdDto);
 }
