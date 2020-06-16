@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -146,4 +148,11 @@ public interface AppVersionRepository extends JpaRepository<AppVersion, Long> {
     @Query(value = "update first_smart_campus.app_version s set s.is_deleted = true where s.pk_app_version_id=?1", nativeQuery = true)
     int setIsDeletedByPkAppVersionId(Long pkAppVersionId);
 
+    /**
+     * 分页查询所有APP版本数据（去除逻辑删除）
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select * from first_smart_campus.app_version where is_deleted = false",nativeQuery = true)
+    Page<AppVersion> getAllAppVersion(Pageable pageable);
 }

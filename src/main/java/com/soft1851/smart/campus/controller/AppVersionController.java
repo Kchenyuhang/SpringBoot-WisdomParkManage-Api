@@ -8,7 +8,11 @@ import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 import com.soft1851.smart.campus.service.AppVersionService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -32,6 +36,7 @@ public class AppVersionController {
      * @param pageDto
      * @return
      */
+    @ApiOperation(value = "分页查询所有APP版本",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllAppVersion(@RequestBody PageDto pageDto) {
         return appVersionService.findAllAppVersion(pageDto);
@@ -43,7 +48,8 @@ public class AppVersionController {
      * @param updateAppVersionDto
      * @return
      */
-    @PutMapping(value = "/modification")
+    @ApiOperation(value = "修改版本数据信息",notes = "")
+    @PostMapping(value = "/modification")
     public ResponseResult updateAppVersion(@RequestBody UpdateAppVersionDto updateAppVersionDto) {
         return appVersionService.modificationAppVersion(updateAppVersionDto);
     }
@@ -54,6 +60,7 @@ public class AppVersionController {
      * @param appVersion
      * @return
      */
+    @ApiOperation(value = "新增版本信息",notes = "")
     @PostMapping(value = "/increase")
     public ResponseResult increaseAppVersion(@RequestBody AppVersion appVersion) {
         return appVersionService.increaseAppVersion(appVersion);
@@ -65,7 +72,8 @@ public class AppVersionController {
      * @param singleParam
      * @return
      */
-    @DeleteMapping(value = "/deletion")
+    @ApiOperation(value = "逻辑删除版本信息",notes = "")
+    @PostMapping(value = "/deletion")
     public ResponseResult deleteAppVersion(@RequestBody SingleParam singleParam) {
         return appVersionService.deletionAppVersion(singleParam.getPkId());
     }
@@ -76,6 +84,7 @@ public class AppVersionController {
      * @param batchDeletionDto
      * @return
      */
+    @ApiOperation(value = "批量逻辑删除反馈",notes = "")
     @PostMapping(value = "/deletionBath")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto) {
         return appVersionService.deletedBatch(batchDeletionDto.getIds());

@@ -20,7 +20,7 @@ class UserAccountMapperTest {
                 .currentPage(1)
                 .pageSize(3)
                 .build();
-        List<UserAccountVo> userAccountVos = userAccountMapper.getUserAccountVo(pageDto);
+        List<UserAccountVo> userAccountVos = userAccountMapper.getTeacherUserAccountVo(pageDto);
         System.out.println(userAccountVos);
     }
 
@@ -29,4 +29,6 @@ class UserAccountMapperTest {
         UserAccount userAccount = userAccountMapper.getUserAccountByJobNumber("1802333101");
         System.out.println(userAccount);
     }
+
+
 }

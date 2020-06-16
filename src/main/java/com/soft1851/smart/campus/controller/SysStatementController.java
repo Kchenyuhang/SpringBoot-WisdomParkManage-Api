@@ -8,7 +8,11 @@ import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.service.SysStatementService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -31,6 +35,7 @@ public class SysStatementController {
      * @param pageDto
      * @return
      */
+    @ApiOperation(value = "分页查询所有声明",notes = "")
     @PostMapping(value = "/all")
     ResponseResult findAllStatement(@RequestBody PageDto pageDto){
         return sysStatementService.findAllStatement(pageDto);
@@ -41,6 +46,7 @@ public class SysStatementController {
      * @param sysStatement
      * @return
      */
+    @ApiOperation(value = "新增声明",notes = "")
     @PostMapping(value = "/increase")
     public ResponseResult increaseSysStatement(@RequestBody SysStatement sysStatement){
         return sysStatementService.increaseSysStatement(sysStatement);
@@ -51,32 +57,33 @@ public class SysStatementController {
      * @param updateSysStatementDto
      * @return
      */
-    @PutMapping(value = "/modification")
+    @ApiOperation(value = "修改声明",notes = "")
+    @PostMapping(value = "/modification")
     public ResponseResult modificationSysStatement(@RequestBody UpdateSysStatementDto updateSysStatementDto){
         return sysStatementService.modificationSysStatement(updateSysStatementDto);
     }
 
 
-    /**
-     * 删除声明
-     * @param id
-     * @return
-     */
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deletedSysStatement(@PathVariable Long id){
-        return sysStatementService.deletionSysStatement(id);
-    }
-
-
-    /**
-     * 批量删除声明
-     * @param ids
-     * @return
-     */
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return sysStatementService.deletedBatch(ids);
-    }
+//    /**
+//     * 删除声明
+//     * @param id
+//     * @return
+//     */
+//    @DeleteMapping(value = "/deletion/{id}")
+//    public ResponseResult deletedSysStatement(@PathVariable Long id){
+//        return sysStatementService.deletionSysStatement(id);
+//    }
+//
+//
+//    /**
+//     * 批量删除声明
+//     * @param ids
+//     * @return
+//     */
+//    @DeleteMapping(value = "/deletionBath/{ids}")
+//    public ResponseResult deletedBatch(@PathVariable String ids){
+//        return sysStatementService.deletedBatch(ids);
+//    }
 
 
     /**
@@ -84,7 +91,8 @@ public class SysStatementController {
      * @param singleParam
      * @return
      */
-    @DeleteMapping(value = "/deletion")
+    @ApiOperation(value = "逻辑删除声明",notes = "")
+    @PostMapping(value = "/deletion")
     public ResponseResult deleteSysStatement(@RequestBody SingleParam singleParam){
         return sysStatementService.deleteSysStatement(singleParam.getPkId());
     }
@@ -94,6 +102,7 @@ public class SysStatementController {
      * @param batchDeletionDto
      * @return
      */
+    @ApiOperation(value = "批量逻辑删除声明",notes = "")
     @PostMapping(value = "/deletionBath")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
         return sysStatementService.deleteBatchByPkStatementId(batchDeletionDto.getIds());

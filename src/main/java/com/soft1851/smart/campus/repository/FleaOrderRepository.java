@@ -4,6 +4,7 @@ package com.soft1851.smart.campus.repository;
 import com.soft1851.smart.campus.model.dto.FleaOrderDto;
 import com.soft1851.smart.campus.model.entity.FleaOrder;
 import com.soft1851.smart.campus.model.vo.FleaOrderVo;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -56,5 +57,5 @@ public interface FleaOrderRepository extends JpaRepository<FleaOrder, String> {
             "left join fo.fleaGoods fg " +
             "left join fo.fleaUserSeller fs " +
             "left join fo.fleaUserBuyer fb ")
-    List<FleaOrderVo> findAllOrder(Pageable pageable);
+    Page<FleaOrderVo> findAllOrder(Pageable pageable);
 }
