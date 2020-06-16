@@ -43,6 +43,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
      * 根据id修改房间信息
      * @param room
      */
-    @Query(value = "UPDATE Room SET name=:#{#room.name}, towerId=:#{#room.towerId} WHERE id=:#{#room.id}")
+    @Query(value = "UPDATE Room SET name=:#{#room.name}, towerId=:#{#room.towerId}, unitId=:#{#room.unitId} WHERE id=:#{#room.id}")
     void updateRoomById(@Param("room") Room room);
 }

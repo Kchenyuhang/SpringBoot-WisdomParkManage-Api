@@ -26,6 +26,12 @@ public interface TowerService {
     List<Map<String, Object>> findAllByType();
 
     /**
+     * 获取所有楼栋的单元
+     * @return
+     */
+    List<Map<String, Object>> getAllUnitByTowerId();
+
+    /**
      * 新增楼栋信息
      */
     void insertTower(Tower tower);

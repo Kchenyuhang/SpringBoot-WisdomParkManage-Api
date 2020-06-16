@@ -1,6 +1,11 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.soft1851.smart.campus.mapper.TowerAndUnitMapper;
+import com.soft1851.smart.campus.mapper.TowerMapper;
+import com.soft1851.smart.campus.mapper.TowerUnitMapper;
 import com.soft1851.smart.campus.model.entity.Tower;
+import com.soft1851.smart.campus.model.entity.TowerAndUnit;
+import com.soft1851.smart.campus.model.entity.TowerUnit;
 import com.soft1851.smart.campus.repository.TowerRepository;
 import com.soft1851.smart.campus.service.TowerService;
 import org.springframework.stereotype.Service;
@@ -23,6 +28,10 @@ import java.util.Map;
 public class TowerServiceImpl implements TowerService {
     @Resource
     private TowerRepository towerRepository;
+    @Resource
+    private TowerMapper towerMapper;
+    @Resource
+    private TowerAndUnitMapper towerAndUnitMapper;
 
     @Override
     public List<Tower> findAll() {
@@ -51,6 +60,16 @@ public class TowerServiceImpl implements TowerService {
         towerTypes.get(0).put("childTowers", teachTowers);
         towerTypes.get(1).put("childTowers", roomTowers);
         return towerTypes;
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllUnitByTowerId() {
+        List<Map<String, Object>> towers = towerMapper.getAllTowers();
+        towers.forEach(tower -> {
+            List<TowerUnit> maps = towerAndUnitMapper.getAllUnitByTowerId(Long.parseLong(tower.get("pk_tower_id").toString()));
+            tower.put("childUnit", maps);
+        });
+        return towers;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.soft1851.smart.campus.model.entity.Room;
 import com.soft1851.smart.campus.model.vo.TowerVo;
 import com.soft1851.smart.campus.service.RoomService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,18 +24,21 @@ public class RoomController {
     @Resource
     private RoomService roomService;
 
+    @ApiOperation(value = "查询所有房间信息")
     @PostMapping(value = "/list")
     public List<TowerVo> selectAll() {
         return roomService.selectAll();
     }
 
+    @ApiOperation(value = "新增房间信息")
     @PostMapping
     public ResponseResult insertRoom(@RequestBody Room room) {
         roomService.insertRoom(room);
         return ResponseResult.success();
     }
 
-    @PutMapping("/id")
+    @ApiOperation(value = "修改房间信息")
+    @PostMapping("/modification/id")
     public ResponseResult updateRoomById(@RequestBody Room room) {
         roomService.update(room);
         return ResponseResult.success();
