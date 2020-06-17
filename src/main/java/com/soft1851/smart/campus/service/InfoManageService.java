@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.InfoManage;
 import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
 
@@ -23,7 +24,8 @@ public interface InfoManageService {
     ResponseResult insertInfoManage(InfoManageTypeIdVo infoManageTypeIdVo);
 
     /**
-     * 查询所有咨讯
+     * 分页查询所有咨讯
+     * @param pageDto
      * @return
      */
     ResponseResult findAllInfo(PageDto pageDto);
@@ -49,4 +51,12 @@ public interface InfoManageService {
      * @return
      */
     ResponseResult updateInfoManage(InfoManage infoManage);
+
+    /**
+     * 改变置顶状态
+     * @param queryDto
+     * @return
+     */
+    ResponseResult changeInfoMange(QueryDto queryDto);
+
 }

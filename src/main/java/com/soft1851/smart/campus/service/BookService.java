@@ -20,11 +20,11 @@ public interface BookService {
     ResponseResult increaseSysBook(SysBookDto sysBookDto);
 
     /**
-     * 删除一个本
-     * @param pkBookid
+     * 删除一条数据
+     * @param pkBookId
      * @return
      */
-    ResponseResult deleteBook(Long pkBookid);
+    ResponseResult deleteBook(Long pkBookId);
     /**
      * 批量删除图书
      *

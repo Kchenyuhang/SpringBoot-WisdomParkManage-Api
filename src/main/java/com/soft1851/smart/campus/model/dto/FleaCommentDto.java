@@ -16,8 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FleaCommentDto {
-    private String comment;
-    private Long userId;
-    private Long rewardId;
-    private Long reviewerId;
+    private Long commentId;
 }

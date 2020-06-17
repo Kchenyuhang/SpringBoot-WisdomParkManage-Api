@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateOrderDto;
 
 /**
  * @ClassName OrderService
@@ -17,12 +18,7 @@ public interface OrderService {
      * @return
      */
     ResponseResult findALLByJobNumer(String jobNumber);
-    /**
-     * 分页查询订单信息
-     * @param pageDto
-     * @return
-     */
-    ResponseResult findAllByPage(PageDto pageDto);
+
 
     /**
      * 分页查询未被逻辑查询删除的订单信息数据
@@ -43,4 +39,11 @@ public interface OrderService {
      * @return
      */
     ResponseResult deletedBatch(String ids);
+
+    /**
+     * 修改金额和订单描述
+     * @param updateOrderDto
+     * @return
+     */
+    ResponseResult updateOrder(UpdateOrderDto updateOrderDto);
 }

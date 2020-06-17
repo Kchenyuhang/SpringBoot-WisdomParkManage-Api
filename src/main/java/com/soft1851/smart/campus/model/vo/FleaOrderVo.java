@@ -17,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FleaOrderVo {
-    private String orderId;
+    private String pkFleaOrderId;
     private String goodsName;
     private Double goodsPrice;
     private String goodsSeller;
@@ -25,4 +25,5 @@ public class FleaOrderVo {
     private Date orderCreateTime;
     private String goodsDescription;
     private String goodsMark;
+    private Boolean isDeleted;
 }

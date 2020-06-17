@@ -2,12 +2,15 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.mapper.SysRoleMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
 import com.soft1851.smart.campus.model.entity.SysRole;
+import com.soft1851.smart.campus.repository.SysRoleMenuRepository;
 import com.soft1851.smart.campus.repository.SysRoleRepository;
 import com.soft1851.smart.campus.service.SysRoleService;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +21,7 @@ import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Tao
@@ -38,6 +38,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
+
+    @Resource
+    private SysRoleMenuRepository sysRoleMenuRepository;
 
     /**
      * 分页查询所有
@@ -181,5 +184,21 @@ public class SysRoleServiceImpl implements SysRoleService {
             e.printStackTrace();
         }
         return ResponseResult.success(mapList);
+    }
+
+    @Override
+    public int deleteRoleMenu(String ids, long roleId) {
+        List<Long> idList = new ArrayList<>();
+        ids = ids.substring(1, ids.length() - 1);
+        String[] strings = ids.split(",");
+        for (String id : strings) {
+            long roleMenuId = sysRoleMenuRepository.getRoleMenuId(roleId, Long.parseLong(id));
+            idList.add(roleMenuId);
+        }
+        int n = sysRoleMenuRepository.deleteBatchByPkRoleId(idList);
+        if (n > 0) {
+            return n;
+        }
+        throw new CustomException("删除角色权限", ResultCode.DATA_UPDATE_ERROR);
     }
 }

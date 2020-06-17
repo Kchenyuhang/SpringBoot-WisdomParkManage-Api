@@ -11,7 +11,12 @@ import com.soft1851.smart.campus.model.dto.*;
  * @createTime 2020年06月09日 13:58:00
  */
 public interface FleaUserService {
-    //查询所有用户
+    /**
+     * 查询所有用户
+     *
+     * @param pageDto PageDto
+     * @return ResponseResult
+     */
     ResponseResult findAllUser(PageDto pageDto);
 
     //模糊搜索

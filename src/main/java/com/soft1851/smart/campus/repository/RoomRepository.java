@@ -30,10 +30,12 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
      * 查询所有房间信息
      * @return
      */
-    @Query(value = "SELECT NEW com.soft1851.smart.campus.model.vo.TowerVo (r.id, r.name, t.name, r.gmtCreate) " +
+    @Query(value = "SELECT NEW com.soft1851.smart.campus.model.vo.TowerVo (r.id, r.name, t.name, u.name, r.gmtCreate, r.electricityBalance) " +
             "FROM Room r " +
             "LEFT JOIN Tower t " +
             "ON r.towerId = t.pkTowerId " +
+            "LEFT JOIN TowerUnit u " +
+            "ON r.unitId = u.unitId " +
             "ORDER BY r.gmtCreate ")
     List<TowerVo> selectAll();
 
@@ -41,6 +43,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
      * 根据id修改房间信息
      * @param room
      */
-    @Query(value = "UPDATE Room SET name=:#{#room.name}, towerId=:#{#room.towerId} WHERE id=:#{#room.id}")
+    @Query(value = "UPDATE Room SET name=:#{#room.name}, towerId=:#{#room.towerId}, unitId=:#{#room.unitId} WHERE id=:#{#room.id}")
     void updateRoomById(@Param("room") Room room);
 }

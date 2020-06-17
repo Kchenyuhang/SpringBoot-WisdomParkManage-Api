@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -45,9 +47,8 @@ public interface SysFeedbackRepository extends JpaRepository<SysFeedback, Long> 
      */
     @Transactional(rollbackFor = RuntimeException.class)
     @Modifying
-    @Query(value = "UPDATE first_smart_campus.sys_feedback SET pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}," +
-            "title=:#{#updateSysFeedbackDto.title},content=:#{#updateSysFeedbackDto.content}," +
-            "contact_way=:#{#updateSysFeedbackDto.contactWay} WHERE pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}",nativeQuery = true)
+    @Query(value = "UPDATE first_smart_campus.sys_feedback SET " +
+            "is_handled =:#{#updateSysFeedbackDto.isHandled} WHERE pk_feedback_id=:#{#updateSysFeedbackDto.pkFeedbackId}",nativeQuery = true)
     void updateSysFeedback(@Param("updateSysFeedbackDto") UpdateSysFeedbackDto updateSysFeedbackDto);
 
 
@@ -69,4 +70,12 @@ public interface SysFeedbackRepository extends JpaRepository<SysFeedback, Long> 
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update first_smart_campus.sys_feedback f set f.is_deleted = true where f.pk_feedback_id in ?1",nativeQuery = true)
     int deleteBatchByPkFeedbackId(List<Long> ids);
+
+    /**
+     * 分页查询所有反馈数据
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select * from first_smart_campus.sys_feedback where is_deleted = false",nativeQuery = true)
+    Page<SysFeedback> getAllSysFeedback(Pageable pageable);
 }

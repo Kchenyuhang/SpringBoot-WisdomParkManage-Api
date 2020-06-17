@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.AppVersionMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateAppVersionDto;
 import com.soft1851.smart.campus.model.entity.AppVersion;
 import com.soft1851.smart.campus.repository.AppVersionRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,6 +35,8 @@ import java.util.List;
 public class AppVersionServiceImpl implements AppVersionService {
     @Resource
     private AppVersionRepository appVersionRepository;
+    @Resource
+    private AppVersionMapper appVersionMapper;
 
     /**
      * 分页查询所有版本号
@@ -44,9 +49,9 @@ public class AppVersionServiceImpl implements AppVersionService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkAppVersionId");
-        Page<AppVersion> appVersions = appVersionRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<AppVersion> appVersions = appVersionRepository.getAllAppVersion(pageable);
         return ResponseResult.success(appVersions.getContent());
     }
 
@@ -153,6 +158,7 @@ public class AppVersionServiceImpl implements AppVersionService {
      */
     @Override
     public ResponseResult deletedBatch(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         //判断是否有数据
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
@@ -174,5 +180,21 @@ public class AppVersionServiceImpl implements AppVersionService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getAppVersionsByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        String[] times = timeBorrowPageDto.getTime().split(",");
+        String startTime = times[0];
+        String endTime = times[1];
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
+        List<AppVersion> appVersionList = null;
+        try {
+            appVersionList = appVersionMapper.getAppVersionByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(appVersionList);
     }
 }

@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.model.dto.FleaTypeIncreasedDto;
 import com.soft1851.smart.campus.model.dto.TypeDto;
 import com.soft1851.smart.campus.model.entity.FleaType;
 import com.soft1851.smart.campus.repository.FleaTypeRepository;
@@ -90,6 +91,29 @@ public class FleaTypeServiceImpl implements FleaTypeService {
                 fleaTypeRepository.save(fleaType);
                 return ResponseResult.success();
             }
+        }
+    }
+
+    @Override
+    public ResponseResult typeIncreased(FleaTypeIncreasedDto fleaTypeIncreasedDto) {
+        FleaType fleaType = FleaType.builder()
+                .parentId(fleaTypeIncreasedDto.getParentId())
+                .typeCoverUrl(fleaTypeIncreasedDto.getTypeCoverUrl())
+                .typeName(fleaTypeIncreasedDto.getTypeName())
+                .typeUrl(fleaTypeIncreasedDto.getTypeUrl())
+                .isDeleted(false)
+                .build();
+
+        log.error("需要添加的数据在数据库里是否存在");
+        log.error("开始判断是否重复");
+        List<FleaType> fleaTypes = fleaTypeRepository.findFleaTypesByTypeNameEqualsOrTypeUrlEquals(fleaType.getTypeName(), fleaType.getTypeUrl());
+        log.info(fleaTypes.toString());
+        if (fleaTypes.size() > 0) {
+            log.error("需要添加的数据在数据库里存在重复值");
+            return ResponseResult.success("数据已存在");
+        } else {
+            fleaTypeRepository.save(fleaType);
+            return ResponseResult.success();
         }
     }
 }

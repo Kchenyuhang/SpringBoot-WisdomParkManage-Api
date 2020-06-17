@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.SingleParam;
-import com.soft1851.smart.campus.model.dto.UpdateSysStatementDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.SysStatement;
 import com.soft1851.smart.campus.service.SysStatementService;
 import io.swagger.annotations.Api;
@@ -108,5 +105,17 @@ public class SysStatementController {
         return sysStatementService.deleteBatchByPkStatementId(batchDeletionDto.getIds());
     }
 
+
+
+    /**
+     * 时间范围内的查询
+     * @param timeBorrowPageDto
+     * @return
+     */
+    @PostMapping(value = "/page")
+    @ApiOperation(value = "时间范围内的查询声明",notes = "")
+    public ResponseResult getSysStatementsByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
+        return sysStatementService.getSysStatementsByTime(timeBorrowPageDto);
+    }
 
 }

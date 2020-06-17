@@ -21,4 +21,6 @@ public class UpdateAppVersionDto {
   private String appType;
   private String downloadLink;
   private String versionDescription;
+  private String maxVersion;
+  private String currentVersion;
 }

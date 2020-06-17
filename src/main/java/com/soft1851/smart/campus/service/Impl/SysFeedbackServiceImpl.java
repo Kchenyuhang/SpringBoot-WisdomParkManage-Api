@@ -1,8 +1,12 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.SysFeedbackMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.TimeBorrowPageDto;
 import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.repository.SysFeedbackRepository;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +36,8 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
 
     @Resource
     private SysFeedbackRepository sysFeedbackRepository;
+    @Resource
+    private SysFeedbackMapper sysFeedbackMapper;
 
     /**
      * 分页查询所有
@@ -43,10 +50,10 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkFeedbackId");
-        Page<SysFeedback> feedbacks = sysFeedbackRepository.findAll(pageable);
-        return ResponseResult.success(feedbacks.getContent());
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<SysFeedback> sysFeedbacks = sysFeedbackRepository.getAllSysFeedback(pageable);
+        return ResponseResult.success(sysFeedbacks.getContent());
     }
 
     @Override
@@ -64,7 +71,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
                     .isDeleted(false)
                     .build();
             sysFeedbackRepository.save(sysFeedback1);
-            return ResponseResult.success();
+            return ResponseResult.success("新增反馈成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_NOT_COMPLETE);
         }
@@ -80,7 +87,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
     public ResponseResult modificationSysFeedback(UpdateSysFeedbackDto updateSysFeedbackDto) {
         sysFeedbackRepository.updateSysFeedback(updateSysFeedbackDto);
         SysFeedback sysFeedback = sysFeedbackRepository.findSysFeedbackByPkFeedbackId(updateSysFeedbackDto.getPkFeedbackId());
-        return ResponseResult.success(sysFeedback);
+        return ResponseResult.success();
     }
 
     /**
@@ -156,5 +163,23 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getSysFeedbackByTime(TimeBorrowPageDto timeBorrowPageDto) {
+        JSONArray times = JSONArray.parseArray(timeBorrowPageDto.getTime());
+        System.out.println(times);
+        String startTime = times.get(0).toString();
+        String endTime = times.get(1).toString();
+        Timestamp timestamp = Timestamp.valueOf(startTime);
+        Timestamp timestamp1 = Timestamp.valueOf(endTime);
+        List<SysFeedback> sysFeedbacks = null;
+        try {
+            sysFeedbacks = sysFeedbackMapper.getSysFeedbackByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+            System.out.println(sysFeedbacks);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(sysFeedbacks);
     }
 }

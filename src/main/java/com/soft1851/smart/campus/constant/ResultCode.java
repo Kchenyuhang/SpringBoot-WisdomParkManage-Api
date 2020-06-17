@@ -32,12 +32,14 @@ public enum ResultCode {
     USER_SIGN_IN_FAIL(20008, "用户登录失败"),
     USER_NOT_FOUND(20009, "用户不存在"),
     USER_NO_AUTH(20019, "用户权限不足"),
+    USER_ACCOUNT_PASSWORD_ERROR(20020,"账号或者密码错误"),
 
 
     /* 业务错误：30001-39999 */
     SMS_ERROR(30001, "短信业务出现问题"),
     TOKEN_NOT_USE(30002, "token已失效"),
     UPLOAD_ERROR(30003, "上传文件业务出现问题"),
+    CARD_REPORT(30004,"一卡通已挂失"),
 
     /* 数据错误：40001-49999 */
     RESULT_CODE_DATA_NONE(50001, "数据未找到"),
@@ -45,6 +47,7 @@ public enum ResultCode {
     DATA_ALREADY_EXISTED(50003, "数据已存在"),
     DATABASE_ERROR(50004, "数据库操作异常"),
     DATA_UPDATE_ERROR(50005, "数据修改异常"),
+
 
 
     /* 服务器或系统错误：50001-599999 */

@@ -36,6 +36,8 @@ public class SysRoleController {
     private RoleService roleService;
     @Resource
     private UserRoleService userRoleService;
+    @Resource
+    private RoleMenuService roleMenuService;
 
     /**
      * 分页查询所有
@@ -141,5 +143,11 @@ public class SysRoleController {
     public ResponseResult assignMenus(@RequestBody DoubleFieldDto doubleFieldDto) {
         System.out.println(doubleFieldDto);
         return userRoleService.insertUserRole(doubleFieldDto);
+    }
+
+    @PostMapping(value = "/delection/batch")
+    public ResponseResult batchDelete(@RequestBody DoubleFieldDto doubleFieldDto) {
+        sysRoleService.deleteRoleMenu(doubleFieldDto.getFirstField(), Long.parseLong(doubleFieldDto.getSecondField()));
+        return ResponseResult.success();
     }
 }

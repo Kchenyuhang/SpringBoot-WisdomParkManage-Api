@@ -24,17 +24,24 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
     /**
      * 根据搜索内容进行模糊查询
      *
-     * @param goodsName
-     * @param goodsDescription
-     * @return
+     * @param goodsName String
+     * @param goodsDescription String
+     * @return List<FleaGoods>
      */
     List<FleaGoods> findFleaGoodsByGoodsNameLikeOrGoodsDescriptionLike(String goodsName, String goodsDescription);
 
-    @Query(value = "select new com.soft1851.smart.campus.model.vo.GoodsVo(g.goodsName,g.goodsPrice,g.goodsDescription,g.goodsMark,g.goodsImgUrl,g.goodsCreateTime,t.typeName,u.username)" +
+    /**
+     * 分页查询所有商品
+     *
+     * @param pageable Pageable
+     * @return List<GoodsVo>
+     */
+    @Query(value = "select new com.soft1851.smart.campus.model.vo.FleaGoodsVo(g.pkFleaGoodsId,g.goodsName,g.goodsDescription,g.goodsImgUrl,g.goodsPrice,g.goodsMark," +
+            "g.goodsCreateTime,t.pkFleaTypeId,t.typeName,u.pkFleaUserId,u.nickname,u.username,g.isDeleted) " +
             "from FleaGoods g " +
             "left join g.fleaType t " +
-            "left join g.fleaUser u")
-    List<GoodsVo> getAllGoodsByTime(Pageable pageable);
+            "left join g.fleaUser u ")
+    List<FleaGoodsVo> getAllGoodsByTime(Pageable pageable);
 
     /**
      * 根据商品id查询指定商品的详细信息
@@ -43,7 +50,7 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
      * @return List<FleaGoodsVo>
      */
     @Query(value = "select new com.soft1851.smart.campus.model.vo.FleaGoodsVo(g.pkFleaGoodsId,g.goodsName,g.goodsDescription,g.goodsImgUrl,g.goodsPrice,g.goodsMark," +
-            "g.goodsCreateTime,t.pkFleaTypeId,t.typeName,u.pkFleaUserId,u.nickname,u.username) " +
+            "g.goodsCreateTime,t.pkFleaTypeId,t.typeName,u.pkFleaUserId,u.nickname,u.username,g.isDeleted) " +
             "from FleaGoods g " +
             "left join g.fleaType t " +
             "left join g.fleaUser u " +
@@ -61,6 +68,16 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
     @Query(value = "update FleaGoods set isDeleted = 1 where pkFleaGoodsId = ?1 ")
     int soldOutGood(Long goodId);
 
+    /**
+     * 批量逻辑删除
+     *
+     * @param batchId List<String>
+     * @return int
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update FleaGoods set isDeleted = 1 where pkFleaGoodsId in (:batchId)")
+    int batchLogicalDel(List<Long> batchId);
     /**
      * 查询top前五的标签
      *

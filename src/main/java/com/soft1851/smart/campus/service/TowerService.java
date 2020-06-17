@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service;
 import com.soft1851.smart.campus.model.entity.Tower;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description TODO
@@ -17,6 +18,18 @@ public interface TowerService {
      * @return
      */
     List<Tower> findAll();
+
+    /**
+     * 查询所有楼栋并分类
+     * @return
+     */
+    List<Map<String, Object>> findAllByType();
+
+    /**
+     * 获取所有楼栋的单元
+     * @return
+     */
+    List<Map<String, Object>> getAllUnitByTowerId();
 
     /**
      * 新增楼栋信息

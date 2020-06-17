@@ -43,4 +43,10 @@ class CardRepositoryTest {
         SysCard sysCard = cardRepository.getSysCardByJobNumber("1802343315");
         System.out.println(sysCard);
     }
+
+    @Test
+    void updateStatus() {
+        int a = cardRepository.updateStatus((long)44,true);
+        System.out.println(a);
+    }
 }

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description TODO
@@ -23,9 +24,21 @@ public class TowerController {
     private TowerService towerService;
 
     @ApiOperation(value = "获取所有楼栋信息")
-    @GetMapping(value = "/list")
+    @PostMapping(value = "/list")
     public List<Tower> selectAll() {
         return towerService.findAll();
+    }
+
+    @ApiOperation(value = "分类获取所有楼栋信息")
+    @PostMapping(value = "/list/type")
+    public List<Map<String, Object>> getAllByType() {
+        return towerService.findAllByType();
+    }
+
+    @ApiOperation(value = "查询所有楼栋的单元信息")
+    @PostMapping(value = "/units/list")
+    public List<Map<String, Object>> getUnitsByTowerId() {
+        return towerService.getAllUnitByTowerId();
     }
 
     @PostMapping("/increase")
@@ -34,7 +47,7 @@ public class TowerController {
         return ResponseResult.success();
     }
 
-    @PutMapping("/single")
+    @PostMapping("/single")
     public ResponseResult updateByTowerId(@RequestBody Tower tower) {
         towerService.updateTowerByTowerId(tower);
         return ResponseResult.success();

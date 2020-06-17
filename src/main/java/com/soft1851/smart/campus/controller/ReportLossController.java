@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.QueryDto;
+import com.soft1851.smart.campus.model.entity.ReportLoss;
 import com.soft1851.smart.campus.service.ReportLossService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,6 +57,7 @@ public class ReportLossController {
     ResponseResult deleteReportLoss(@RequestBody QueryDto queryDto){
         return reportLossService.deleteReportLoss(Long.parseLong(queryDto.getField().toString()));
     }
+
     /**
      * 批量删除挂失
      * @return List<ReportLoss>
@@ -64,6 +66,17 @@ public class ReportLossController {
     @PostMapping(value = "/deletionBath/{ids}")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
         return reportLossService.deletedBatch(batchDeletionDto.getIds());
+    }
+
+    /**
+     * 申请挂失
+     * @param reportLoss
+     * @return
+     */
+    @ApiOperation(value = "申请挂失信息",notes = "")
+    @PostMapping(value = "/increase")
+    public ResponseResult increaseReportLoss(@RequestBody ReportLoss reportLoss){
+        return reportLossService.insertReportLoss(reportLoss);
     }
 
 
