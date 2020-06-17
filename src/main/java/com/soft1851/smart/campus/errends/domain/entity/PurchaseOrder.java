@@ -28,8 +28,8 @@ import java.sql.Timestamp;
 public class PurchaseOrder {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    private String id;
     /**
      *目的地
      */

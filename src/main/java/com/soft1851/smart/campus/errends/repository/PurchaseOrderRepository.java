@@ -1,7 +1,6 @@
-package com.soft1851.smart.campus.repository.errendsrepository;
+package com.soft1851.smart.campus.errends.repository;
 
-
-import com.soft1851.smart.campus.model.entity.errendsentity.PurchaseOrder;
+import com.soft1851.smart.campus.errends.domain.entity.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2020/6/9
  * @Version 1.0
  */
-public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder,Long> {
+public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder,String> {
 }

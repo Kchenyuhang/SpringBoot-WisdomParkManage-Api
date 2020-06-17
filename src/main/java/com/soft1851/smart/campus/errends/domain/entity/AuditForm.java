@@ -14,55 +14,58 @@ import java.sql.Timestamp;
 
 /**
  * @author wl
- * @ClassNametransaction
+ * @ClassNameAuditForm
  * @Description TODO
- * @Date 2020/6/9
+ * @Date 2020/6/17
  * @Version 1.0
  */
+
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "transaction")
 @EntityListeners(AuditingEntityListener.class)
-public class Transaction {
-    @Id
-    @Column(name = "id")
+@Table(name = "audit_form")
+public class AuditForm {
 
+    /**
+     * 主键自增
+     */
+    @Id
+    @Column(name = "id",length = 30)
     private String id;
     /**
-     *订单id
+     * 结束时间
      */
-    @Column(name = "order_id", nullable = false)
-    private  String orderId;
+    @Column(name = "end_time", nullable = false)
+    private Timestamp endTime;
     /**
-     *交易创建时间+
+     * 申请人
      */
-    @Column(name = "transaction_create", nullable = false)
-    private Timestamp transactionCreate;
+    @Column(name = "founderId", nullable = false)
+    private String founderId;
     /**
-     *跑腿人
-     *
+     * 原因
      */
-    @Column(name = "errands_id", nullable = false)
-    private String errandsId;
+    @Column(name = "remark", nullable = false)
+    private String remark;
     /**
-     * 完成时间  根据完成后更改
+     * 审核人
      */
-    @Column(name = "transaction_end", nullable = false)
-    private Timestamp transactionEnd;
+    @Column(name = "reviewer_id", nullable = false)
+    private String reviewerId;
     /**
-     * 状态 0是抢单  1是取货并且送货  3是完成
+     * 状态 0是通过 1是未通过
      */
-    @Column(name = "status", nullable = false)
-    private Integer status;
+    @Column(name = "stauts", nullable = false)
+    private Integer stauts;
     /**
      * 创建时间
      */
     //@JsonIgnore
     @Column(nullable = false)
-   @CreatedDate
+    @CreatedDate
     private Timestamp gmtCreate;
 
     /**

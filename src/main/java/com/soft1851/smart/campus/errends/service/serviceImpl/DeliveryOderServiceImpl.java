@@ -1,6 +1,4 @@
 package com.soft1851.smart.campus.errends.service.serviceImpl;
-
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.errends.domain.dto.FinshOrderDto;
@@ -12,10 +10,9 @@ import com.soft1851.smart.campus.errends.domain.vo.DeliveryOderInformationVo;
 import com.soft1851.smart.campus.errends.mapper.*;
 import com.soft1851.smart.campus.errends.service.DeliveryOrderService;
 import com.soft1851.smart.campus.errends.util.PageUtil;
+import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -52,8 +49,10 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
     @Override
     public ResponseResult getOrder(FinshOrderDto finshOrderDto) {
         List<DeliveryOderInformationVo> list = new ArrayList<>();
+        log.info(String.valueOf(finshOrderDto));
         //分页减一
             Pageable pageable = PageRequest.of(finshOrderDto.getNum(), finshOrderDto.getSize());
+
         //查询所有完成的值
         QueryWrapper<DeliveryOrder> deliveryOrderQueryWrapper = new QueryWrapper<>();
         deliveryOrderQueryWrapper.orderByDesc("oder_create_time").eq("status", finshOrderDto.getStatus());
@@ -138,7 +137,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
         org.springframework.data.domain.Page<DeliveryOderInformationVo> deliveryOderInformationVos = PageUtil.listConvertToPage(list, pageable);
         int total = (int) deliveryOderInformationVos.getTotalElements();
         List<DeliveryOderInformationVo> content = deliveryOderInformationVos.getContent();
-        Map<String,Object>map =new HashMap<>();
+        Map<String,Object> map =new HashMap<>();
         map.put("order",content);
         map.put("total",total);
         return ResponseResult.success(map);

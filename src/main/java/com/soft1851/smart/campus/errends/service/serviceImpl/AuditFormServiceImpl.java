@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
 @Slf4j
-public class AuditFormServiceImpl implements AuditFormService {
+public class AuditFormServiceImpl implements AuditFormService{
     @Resource
     private AuditFormRepository auditFormRepository;
     @Resource
@@ -37,7 +37,7 @@ public class AuditFormServiceImpl implements AuditFormService {
         SnowFlake snowFlake = new SnowFlake(1, 3);
         long id = snowFlake.nextId();
         AuditForm auditForm = AuditForm.builder()
-                .end_time(Timestamp.valueOf(LocalDateTime.now()))
+                .endTime(Timestamp.valueOf(LocalDateTime.now()))
                 .founderId(auditFormDto.getFounderId()).gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                 .gmtModified(Timestamp.valueOf(LocalDateTime.now())).id(String.valueOf(id)).isDeleted(false)
                 .remark(auditFormDto.getRemark()).reviewerId(auditFormDto.getReviewerId()).stauts(auditFormDto.getStauts())

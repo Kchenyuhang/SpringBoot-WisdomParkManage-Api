@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -14,49 +13,48 @@ import java.sql.Timestamp;
 
 /**
  * @author wl
- * @ClassNamecommodity
- * @Description TODO
- * @Date 2020/6/9
+ * @ClassNameCancleDeliveryOrder
+ * @Description 取消跑腿记录表
+ * @Date 2020/6/10
  * @Version 1.0
  */
-
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "commodity")
-public class Commodity {
+@Table(name = "cancle_delivery_order")
+public class CancleDeliveryOrder {
     /**
-     * 主键自增
+     * id
      */
     @Id
-    @Column(name = "id",length = 30)
+    @Column(name = "id" ,length = 30)
     private String id;
     /**
-     * 商品类型
+     * 订单编号
      */
-    @Column(name = "type", nullable = false)
-    private String type;
+    @Column(name = "oder_id", nullable = false)
+    private String oderId;
     /**
-     * 物品价格范围
+     * 取消时间
      */
-    @Column(name = "price_rang", nullable = false)
-    private String priceRang;
+    @Column(name = "cancle_time", nullable = false)
+    private Timestamp cancleTime;
     /**
      * 创建时间
      */
     //@JsonIgnore
     @Column(nullable = false)
-    @CreatedDate
+    @UpdateTimestamp
     private Timestamp gmtCreate;
 
     /**
      * 修改时间
      */
     @JsonIgnore
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(nullable = false)
     private Timestamp gmtModified;
 
@@ -66,4 +64,5 @@ public class Commodity {
 //    @JsonIgnore
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
+
 }

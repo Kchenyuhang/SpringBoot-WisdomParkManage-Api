@@ -1,7 +1,6 @@
-package com.soft1851.smart.campus.repository.errendsrepository;
+package com.soft1851.smart.campus.errends.repository;
 
-
-import com.soft1851.smart.campus.model.entity.errendsentity.ReviewForm;
+import com.soft1851.smart.campus.errends.domain.entity.ReviewForm;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2020/6/12
  * @Version 1.0
  */
-public interface ReviewFormRepository  extends JpaRepository<ReviewForm, Long> {
+public interface ReviewFormRepository  extends JpaRepository<ReviewForm, String> {
 }
