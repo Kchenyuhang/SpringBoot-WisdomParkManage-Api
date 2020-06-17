@@ -1,6 +1,6 @@
 package com.soft1851.smart.campus.repository;
 
-import com.soft1851.smart.campus.model.entity.Dynamic;
+import com.soft1851.smart.campus.model.entity.Collections;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,19 +10,19 @@ import java.util.List;
 
 /**
  * @author Yujie_Zhao
- * @ClassName DynamicRepository
- * @Description 动态
- * @Date 2020/6/12  15:36
+ * @ClassName CollectionsRepository
+ * @Description 动态的收藏
+ * @Date 2020/6/15  14:02
  * @Version 1.0
  **/
-public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
+public interface CollectionsRepository extends JpaRepository<Collections,String> {
     /**
-     * 根据动态id查询存在
+     * 查找存在的收藏
      * @param id
      * @param isDelete
      * @return
      */
-    Dynamic findDynamicByPkDynamicIdAndIsDeleted(String id,Boolean isDelete);
+    Collections findCollectionsByPkCollectionIdAndIsDeleted(String id,Boolean isDelete);
 
     /**
      * 批量修改
@@ -31,6 +31,6 @@ public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query("update Dynamic t set t.isDeleted = true where t.pkDynamicId in (?1)")
+    @Query("update Collections t set t.isDeleted = true where t.pkCollectionId in (?1)")
     int updateIsDelete(List<String> ids);
 }
