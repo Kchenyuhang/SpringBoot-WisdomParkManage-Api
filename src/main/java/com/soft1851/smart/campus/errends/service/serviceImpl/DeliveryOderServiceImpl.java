@@ -11,7 +11,9 @@ import com.soft1851.smart.campus.errends.domain.entity.Transaction;
 import com.soft1851.smart.campus.errends.domain.vo.DeliveryOderInformationVo;
 import com.soft1851.smart.campus.errends.mapper.*;
 import com.soft1851.smart.campus.errends.service.DeliveryOrderService;
+import com.soft1851.smart.campus.errends.util.PageUtil;
 import com.soft1851.smart.campus.model.entity.UserAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,7 @@ import java.util.Map;
  * @Version 1.0
  */
 @Service
+@Slf4j
 @Transactional(rollbackFor = RuntimeException.class)
 public class DeliveryOderServiceImpl implements DeliveryOrderService {
     @Resource
@@ -50,7 +53,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
     public ResponseResult getOrder(FinshOrderDto finshOrderDto) {
         List<DeliveryOderInformationVo> list = new ArrayList<>();
         //分页减一
-        Pageable pageable = PageRequest.of(finshOrderDto.getNum(), finshOrderDto.getSize());
+            Pageable pageable = PageRequest.of(finshOrderDto.getNum(), finshOrderDto.getSize());
         //查询所有完成的值
         QueryWrapper<DeliveryOrder> deliveryOrderQueryWrapper = new QueryWrapper<>();
         deliveryOrderQueryWrapper.orderByDesc("oder_create_time").eq("status", finshOrderDto.getStatus());
@@ -62,19 +65,22 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
             QueryWrapper<UserAccount> userAccountQueryWrapper = new QueryWrapper<>();
             userAccountQueryWrapper.select("nickname", "job_number", "phone_number").eq("job_number", deliveryOrder.getFounderId());
             UserAccount userAccount = userAccountMapper.selectOne(userAccountQueryWrapper);
+
             //根据不同状态追加不同值
             if (finshOrderDto.getStatus() == 0 || finshOrderDto.getStatus() == 1) {
                 if (finshOrderDto.getStatus() == 1) {
-                    CancleDeliveryOrder cancleDeliveryOrder = cancleDeliveryOderMapper.selectById(deliveryOrder.getId());
+                    QueryWrapper<CancleDeliveryOrder>cancleDeliveryOrderQueryWrapper=new QueryWrapper<>();
+             cancleDeliveryOrderQueryWrapper.select("cancle_time").eq("oder_id",deliveryOrder.getId());
+                    CancleDeliveryOrder cancleDeliveryOrder = cancleDeliveryOderMapper.selectOne(cancleDeliveryOrderQueryWrapper);
                     DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                             .amount(deliveryOrder.getAmount())
                             .cancleTime(cancleDeliveryOrder.getCancleTime())
-                            .commodity(commodity)
+                            .priceRange(commodity.getPriceRang()).type(commodity.getType())
                             .deliveryTime(deliveryOrder.getDeliveryTime())
                             .destination(deliveryOrder.getDestination())
                             .founderId(userAccount.getJobNumber())
-                            .founderName(userAccount.getUserName())
-                            .founderPhonenumber(userAccount.getPhoneNumber())
+                            .founderName(deliveryOrder.getFounderName())
+                            .founderPhonenumber(deliveryOrder.getFounderPhonenumber())
                             .id(deliveryOrder.getId()).oderCreateTime(deliveryOrder.getOderCreateTime())
                             .originAddress(deliveryOrder.getOriginAddress()).receiverName(deliveryOrder.getReceiverName())
                             .receiverPhoneNumber(deliveryOrder.getReceiverPhoneNumber())
@@ -82,13 +88,14 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
                     list.add(deliveryOderInformationVo);
                     //发布的信息
                 } else if (finshOrderDto.getStatus() == 0) {
+                    log.info(userAccount.getJobNumber());
                     DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                             .amount(deliveryOrder.getAmount())
-                            .commodity(commodity).deliveryTime(deliveryOrder.getDeliveryTime())
+                            .priceRange(commodity.getPriceRang()).type(commodity.getType()).deliveryTime(deliveryOrder.getDeliveryTime())
                             .destination(deliveryOrder.getDestination())
-                            .founderId(userAccount.getJobNumber())
-                            .founderName(userAccount.getUserName())
-                            .founderPhonenumber(userAccount.getPhoneNumber())
+                                .founderId(userAccount.getJobNumber())
+                            .founderName(deliveryOrder.getFounderName())
+                            .founderPhonenumber(deliveryOrder.getFounderPhonenumber())
                             .id(deliveryOrder.getId())
                             .oderCreateTime(deliveryOrder.getOderCreateTime())
                             .originAddress(deliveryOrder.getOriginAddress())
@@ -109,11 +116,11 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
                 //完成 进行  被抢单  抢单表都有数据
                 DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                         .amount(deliveryOrder.getAmount())
-                        .commodity(commodity).deliveryTime(deliveryOrder.getDeliveryTime())
+                        .priceRange(commodity.getPriceRang()).type(commodity.getType()).deliveryTime(deliveryOrder.getDeliveryTime())
                         .destination(deliveryOrder.getDestination())
                         .founderId(userAccount.getJobNumber())
-                        .founderName(userAccount.getUserName())
-                        .founderPhonenumber(userAccount.getPhoneNumber())
+                        .founderName(deliveryOrder.getFounderName())
+                        .founderPhonenumber(deliveryOrder.getFounderPhonenumber())
                         .id(deliveryOrder.getId())
                         .oderCreateTime(deliveryOrder.getOderCreateTime())
                         .originAddress(deliveryOrder.getOriginAddress())
@@ -128,12 +135,12 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
 
 
         }
-        Page<DeliveryOderInformationVo> deliveryOderInformationVos = new PageImpl<DeliveryOderInformationVo>(list, pageable, list.size());
-        int totalPages = deliveryOderInformationVos.getTotalPages();
+        org.springframework.data.domain.Page<DeliveryOderInformationVo> deliveryOderInformationVos = PageUtil.listConvertToPage(list, pageable);
+        int total = (int) deliveryOderInformationVos.getTotalElements();
         List<DeliveryOderInformationVo> content = deliveryOderInformationVos.getContent();
-        Map<String, Object> map = new HashMap<>();
-        map.put("order", content);
-        map.put("totalPages", totalPages);
+        Map<String,Object>map =new HashMap<>();
+        map.put("order",content);
+        map.put("total",total);
         return ResponseResult.success(map);
     }
 }
