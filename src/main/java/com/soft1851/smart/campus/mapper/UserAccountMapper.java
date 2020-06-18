@@ -1,5 +1,8 @@
 package com.soft1851.smart.campus.mapper;
 
+
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.model.vo.UserAccountVo;
@@ -15,7 +18,7 @@ import java.util.List;
  * @Description TODO
  * @date 2020-06-14 13:03
  **/
-public interface UserAccountMapper {
+public interface UserAccountMapper extends BaseMapper<UserAccount> {
     /**
      * 分页查询所有学生数据
      * @param pageDto
