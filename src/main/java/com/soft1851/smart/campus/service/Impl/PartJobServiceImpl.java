@@ -33,7 +33,6 @@ public class PartJobServiceImpl extends ServiceImpl<PartJobMapper, PartJob> impl
         log.info(">>>>>>>>>>>>>>>{}",jobPageDto);
         QueryWrapper<PartJob> wrapper =  new QueryWrapper<>();
         IPage<PartJob> page = new Page<>(jobPageDto.getCurrentPage(), jobPageDto.getPageSize());
-        System.out.println(page.getTotal());
         return partJobMapper.selectPage(page, wrapper).getRecords();
     }
 }
