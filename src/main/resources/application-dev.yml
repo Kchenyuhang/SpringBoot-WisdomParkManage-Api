@@ -26,7 +26,6 @@ spring:
   #redis配置数据
   redis:
     database: 0
-#    password:
     port: 6379
     host: 101.37.31.188
     lettuce:

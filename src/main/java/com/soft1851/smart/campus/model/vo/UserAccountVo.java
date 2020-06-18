@@ -1,3 +1,4 @@
+
 package com.soft1851.smart.campus.model.vo;
 
 import lombok.AllArgsConstructor;
@@ -29,3 +30,4 @@ public class UserAccountVo {
     private String userName;
     private String name;
 }
+
