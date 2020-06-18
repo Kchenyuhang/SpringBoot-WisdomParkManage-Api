@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.controller;
 
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.service.SysCourseService;
 import io.swagger.annotations.Api;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author xunmi
@@ -34,5 +37,10 @@ public class SysCourseController {
     public void increase(@RequestBody SysCourse sysCourse) {
         System.out.println(sysCourse);
         sysCourseService.increase(sysCourse);
+    }
+
+    @PostMapping(value = "/list")
+    public List<Map<String, Object>> getAllCourse(@RequestBody PageDto pageDto) {
+        return sysCourseService.getAllCourses(pageDto);
     }
 }

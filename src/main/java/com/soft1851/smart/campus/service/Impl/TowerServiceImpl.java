@@ -88,4 +88,9 @@ public class TowerServiceImpl implements TowerService {
     public void updateTowerByTowerId(Tower tower) {
         towerRepository.updateTowerByTowerId(tower);
     }
+
+    @Override
+    public List<Map<String, Object>> getAllTowerRooms() {
+        return towerMapper.getTeachTowersByType();
+    }
 }

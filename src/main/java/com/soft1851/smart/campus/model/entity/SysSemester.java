@@ -57,4 +57,7 @@ public class SysSemester {
      */
     @Column(name = "is_deleted" ,nullable = false,length = 4)
     private Boolean isDeleted;
+
+    @Column(name = "open_school_time")
+    private Timestamp openSchoolTime;
 }

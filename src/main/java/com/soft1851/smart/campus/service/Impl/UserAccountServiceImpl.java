@@ -1,7 +1,9 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
@@ -18,8 +20,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,6 +62,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
         //查询一卡通数据是否存在
         SysCard selectSysCard = cardRepository.getSysCardByJobNumber(userAccount.getJobNumber());
+
         //首先查询需要新增的用户是否已经存在,如果逻辑删除，符合条件可以重新添加数据
         if (selectUserAccount == null) {
             if (selectSysCard == null){
@@ -77,10 +83,8 @@ public class UserAccountServiceImpl implements UserAccountService {
                 //新增学生数据
                 UserAccount userAccount1 = UserAccount.builder()
                         .pkUserAccountId(pkUserAccountId)
-                        .address(userAccount.getAddress())
                         .avatar("https://niit-student.oss-cn-beijing.aliyuncs.com/markdown/20200601182918.png")
                         .cardNumber(userAccount.getJobNumber())
-                        .clazzId(userAccount.getClazzId())
                         .gender(userAccount.getGender())
                         .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                         .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
@@ -91,9 +95,11 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
                         .status(false)
+                        .brithday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
+                System.out.println(userAccount1);
                 userAccountRepository.save(userAccount1);
                 return ResponseResult.success();
             }else {
@@ -207,6 +213,21 @@ public class UserAccountServiceImpl implements UserAccountService {
     public ResponseResult getAllTeacher(PageDto pageDto) {
         List<UserAccountVo> userAccountVos = userAccountMapper.getTeacherUserAccountVo(pageDto);
         return ResponseResult.success(userAccountVos);
+    }
+
+    @Override
+    public int updateUserAccountById(UserAccount userAccount) {
+        int n = userAccountRepository.updateUserAccountById(userAccount);
+        return n;
+    }
+
+    @Override
+    public int updateStatusById(UserAccount userAccount) {
+        int result = userAccountRepository.updateStatusById(userAccount);
+        if (result > 0) {
+            return result;
+        }
+        throw new CustomException("修改账户状态异常", ResultCode.DATA_UPDATE_ERROR);
     }
 
 

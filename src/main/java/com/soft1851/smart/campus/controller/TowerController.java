@@ -58,4 +58,10 @@ public class TowerController {
         towerService.deleteTowerById(id);
         return ResponseResult.success();
     }
+
+    @ApiOperation(value = "查询所有教学楼栋及其房间信息")
+    @PostMapping(value = "/list/teach")
+    public List<Map<String, Object>> getAllTowers() {
+        return towerService.getAllTowerRooms();
+    }
 }

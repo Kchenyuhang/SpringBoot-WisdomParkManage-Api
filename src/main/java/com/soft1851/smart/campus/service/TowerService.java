@@ -46,4 +46,11 @@ public interface TowerService {
      * @param tower
      */
     void updateTowerByTowerId(Tower tower);
+
+
+    /**
+     * 获取所有楼栋房间的信息
+     * @return
+     */
+    List<Map<String, Object>> getAllTowerRooms();
 }
