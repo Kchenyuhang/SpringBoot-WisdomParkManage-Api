@@ -21,8 +21,6 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "clazz",indexes = {@Index(name = "nameIndex",columnList = "name"),
-@Index(name = "college_idIndex",columnList = "college_id")})
 public class Clazz {
     /**
      * 主键

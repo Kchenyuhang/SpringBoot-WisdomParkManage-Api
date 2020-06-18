@@ -68,4 +68,23 @@ public interface UserAccountService {
      */
     ResponseResult getAllTeacher(PageDto pageDto);
 
+    /**
+     * 获取所有老师数据
+     * @return
+     */
+    ResponseResult getAllTeacherMessage();
+
+    /**
+     * 查询未被分配的学生
+     * @param pageDto
+     * @return
+     */
+    ResponseResult getAllUndistributedStudent(PageDto pageDto);
+
+    /**
+     * 通过学号或者学生姓名查询学生信息
+     * @param keywords
+     * @return
+     */
+    ResponseResult findStudentLike(String keywords);
 }

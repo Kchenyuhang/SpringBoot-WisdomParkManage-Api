@@ -17,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +51,8 @@ public class InfoManageServiceImpl implements InfoManageService {
         infoManage.setTitle(infoManageTypeIdVo.getTitle());
         infoManage.setCover(infoManageTypeIdVo.getCover());
         infoManage.setText(infoManageTypeIdVo.getText());
-        infoManage.setIsTop(true);
-        infoManage.setIsDeleted(true);
+        infoManage.setIsTop(false);
+        infoManage.setIsDeleted(false);
         infoManageRepository.save(infoManage);
         //获取其返回的自增主键
         Long id = infoManage.getPkInfoManageId();
@@ -60,7 +62,7 @@ public class InfoManageServiceImpl implements InfoManageService {
             InfoMangeType infoMangeType = new InfoMangeType();
             infoMangeType.setTypeId(infoManageTypeIdVo.getTypeId());
             infoMangeType.setInfoId(id);
-            infoMangeType.setIsDeleted(true);
+            infoMangeType.setIsDeleted(false);
             infoManageTypeRepository.save(infoMangeType);
             return ResponseResult.success("添加成功");
         } else {
@@ -144,8 +146,8 @@ public class InfoManageServiceImpl implements InfoManageService {
             infoManage1.setCover(infoManage.getCover());
             infoManage1.setText(infoManage.getText());
             infoManage1.setIsTop(infoManage.getIsTop());
-            infoManage1.setGmtCreate(infoManage1.getGmtCreate());
-            infoManage1.setIsDeleted(infoManage.getIsDeleted());
+            infoManage1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            infoManage1.setIsDeleted(false);
             infoManageRepository.saveAndFlush(infoManage1);
             return ResponseResult.success("修改成功" + infoManage1);
         } else {

@@ -58,5 +58,4 @@ public interface InfoManageService {
      * @return
      */
     ResponseResult changeInfoMange(QueryDto queryDto);
-
 }

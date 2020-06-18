@@ -1,7 +1,6 @@
 package com.soft1851.smart.campus.service.Impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.mapper.SysFeedbackMapper;
@@ -124,7 +123,7 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
                 //遍历所有id存入到list
                 idsList.add(Long.valueOf(id));
             }
-            sysFeedbackRepository.deleteBatch(idsList);
+            sysFeedbackRepository.deleteBatchByPkFeedbackId(idsList);
             return ResponseResult.success();
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
