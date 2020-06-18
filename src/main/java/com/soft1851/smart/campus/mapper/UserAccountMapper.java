@@ -100,6 +100,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
 
     /**
      * 查询某个班级的所有学生id
+     *
      * @param clazzId
      * @return
      * @throws SQLException

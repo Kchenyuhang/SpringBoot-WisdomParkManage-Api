@@ -10,18 +10,31 @@ import com.soft1851.smart.campus.model.dto.UpdateSysFeedbackDto;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.repository.SysFeedbackRepository;
 import com.soft1851.smart.campus.service.SysFeedbackService;
+import com.soft1851.smart.campus.utils.ExcelConsumer;
+import com.soft1851.smart.campus.utils.ExportDataAdapter;
+import com.soft1851.smart.campus.utils.ThreadPool;
+import lombok.SneakyThrows;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Tao
@@ -31,6 +44,7 @@ import java.util.List;
  * @date 2020-06-02 22:32
  **/
 @Service
+@Transactional(rollbackFor = RuntimeException.class)
 public class SysFeedbackServiceImpl implements SysFeedbackService {
 
     @Resource
@@ -180,5 +194,51 @@ public class SysFeedbackServiceImpl implements SysFeedbackService {
             e.printStackTrace();
         }
         return ResponseResult.success(sysFeedbacks);
+    }
+
+    @Override
+    @SneakyThrows
+    public void exportData() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        HttpServletResponse response = attributes.getResponse();
+        assert response != null;
+//        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+//        response.setHeader("Content-Disposition","attachment");
+        String fileName = "sysFeedback.xls";
+        response.setContentType("application/x-msdownload");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        //导出excel对象
+        SXSSFWorkbook sxssfWorkbook = new SXSSFWorkbook(1000);
+        //数据缓冲
+        ExportDataAdapter<SysFeedback> exportDataAdapter = new ExportDataAdapter<>();
+        //线程同步对象
+        CountDownLatch latch = new CountDownLatch(2);
+        //启动线程获取数据(生产者)
+        ThreadPool.getExecutor().submit(() -> produceExportData(exportDataAdapter, latch));
+        //启动线程导出数据（消费者）
+        ThreadPool.getExecutor().submit(() -> new ExcelConsumer<>(SysFeedback.class, exportDataAdapter, sxssfWorkbook, latch, "反馈数据").run());
+        latch.await();
+        //使用字节流写数据
+        OutputStream outputStream = null;
+        outputStream = response.getOutputStream();
+        sxssfWorkbook.write(outputStream);
+        outputStream.flush();
+        outputStream.close();
+    }
+
+    /**
+     * 生产者生产数据
+     *
+     * @param exportDataAdapter
+     * @param latch
+     */
+    private void produceExportData(ExportDataAdapter<SysFeedback> exportDataAdapter, CountDownLatch latch) {
+        List<SysFeedback> songs = sysFeedbackMapper.selectList(null);
+        songs.forEach(exportDataAdapter::addData);
+//        log.info("数据生产完成");
+        System.out.println("数据生产完成");
+        //数据生产结束
+        latch.countDown();
     }
 }

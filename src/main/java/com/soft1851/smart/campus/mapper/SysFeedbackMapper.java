@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.soft1851.smart.campus.model.entity.SysFeedback;
 import org.apache.ibatis.annotations.Select;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * @author Tao
  */
-public interface SysFeedbackMapper {
+public interface SysFeedbackMapper extends BaseMapper<SysFeedback> {
     /**
      * 根据时间查询反馈
      * @param startTime

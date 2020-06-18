@@ -35,4 +35,9 @@ class SysFeedbackServiceTest {
                 .build();
         System.out.println(sysFeedbackService.getSysFeedbackByTime(timeBorrowPageDto));
     }
+
+    @Test
+    void exportData() {
+        sysFeedbackService.exportData();
+    }
 }
