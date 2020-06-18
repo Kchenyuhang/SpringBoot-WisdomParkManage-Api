@@ -2,7 +2,11 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysRoleMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Description TODO
@@ -37,4 +41,22 @@ public interface SysRoleMenuRepository extends JpaRepository<SysRoleMenu, Long> 
             "AND a.pkRoleId = ?2 AND u.parentId = ?1")
     Object[] getRoleChildMenuByPkRoleId(long parentId, long roleId);
 
+    /**
+     * 批量删除（逻辑）
+     * @param ids
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "DELETE FROM SysRoleMenu where pkRoleMenuId in (?1)")
+    int deleteBatchByPkRoleId(List<Long> ids);
+
+    /**
+     * 查询角色权限
+     * @param roleId
+     * @param menuId
+     * @return
+     */
+    @Query(value = "SELECT sr.pkRoleMenuId FROM SysRoleMenu sr WHERE sr.pkRoleId = ?1 AND sr.menuId = ?2")
+    Long getRoleMenuId(long roleId, long menuId);
 }

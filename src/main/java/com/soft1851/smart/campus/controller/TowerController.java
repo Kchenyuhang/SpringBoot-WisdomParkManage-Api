@@ -35,13 +35,19 @@ public class TowerController {
         return towerService.findAllByType();
     }
 
+    @ApiOperation(value = "查询所有楼栋的单元信息")
+    @PostMapping(value = "/units/list")
+    public List<Map<String, Object>> getUnitsByTowerId() {
+        return towerService.getAllUnitByTowerId();
+    }
+
     @PostMapping("/increase")
     public ResponseResult insert(@RequestBody Tower tower) {
         towerService.insertTower(tower);
         return ResponseResult.success();
     }
 
-    @PutMapping("/single")
+    @PostMapping("/single")
     public ResponseResult updateByTowerId(@RequestBody Tower tower) {
         towerService.updateTowerByTowerId(tower);
         return ResponseResult.success();

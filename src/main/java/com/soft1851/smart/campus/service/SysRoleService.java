@@ -66,4 +66,11 @@ public interface SysRoleService {
      * @return
      */
     ResponseResult findAllSysRole();
+
+    /**
+     * 删除角色权限
+     * @param id
+     * @return
+     */
+    int deleteRoleMenu(String id, long roleId);
 }
