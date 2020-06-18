@@ -20,6 +20,6 @@ class PartJobServiceTest {
                 .currentPage(1)
                 .pageSize(2)
                 .build();
-        System.out.println(partJobService.findList(jobPageDto).size());
+        partJobService.findList(jobPageDto).forEach(System.out::println);
     }
 }
