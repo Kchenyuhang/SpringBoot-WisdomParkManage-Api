@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.service.UserAccountService;
@@ -97,6 +98,16 @@ public class UserAccountController {
         return userAccountService.getAllTeacher(pageDto);
     }
 
+    /**
+     * 获取所有教师数据信息
+     * @return
+     */
+    @ApiOperation(value = "获取教师分配班主任",notes = "")
+    @PostMapping(value = "/headmaster")
+    public ResponseResult getAllTeacherMessage(){
+        return userAccountService.getAllTeacherMessage();
+    }
+
 
     /**
      * 新增用户数据信息
@@ -115,5 +126,27 @@ public class UserAccountController {
     public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
         int n = userAccountService.updateStatusById(userAccount);
         return ResponseResult.success();
+    }
+
+    /**
+     * 查询未被分配的学生
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "查询未被分配的学生",notes = "")
+    @PostMapping(value = "/undistributed")
+    public ResponseResult getAllUndistributedStudents(@RequestBody PageDto pageDto){
+        return userAccountService.getAllUndistributedStudent(pageDto);
+    }
+
+    /**
+     * 模糊查询学生数据
+     * @param batchDeletionDto
+     * @return
+     */
+    @ApiOperation(value = "模糊查询学生数据",notes = "ids为keywords关键字")
+    @PostMapping(value = "/student/like")
+    public ResponseResult findStudentLike(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.findStudentLike(batchDeletionDto.getIds());
     }
 }

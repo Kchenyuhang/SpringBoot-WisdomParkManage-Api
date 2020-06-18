@@ -22,4 +22,9 @@ class ReportLossServiceTest {
         ResponseResult responseResult = reportLossService.insertReportLoss(reportLoss);
         System.out.println(responseResult);
     }
+
+    @Test
+    void adminInsertReportLoss() {
+        reportLossService.adminInsertReportLoss("120119110");
+    }
 }

@@ -92,7 +92,8 @@ public class UserAccount {
     /**
      * 所属班级id
      */
-    private Integer clazzId;
+    @Column(nullable = false)
+    private Long clazzId;
 
     /**
      * 校园卡号

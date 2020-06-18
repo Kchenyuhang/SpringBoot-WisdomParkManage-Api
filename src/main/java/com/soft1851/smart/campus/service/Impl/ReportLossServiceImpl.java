@@ -39,6 +39,7 @@ public class ReportLossServiceImpl implements ReportLossService {
 
     /**
      * 分页查询所有信息
+     *
      * @param pageDto
      * @return
      */
@@ -99,13 +100,13 @@ public class ReportLossServiceImpl implements ReportLossService {
         //通过卡号查找帐号
         UserAccount userAccount = userAccountRepository.findUserAccountByCardNumber(reportLoss.getLossJobNumber());
         //通过挂失的卡号和卡密去查找一卡通数据
-        SysCard sysCard = cardRepository.findSysCardByCardNumberAndCardPassword(reportLoss.getLossJobNumber(),reportLoss.getPassword());
+        SysCard sysCard = cardRepository.findSysCardByCardNumberAndCardPassword(reportLoss.getLossJobNumber(), reportLoss.getPassword());
         //用户是否存在
-        if (userAccount!=null){
+        if (userAccount != null) {
             //判断帐号状态 若为禁用状态无法挂失申请
-            if (!userAccount.getStatus()){
+            if (!userAccount.getStatus()) {
                 //一卡通未申请过挂失
-                if (!sysCard.getStatus()){
+                if (!sysCard.getStatus()) {
                     ReportLoss reportLoss1 = ReportLoss.builder()
                             .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
                             .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
@@ -120,17 +121,52 @@ public class ReportLossServiceImpl implements ReportLossService {
                     //新增信息
                     reportLossRepository.save(reportLoss1);
                     //修改一卡通的状态为禁用
-                    cardRepository.updateStatus(sysCard.getPkCardId(),true);
+                    cardRepository.updateStatus(sysCard.getPkCardId(), true);
                     return ResponseResult.success("申请挂失成功");
-                }else {
+                } else {
                     return ResponseResult.failure(ResultCode.CARD_REPORT);
                 }
-            }else{
+            } else {
                 return ResponseResult.failure(ResultCode.USER_ACCOUNT_FORBIDDEN);
             }
-        }else {
+        } else {
             return ResponseResult.failure(ResultCode.USER_ACCOUNT_PASSWORD_ERROR);
         }
+    }
+
+    @Override
+    public ResponseResult adminInsertReportLoss(String cardNumber) {
+        //通过卡号查询用户表 查看用户状态
+        UserAccount userAccount = userAccountRepository.findUserAccountByCardNumber(cardNumber);
+        //通过卡号查询一卡通数据
+        SysCard sysCard = cardRepository.findByCardNumber(cardNumber);
+        if (userAccount != null) {
+            //一卡通状态为启用状态
+           if (!sysCard.getStatus()){
+               //禁用一卡通
+               cardRepository.updateStatus(sysCard.getPkCardId(), true);
+               //新增挂失记录
+               ReportLoss reportLoss1 = ReportLoss.builder()
+                       .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                       .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                       .isDeleted(false)
+                       .lossJobNumber(userAccount.getJobNumber())
+                       .lossName(userAccount.getUserName())
+                       .lossPhone(userAccount.getPhoneNumber())
+                       .lossStatus(true)
+                       .password(sysCard.getCardPassword())
+                       .remark("管理员操作一卡通挂失")
+                       .build();
+               //新增信息
+               reportLossRepository.save(reportLoss1);
+               return ResponseResult.success("挂失成功！");
+           }else {
+               return ResponseResult.failure(ResultCode.USER_ACCOUNT_FORBIDDEN);
+           }
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+
     }
 
 }

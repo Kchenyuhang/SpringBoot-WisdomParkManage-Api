@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,5 +37,10 @@ class UserAccountServiceTest {
         UpdateWrapper<UserAccount> wrapper = new UpdateWrapper<>();
         wrapper.eq("pk_user_account_id", 1);
         System.out.println(userAccountService.updateUserAccountById(userAccount));
+    }
+    @Test
+    void findStudentLike() {
+        ResponseResult responseResult = userAccountService.findStudentLike("曹");
+        System.out.println(responseResult);
     }
 }

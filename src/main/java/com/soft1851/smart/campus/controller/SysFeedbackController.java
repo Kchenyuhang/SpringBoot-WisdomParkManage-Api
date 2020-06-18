@@ -6,10 +6,7 @@ import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.service.SysFeedbackService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -116,6 +113,14 @@ public class SysFeedbackController {
     public ResponseResult getSysFeedbackByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
         System.out.println(timeBorrowPageDto);
         return sysFeedbackService.getSysFeedbackByTime(timeBorrowPageDto);
+    }
+
+    /**
+     * 导出excel
+     */
+    @GetMapping(value = "/export")
+    public void exportData() {
+        sysFeedbackService.exportData();
     }
 
 }

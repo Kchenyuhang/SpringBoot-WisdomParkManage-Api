@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.model.dto.CourseDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 
@@ -27,4 +28,18 @@ public interface SysCourseService {
      * @return
      */
     List<Map<String, Object>> getAllCourses(PageDto pageDto);
+
+    /**
+     * 根据id修改课程信息
+     * @param courseDto
+     * @return
+     */
+    int updateCourseById(CourseDto courseDto);
+
+    /**
+     * 根据id逻辑删除
+     * @param pkId
+     * @return
+     */
+    int updateCourseIsDeletedById(long pkId);
 }

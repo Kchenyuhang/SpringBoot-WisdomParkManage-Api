@@ -1,6 +1,9 @@
 package com.soft1851.smart.campus.controller;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.CourseDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.service.SysCourseService;
 import io.swagger.annotations.Api;
@@ -42,5 +45,17 @@ public class SysCourseController {
     @PostMapping(value = "/list")
     public List<Map<String, Object>> getAllCourse(@RequestBody PageDto pageDto) {
         return sysCourseService.getAllCourses(pageDto);
+    }
+
+    @PostMapping(value = "/modification")
+    public ResponseResult updateCourseById(@RequestBody CourseDto courseDto) {
+        sysCourseService.updateCourseById(courseDto);
+        return ResponseResult.success();
+    }
+
+    @PostMapping(value = "/delection")
+    public ResponseResult updateCourseIsDeletedById(@RequestBody QueryDto queryDto) {
+        sysCourseService.updateCourseIsDeletedById(Long.parseLong(queryDto.getField().toString()));
+        return ResponseResult.success();
     }
 }

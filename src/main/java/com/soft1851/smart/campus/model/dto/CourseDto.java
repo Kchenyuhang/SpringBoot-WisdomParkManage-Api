@@ -16,9 +16,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseDto {
+    private Long pkId;
     private String jobNumber;
     private String name;
     private Long roomId;
     private Long towerId;
     private Long semesterName;
+    private Integer weekDay;
+    private Integer time;
+    private Long clazz;
+    private String weeks;
+    private Long oldRoomId;
+    private Long oldScheduleId;
+    private Long oldSubjectId;
 }

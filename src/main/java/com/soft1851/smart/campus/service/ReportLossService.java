@@ -53,4 +53,11 @@ public interface ReportLossService {
      */
     ResponseResult insertReportLoss(ReportLoss reportLoss);
 
+    /**
+     * 管理员新增接口
+     * @param cardNumber
+     * @return
+     */
+    ResponseResult adminInsertReportLoss(String cardNumber);
+
 }
