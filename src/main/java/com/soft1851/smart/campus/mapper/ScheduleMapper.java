@@ -23,7 +23,7 @@ public interface ScheduleMapper extends BaseMapper<Schedule> {
      * @param id
      * @return
      */
-    @Select(value = "SELECT s.name FROM sys_semester s " +
+    @Select(value = "SELECT s.name, clazz_id FROM sys_semester s " +
             "LEFT JOIN schedule sd " +
             "ON s.pk_semester_id = sd.semester_id " +
             "WHERE pk_school_timetable_id = #{id}")

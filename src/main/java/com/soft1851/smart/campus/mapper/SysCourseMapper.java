@@ -15,6 +15,12 @@ import java.util.Map;
  */
 public interface SysCourseMapper extends BaseMapper<SysCourse> {
 
+    /**
+     * 课程分页查询
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     @Select(value = "SELECT c.pk_course_id,c.time, c.week_day, c.week_duration, c.gmt_create,c.schedule_id, c.subject_id, c.room_id, r.name, u.user_name FROM sys_course c " +
             "LEFT JOIN room r " +
             "ON r.id = c.room_id " +
