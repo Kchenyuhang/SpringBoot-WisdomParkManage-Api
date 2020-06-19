@@ -66,9 +66,11 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "修改用户信息",notes = "")
-    @PutMapping(value = "/modification")
+    @PostMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
-        return userAccountService.updateUserAccount(userAccount);
+        System.out.println(userAccount);
+        int n = userAccountService.updateUserAccountById(userAccount);
+        return ResponseResult.success();
     }
 
 
@@ -84,7 +86,6 @@ public class UserAccountController {
     public ResponseResult getAllStudent(@RequestBody PageDto pageDto){
         return userAccountService.getAllStudent(pageDto);
     }
-
 
     /**
      * 获取所有教师数据信息
@@ -116,7 +117,15 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
+        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
+    }
+
+    @ApiOperation(value = "修改学生状态接口")
+    @PostMapping(value = "/status")
+    public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
+        int n = userAccountService.updateStatusById(userAccount);
+        return ResponseResult.success();
     }
 
     /**
@@ -140,6 +149,4 @@ public class UserAccountController {
     public ResponseResult findStudentLike(@RequestBody BatchDeletionDto batchDeletionDto){
         return userAccountService.findStudentLike(batchDeletionDto.getIds());
     }
-
-
 }

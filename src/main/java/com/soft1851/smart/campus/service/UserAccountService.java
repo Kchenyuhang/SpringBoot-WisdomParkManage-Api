@@ -69,6 +69,19 @@ public interface UserAccountService {
     ResponseResult getAllTeacher(PageDto pageDto);
 
     /**
+     * 根据id修改用户信息
+     * @return
+     */
+    int updateUserAccountById(UserAccount userAccount);
+
+    /**
+     * 修改用户的状态
+     * @param userAccount
+     * @return
+     */
+    int updateStatusById(UserAccount userAccount);
+
+    /**
      * 获取所有老师数据
      * @return
      */

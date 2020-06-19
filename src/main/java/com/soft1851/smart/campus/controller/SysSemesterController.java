@@ -24,12 +24,12 @@ public class SysSemesterController {
     @Resource
     private SysSemesterService sysSemesterService;
 
-    @GetMapping("/all")
+    @PostMapping("/all")
     public List<SysSemester> findAll() {
         return sysSemesterService.findAll();
     }
 
-    @PutMapping("/id")
+    @PostMapping("/id")
     public ResponseResult updateSemesterById(@RequestBody SysSemester sysSemester) {
         sysSemesterService.updateSemesterById(sysSemester);
         return ResponseResult.success();
@@ -41,9 +41,9 @@ public class SysSemesterController {
         return ResponseResult.success();
     }
 
-    @DeleteMapping("/id/{id}")
-    public ResponseResult deleteSemesterById(@PathVariable String id) {
-        sysSemesterService.deleteSemesterById(Long.parseLong(id));
+    @PostMapping("/delection/id")
+    public ResponseResult deleteSemesterById(@RequestBody SysSemester sysSemester) {
+        sysSemesterService.updateIsDeletedById(sysSemester);
         return ResponseResult.success();
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -68,7 +69,6 @@ public class UserAccount {
     /**
      * 头像
      */
-    @Column(nullable = false ,length = 255)
     private String avatar;
 
     /**
@@ -133,6 +133,9 @@ public class UserAccount {
     /**
      * 地址
      */
-    @Column(nullable = false,length = 128)
+    @Column(length = 128)
     private String address;
+
+    @Column(nullable = false)
+    private Date brithday;
 }

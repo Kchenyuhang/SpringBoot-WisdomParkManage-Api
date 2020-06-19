@@ -8,6 +8,7 @@ import com.soft1851.smart.campus.model.vo.TeacherVo;
 import com.soft1851.smart.campus.model.vo.UserAccountVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,7 +27,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      * @param pageDto
      * @return
      */
-    @Select("SELECT u.pk_user_account_id,u.gender,u.gmt_create,u.is_deleted,u.job_number,u.phone_number," +
+    @Select("SELECT u.pk_user_account_id,u.job_number, u.gender,u.gmt_create,u.is_deleted,u.job_number,u.phone_number," +
             "u.status,u.user_name,c.name " +
             "FROM user_account u " +
             "LEFT JOIN clazz c " +
@@ -59,6 +60,16 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      */
     @Select("SELECT * FROM user_account WHERE job_number = #{jobNumber} AND is_deleted = false")
     UserAccount getUserAccountByJobNumber(String jobNumber);
+
+    /**
+     * 通过id修改用户账号信息
+     * @param userAccount
+     * @return
+     */
+    @Update("UPDATE user_account SET gender=#{userAccount.gender}, job_number=#{userAccount.jobNumber}, " +
+            "phone_number=#{userAccount.phoneNumber}, user_name=#{userAccount.userName}, role=#{userAccount.role} " +
+            "WHERE pk_user_account_id=#{userAccount.pkUserAccountId} ")
+    int updateUserAccountById(@Param("userAccount") UserAccount userAccount);
 
     /**
      * 查找所有教师数据

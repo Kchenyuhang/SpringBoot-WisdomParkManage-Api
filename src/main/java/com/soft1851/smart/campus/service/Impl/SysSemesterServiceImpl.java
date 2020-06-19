@@ -6,6 +6,9 @@ import com.soft1851.smart.campus.service.SysSemesterService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,17 +26,21 @@ public class SysSemesterServiceImpl implements SysSemesterService {
 
     @Override
     public List<SysSemester> findAll() {
-        return sysSemesterRepository.findAll();
+        return sysSemesterRepository.getSysSemesterByIsDeleted(false);
     }
 
     @Override
     public void insertSemester(SysSemester sysSemester) {
+        sysSemester.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+        sysSemester.setGmtModified(Timestamp.valueOf(LocalDateTime.now()));
+        sysSemester.setIsDeleted(false);
         sysSemesterRepository.save(sysSemester);
     }
 
     @Override
-    public void deleteSemesterById(long id) {
-        sysSemesterRepository.deleteById(id);
+    public void updateIsDeletedById(SysSemester semester) {
+        System.out.println(semester.getPkSemesterId());
+        sysSemesterRepository.updateIsDeletedById(semester);
     }
 
     @Override
