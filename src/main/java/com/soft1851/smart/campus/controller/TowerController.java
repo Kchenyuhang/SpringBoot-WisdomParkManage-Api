@@ -49,6 +49,7 @@ public class TowerController {
 
     @PostMapping("/single")
     public ResponseResult updateByTowerId(@RequestBody Tower tower) {
+        System.out.println(tower);
         towerService.updateTowerByTowerId(tower);
         return ResponseResult.success();
     }
