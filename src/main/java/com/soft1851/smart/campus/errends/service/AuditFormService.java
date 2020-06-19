@@ -17,4 +17,11 @@ public interface AuditFormService {
      * @return
      */
     ResponseResult saveAuditForm(AuditFormDto auditFormDto);
+
+    /**
+     * 查询所有跑腿
+     * @param auditFormDto
+     * @return
+     */
+    ResponseResult selectErrends(AuditFormDto auditFormDto);
 }

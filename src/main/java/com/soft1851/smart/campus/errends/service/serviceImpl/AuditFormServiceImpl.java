@@ -2,10 +2,14 @@ package com.soft1851.smart.campus.errends.service.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.errends.domain.dto.AuditFormDto;
 import com.soft1851.smart.campus.errends.domain.entity.AuditForm;
 import com.soft1851.smart.campus.errends.domain.entity.ReviewForm;
+import com.soft1851.smart.campus.errends.domain.entity.Transaction;
+import com.soft1851.smart.campus.errends.mapper.DeliveryOrderMapper;
 import com.soft1851.smart.campus.errends.mapper.ReviwFormMapper;
+import com.soft1851.smart.campus.errends.mapper.TransactionMapper;
 import com.soft1851.smart.campus.errends.repository.AuditFormRepository;
 import com.soft1851.smart.campus.errends.service.AuditFormService;
 import com.soft1851.smart.campus.errends.util.SnowFlake;
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author wl
@@ -27,11 +32,16 @@ import java.time.LocalDateTime;
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
 @Slf4j
-public class AuditFormServiceImpl implements AuditFormService{
+public class AuditFormServiceImpl implements AuditFormService {
     @Resource
     private AuditFormRepository auditFormRepository;
     @Resource
     private ReviwFormMapper reviwFormMapper;
+    @Resource
+    private DeliveryOrderMapper deliveryOrderMapper;
+    @Resource
+    private TransactionMapper transactionMapper;
+
     @Override
     public ResponseResult saveAuditForm(AuditFormDto auditFormDto) {
         SnowFlake snowFlake = new SnowFlake(1, 3);
@@ -50,5 +60,28 @@ public class AuditFormServiceImpl implements AuditFormService{
         reviwFormMapper.update(reviewForm, queryWrapper);
         return ResponseResult.success();
 
+
+    }
+
+    @Override
+    public ResponseResult selectErrends(AuditFormDto auditFormDto) {
+        //查询申请表中数据  查询所有跑腿
+        QueryWrapper<ReviewForm> reviewFormQueryWrapper = new QueryWrapper<>();
+        reviewFormQueryWrapper.eq("status", auditFormDto.getStauts());
+        List<ReviewForm> reviewForms = reviwFormMapper.selectList(reviewFormQueryWrapper);
+        if (reviewForms.size() != 0) {
+            for (ReviewForm reviewForm : reviewForms) {
+                QueryWrapper<Transaction> transactionQueryWrapper = new QueryWrapper<>();
+                transactionQueryWrapper.eq("errands_id", reviewForm.getRequesterId());
+
+
+            }
+
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+
+        }
+
+
+        return null;
     }
 }
