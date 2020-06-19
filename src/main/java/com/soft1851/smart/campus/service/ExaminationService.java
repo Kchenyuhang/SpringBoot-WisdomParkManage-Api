@@ -3,7 +3,6 @@ package com.soft1851.smart.campus.service;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.EntityVo;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
 
 import java.util.List;
 
@@ -44,4 +43,7 @@ public interface ExaminationService {
      * @return
      */
     Long countNum();
+
+
+
 }

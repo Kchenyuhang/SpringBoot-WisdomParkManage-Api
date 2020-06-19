@@ -10,8 +10,6 @@ import com.soft1851.smart.campus.utils.DataTypeChange;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,16 +25,25 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Resource
     private ExaminationRepository examinationRepository;
 
-    @Override
-    public void updateInfo(Examination examination) {
-        createDate(examination);
-        examinationRepository.updateInfo(examination);
-    }
 
     @Override
+    public void updateInfo(Examination examination) {
+
+    }
+
+    /**
+     * 新增考务
+     * @param examination
+     */
+    @Override
     public void increaseInfo(Examination examination) {
-        createDate(examination);
-        examinationRepository.saveAndFlush(examination);
+//        Examination examination1 = Examination.builder()
+//                //查询所有学期下拉框选择学期
+//                .semester(examination.getSemester())
+//                //查询所有学科下拉框选择科目（或者模糊查询）
+//                .subjectId(examination.getSubjectId())
+//
+
     }
 
     @Override
@@ -52,19 +59,6 @@ public class ExaminationServiceImpl implements ExaminationService {
         return examinationRepository.count();
     }
 
-    /**
-     * 为 examination对象补充属性值的方法
-     *
-     * @param examination
-     */
-    private void createDate(Examination examination) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        if (examination.getGmtCreate() == null) {
-            examination.setGmtCreate(timestamp);
-        }
-        if (examination.getGmtModified() == null) {
-            examination.setGmtModified(timestamp);
-        }
-        examination.setIsDeleted(false);
-    }
+
+
 }

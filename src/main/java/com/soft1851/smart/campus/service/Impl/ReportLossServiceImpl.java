@@ -142,26 +142,31 @@ public class ReportLossServiceImpl implements ReportLossService {
         SysCard sysCard = cardRepository.findByCardNumber(cardNumber);
         if (userAccount != null) {
             //一卡通状态为启用状态
-           if (!sysCard.getStatus()){
-               //禁用一卡通
-               cardRepository.updateStatus(sysCard.getPkCardId(), true);
-               //新增挂失记录
-               ReportLoss reportLoss1 = ReportLoss.builder()
-                       .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
-                       .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
-                       .isDeleted(false)
-                       .lossJobNumber(userAccount.getJobNumber())
-                       .lossName(userAccount.getUserName())
-                       .lossPhone(userAccount.getPhoneNumber())
-                       .lossStatus(true)
-                       .password(sysCard.getCardPassword())
-                       .remark("管理员操作一卡通挂失")
-                       .build();
-               //新增信息
-               reportLossRepository.save(reportLoss1);
-               return ResponseResult.success("挂失成功！");
+           if (sysCard!=null){
+               if (!sysCard.getStatus()){
+                   //禁用一卡通
+                   cardRepository.updateStatus(sysCard.getPkCardId(), true);
+                   //新增挂失记录
+                   ReportLoss reportLoss1 = ReportLoss.builder()
+                           .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                           .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                           .isDeleted(false)
+                           .lossJobNumber(userAccount.getJobNumber())
+                           .lossName(userAccount.getUserName())
+                           .lossPhone(userAccount.getPhoneNumber())
+                           .lossStatus(true)
+                           .password(sysCard.getCardPassword())
+                           .remark("管理员操作一卡通挂失")
+                           .build();
+                   //新增信息
+                   reportLossRepository.save(reportLoss1);
+                   return ResponseResult.success("挂失成功！");
+               }else {
+                   return ResponseResult.failure(ResultCode.USER_ACCOUNT_FORBIDDEN);
+               }
+
            }else {
-               return ResponseResult.failure(ResultCode.USER_ACCOUNT_FORBIDDEN);
+               return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
            }
         } else {
             return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
