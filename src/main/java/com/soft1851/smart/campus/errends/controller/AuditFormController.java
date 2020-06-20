@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.errends.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.errends.domain.dto.AuditFormDto;
+import com.soft1851.smart.campus.errends.domain.dto.FinshOrderDto;
 import com.soft1851.smart.campus.errends.service.AuditFormService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +27,33 @@ public class AuditFormController {
     @Resource
     private AuditFormService auditFormService;
 
-    @PostMapping(value="/Errends")
+    /**
+     * 成为跑腿
+     *
+     * @param auditFormDto
+     * @return
+     */
+    @PostMapping(value = "/Errends")
     public ResponseResult becomeErrends(@RequestBody AuditFormDto auditFormDto) {
         return auditFormService.saveAuditForm(auditFormDto);
+    }
+
+    /**
+     * 查询所有跑腿
+     *
+     * @param finshOrderDto
+     * @return
+     */
+    @PostMapping(value = "/all/errends")
+    public ResponseResult getAllerrends(@RequestBody FinshOrderDto finshOrderDto) {
+        return auditFormService.selectErrends(finshOrderDto);
+    }
+
+    /**
+     * 查询所有跑腿申请
+     */
+    @PostMapping(value = "/nopass/errends")
+    public ResponseResult getErredsFrom(@RequestBody FinshOrderDto finshOrderDto) {
+        return auditFormService.selectReviewForm(finshOrderDto);
     }
 }

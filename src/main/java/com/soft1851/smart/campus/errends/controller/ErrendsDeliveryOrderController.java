@@ -25,9 +25,9 @@ public class ErrendsDeliveryOrderController {
     @Resource
     private DeliveryOrderService deliveryOrderService;
 
+
     @PostMapping(value = "/serach/differentOrder")
     public ResponseResult getDeliveryOrder(@RequestBody FinshOrderDto finshOrderDto) {
-
         return deliveryOrderService.getOrder(finshOrderDto);
     }
 }

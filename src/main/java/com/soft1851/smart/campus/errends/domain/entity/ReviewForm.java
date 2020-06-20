@@ -67,10 +67,12 @@ public class ReviewForm {
     @Column(name = "remark")
     private String remark;
 
+
+
     /**
      * 创建时间
      */
-    @JsonIgnore
+
     @Column(nullable = false)
     @CreatedDate
     private Timestamp gmtCreate;
