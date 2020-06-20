@@ -11,7 +11,7 @@ import com.soft1851.smart.campus.model.entity.UserAccount;
  * @Date 2020/6/3  16:47
  * @Version 1.0
  **/
-public interface UserAccountService {
+public interface  UserAccountService {
 
     /**
      * 新增用户数据
@@ -100,4 +100,12 @@ public interface UserAccountService {
      * @return
      */
     ResponseResult findStudentLike(String keywords);
+
+
+    /**
+     * 通过教工号或者教师姓名查询教师信息
+     * @param keywords
+     * @return
+     */
+    ResponseResult findTeacherLike(String keywords);
 }

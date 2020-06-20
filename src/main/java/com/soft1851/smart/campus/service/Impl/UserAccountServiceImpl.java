@@ -20,13 +20,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -98,7 +96,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
                         .status(false)
-                        .brithday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
@@ -271,6 +268,17 @@ public class UserAccountServiceImpl implements UserAccountService {
             e.printStackTrace();
         }
         return ResponseResult.success(studentVos);
+    }
+
+    @Override
+    public ResponseResult findTeacherLike(String keywords) {
+        List<TeacherVo> teacherVos = null;
+        try {
+            teacherVos = userAccountMapper.findTeacherLike(keywords);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(teacherVos);
     }
 
 

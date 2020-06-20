@@ -10,7 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -128,14 +127,10 @@ public class UserAccount {
     @Column(nullable = false, length = 2)
     private String gender;
 
-
-
     /**
      * 地址
      */
     @Column(length = 128)
     private String address;
 
-    @Column(nullable = false)
-    private Date brithday;
 }

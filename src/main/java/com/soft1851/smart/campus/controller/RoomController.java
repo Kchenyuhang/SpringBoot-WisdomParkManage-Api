@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.IntSingleParam;
 import com.soft1851.smart.campus.model.entity.Room;
 import com.soft1851.smart.campus.model.vo.TowerVo;
 import com.soft1851.smart.campus.service.RoomService;
@@ -44,9 +45,9 @@ public class RoomController {
         return ResponseResult.success();
     }
 
-    @DeleteMapping(value = "/id/{id}")
-    public ResponseResult deleteRoomById(@PathVariable int id) {
-        roomService.deleteRoomById(id);
+    @PostMapping(value = "/id")
+    public ResponseResult deleteRoomById(@RequestBody IntSingleParam intSingleParam) {
+        roomService.deleteRoomById(intSingleParam.getId());
         return ResponseResult.success();
     }
 }

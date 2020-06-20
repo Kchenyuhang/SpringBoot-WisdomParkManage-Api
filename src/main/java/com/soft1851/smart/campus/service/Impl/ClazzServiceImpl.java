@@ -2,10 +2,12 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.mapper.ClazzMapper;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.UpdateClazzDto;
 import com.soft1851.smart.campus.model.entity.Clazz;
+import com.soft1851.smart.campus.model.vo.ClazzVo;
 import com.soft1851.smart.campus.repository.ClazzRepository;
 import com.soft1851.smart.campus.service.ClazzService;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,8 @@ public class ClazzServiceImpl implements ClazzService {
     private ClazzRepository clazzRepository;
     @Resource
     private UserAccountMapper userAccountMapper;
+    @Resource
+    private ClazzMapper clazzMapper;
 
 
     /**
@@ -182,5 +186,16 @@ public class ClazzServiceImpl implements ClazzService {
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
+    }
+
+    @Override
+    public ResponseResult getAllClazzs(String keywords) {
+        List<ClazzVo> clazzVos = null;
+        try {
+            clazzVos = clazzMapper.findClazzLike(keywords);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(clazzVos);
     }
 }

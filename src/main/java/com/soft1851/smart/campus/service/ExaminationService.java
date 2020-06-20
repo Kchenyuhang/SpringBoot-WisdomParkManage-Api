@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.EntityVo;
@@ -20,14 +21,14 @@ public interface ExaminationService {
      *
      * @param examination
      */
-    void updateInfo(Examination examination);
+    ResponseResult updateInfo(Examination examination);
 
     /**
      * 新增考务信息
-     *
      * @param examination
+     * @return
      */
-    void increaseInfo(Examination examination);
+    ResponseResult increaseInfo(Examination examination);
 
     /**
      * 分页查找所有考务信息数据
@@ -43,7 +44,6 @@ public interface ExaminationService {
      * @return
      */
     Long countNum();
-
 
 
 }

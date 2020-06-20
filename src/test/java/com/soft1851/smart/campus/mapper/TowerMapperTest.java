@@ -22,4 +22,5 @@ class TowerMapperTest {
     void getTeachTowersByType() {
         System.out.println(towerMapper.getTeachTowersByType());
     }
+
 }
