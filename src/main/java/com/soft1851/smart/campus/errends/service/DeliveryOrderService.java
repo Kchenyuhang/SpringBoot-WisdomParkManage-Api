@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.errends.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.errends.domain.dto.DeliveryOrderDto;
 import com.soft1851.smart.campus.errends.domain.dto.FinshOrderDto;
 
 /**
@@ -17,4 +18,11 @@ public interface DeliveryOrderService {
      * @return
      */
     ResponseResult getOrder(FinshOrderDto finshOrderDto);
+
+    /**
+     * 根据订单ID，姓名模糊查询
+     * @param deliveryOrderDto
+     * @return
+     */
+    ResponseResult getOrderByFoundIdOrFounderName(DeliveryOrderDto deliveryOrderDto);
 }

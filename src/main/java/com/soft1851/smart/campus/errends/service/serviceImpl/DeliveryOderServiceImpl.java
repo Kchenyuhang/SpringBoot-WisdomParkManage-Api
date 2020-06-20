@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.errends.service.serviceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.errends.domain.dto.DeliveryOrderDto;
 import com.soft1851.smart.campus.errends.domain.dto.FinshOrderDto;
 import com.soft1851.smart.campus.errends.domain.entity.CancleDeliveryOrder;
 import com.soft1851.smart.campus.errends.domain.entity.Commodity;
@@ -150,5 +151,12 @@ log.info(String.valueOf(userAccount));
         map.put("order",content);
         map.put("total",total);
         return ResponseResult.success(map);
+    }
+
+    @Override
+    public ResponseResult getOrderByFoundIdOrFounderName(DeliveryOrderDto deliveryOrderDto) {
+//        QueryWrapper<DeliveryOderInformationVo> pa = (QueryWrapper<DeliveryOderInformationVo>) deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto);
+//        List<DeliveryOderInformationVo> page = pa
+        return ResponseResult.success(deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto));
     }
 }
