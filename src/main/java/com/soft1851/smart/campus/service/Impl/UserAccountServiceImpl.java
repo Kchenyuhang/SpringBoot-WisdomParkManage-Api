@@ -2,7 +2,6 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
-import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
@@ -168,6 +167,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
     }
 
+
     /**
      * 修改账号
      *
@@ -214,14 +214,24 @@ public class UserAccountServiceImpl implements UserAccountService {
         return n;
     }
 
+    /**
+     * 修改状态
+     * @param pkUserAccountId
+     * @param status
+     * @return
+     */
     @Override
-    public int updateStatusById(UserAccount userAccount) {
-        int result = userAccountRepository.updateStatusById(userAccount);
-        if (result > 0) {
-            return result;
+    public ResponseResult updateStatusById(String pkUserAccountId, Boolean status) {
+        UserAccount userAccount = userAccountRepository.findByPkUserAccountId(pkUserAccountId);
+        if (userAccount!=null){
+            userAccountRepository.updateStatusById(pkUserAccountId,status);
+            return ResponseResult.success("修改状态");
+        }else{
+            return ResponseResult.failure(ResultCode.USER_NOT_FOUND);
         }
-        throw new CustomException("修改账户状态异常", ResultCode.DATA_UPDATE_ERROR);
     }
+
+
     /**
      * 获取所有教师数据(用户班级选择班主任)
      *

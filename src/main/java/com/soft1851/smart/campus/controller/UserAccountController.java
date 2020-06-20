@@ -68,11 +68,9 @@ public class UserAccountController {
      */
     @ApiOperation(value = "修改用户信息",notes = "")
     @PostMapping(value = "/modification")
-    public int updateInfoType(@RequestBody UserAccount userAccount){
-       return userAccountService.updateUserAccountById(userAccount);
+    public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
+       return userAccountService.updateUserAccount(userAccount);
     }
-
-
 
 
     /**
@@ -116,16 +114,20 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
     }
 
-    @ApiOperation(value = "修改学生状态接口")
+    /**
+     * 修改用户状态
+     * @param queryDto
+     * @return
+     */
+    @ApiOperation(value = "修改用户状态",notes = "")
     @PostMapping(value = "/status")
-    public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
-        int n = userAccountService.updateStatusById(userAccount);
-        return ResponseResult.success();
+    public ResponseResult updateStatusById(@RequestBody QueryDto queryDto){
+        return userAccountService.updateStatusById(queryDto.getFiled1(),queryDto.getStatus());
     }
+
 
     /**
      * 查询未被分配的学生

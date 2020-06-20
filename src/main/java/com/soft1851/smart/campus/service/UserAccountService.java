@@ -47,7 +47,6 @@ public interface  UserAccountService {
 
     /**
      * 修改账号
-     *
      * @param userAccount
      * @return
      */
@@ -76,10 +75,11 @@ public interface  UserAccountService {
 
     /**
      * 修改用户的状态
-     * @param userAccount
+     * @param pkUserAccountId
+     * @param status
      * @return
      */
-    int updateStatusById(UserAccount userAccount);
+    ResponseResult updateStatusById(String pkUserAccountId,Boolean status);
 
     /**
      * 获取所有老师数据
