@@ -1,7 +1,9 @@
 package com.soft1851.smart.campus.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
+import com.soft1851.smart.campus.model.dto.PartJobDto;
 import com.soft1851.smart.campus.model.entity.PartJob;
 
 import java.util.List;
@@ -16,4 +18,10 @@ import java.util.List;
 public interface PartJobService extends IService<PartJob> {
 
     List<PartJob> findList(JobPageDto jobPageDto);
+
+    int add(PartJobDto partJobDto);
+
+//    Boolean updateJob(PartJobDto partJobDto);
+
+//    int delete(JobDto jobDto);
 }

@@ -43,7 +43,7 @@ public class PartJob extends Model<PartJob> {
 
     @TableField("boss_id")
     @Column(nullable = false,length = 60)
-    private  Long bossId;
+    private  String bossId;
 
     @TableField("boss_name")
     @Column(nullable = false,length = 60)
