@@ -1,10 +1,9 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.mapper.TowerAndUnitMapper;
 import com.soft1851.smart.campus.mapper.TowerMapper;
-import com.soft1851.smart.campus.mapper.TowerUnitMapper;
 import com.soft1851.smart.campus.model.entity.Tower;
-import com.soft1851.smart.campus.model.entity.TowerAndUnit;
 import com.soft1851.smart.campus.model.entity.TowerUnit;
 import com.soft1851.smart.campus.repository.TowerRepository;
 import com.soft1851.smart.campus.service.TowerService;
@@ -88,4 +87,10 @@ public class TowerServiceImpl implements TowerService {
     public void updateTowerByTowerId(Tower tower) {
         towerRepository.updateTowerByTowerId(tower);
     }
+
+    @Override
+    public List<Map<String, Object>> getAllTowerRooms() {
+        return towerMapper.getTeachTowersByType();
+    }
+
 }

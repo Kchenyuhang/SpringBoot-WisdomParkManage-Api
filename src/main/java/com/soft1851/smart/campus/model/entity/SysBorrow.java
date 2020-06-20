@@ -64,6 +64,18 @@ public class SysBorrow {
      */
     @Column(nullable = false)
     private Timestamp gmtCreate;
+    /**
+     * 归还标志
+     */
+    @Column(nullable = false,length = 4)
+    private  Boolean isReturned;
+
+    /**
+     * 还书时间
+     */
+    @Column(nullable = false)
+    @CreationTimestamp
+    private  Timestamp gmtReturn;
 
     /**
      * 更新时间
@@ -74,21 +86,9 @@ public class SysBorrow {
 
 
     /**
-     * 还书时间
-     */
-    @Column(nullable = false)
-    @CreationTimestamp
-    private  Timestamp gmtReturn;
-
-    /**
      * 删除标志
      */
     @Column(nullable = false,length = 4)
     private  Boolean isDeleted;
 
-    /**
-     * 归还标志
-     */
-    @Column(nullable = false,length = 4)
-    private  Boolean isReturned;
 }

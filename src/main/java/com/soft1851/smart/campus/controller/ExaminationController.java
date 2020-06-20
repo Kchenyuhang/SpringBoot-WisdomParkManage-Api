@@ -1,12 +1,12 @@
 package com.soft1851.smart.campus.controller;
 
-import cn.hutool.db.Page;
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.EntityVo;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
 import com.soft1851.smart.campus.service.ExaminationService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,14 +27,20 @@ public class ExaminationController {
     @Resource
     private ExaminationService examinationService;
 
-    @PutMapping("/modification")
+    @PostMapping("/modification")
     public void updateInfo(@RequestBody Examination examination) {
         examinationService.updateInfo(examination);
     }
 
-    @PostMapping("/increase")
-    public void increaseInfo(@RequestBody Examination examination) {
-        examinationService.increaseInfo(examination);
+    /**
+     * 新增考务
+     * @param examination
+     * @return
+     */
+    @ApiOperation(value = "新增考务",notes = "")
+    @PostMapping(value = "/increase")
+    public ResponseResult increaseSysFeedback(@RequestBody Examination examination){
+        return examinationService.increaseInfo(examination);
     }
 
     @PostMapping("/all/page")
@@ -57,7 +63,7 @@ public class ExaminationController {
      *
      * @return
      */
-    @GetMapping("/count")
+    @PostMapping("/count")
     public Long totalNum() {
         return examinationService.countNum();
     }

@@ -8,6 +8,8 @@ import com.soft1851.smart.campus.service.InfoTypeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class InfoTypeServiceImpl implements InfoTypeService {
         InfoType infoType1 = infoTypeRepository.findTopByOrderBySortDesc();
 
         infoType.setSort(infoType1.getSort()+1);
-        infoType.setIsDeleted(true);
+        infoType.setIsDeleted(false);
         infoTypeRepository.save(infoType);
         if (infoType.getPkInfoTypeId()!=null){
             return ResponseResult.success("添加成功");
@@ -99,8 +101,8 @@ public class InfoTypeServiceImpl implements InfoTypeService {
         if (infoType1!= null){
             infoType1.setName(infoType.getName());
             infoType1.setSort(infoType.getSort());
-            infoType1.setGmtCreate(infoType1.getGmtCreate());
-            infoType1.setIsDeleted(true);
+            infoType1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
+            infoType1.setIsDeleted(false);
             infoTypeRepository.saveAndFlush(infoType1);
             return ResponseResult.success("修改成功"+infoType1);
         }

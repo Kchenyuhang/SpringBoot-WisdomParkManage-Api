@@ -1,7 +1,9 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.service.UserAccountService;
 import io.swagger.annotations.Api;
@@ -32,7 +34,7 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "分页查询所有账号",notes = "")
-    @GetMapping(value = "/all")
+    @PostMapping(value = "/all")
     public ResponseResult findInfoType(PageDto pageDto){
         return userAccountService.findAllUserAccount(pageDto);
     }
@@ -40,13 +42,13 @@ public class UserAccountController {
 
     /**
      * 删除用户账号
-     * @param id
+     * @param
      * @return
      */
     @ApiOperation(value = "删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deleteInfoType(@PathVariable String id){
-        return userAccountService.deleteUserAccount(id);
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteInfoType(@RequestBody QueryDto queryDto){
+        return userAccountService.deleteUserAccount(queryDto.getField().toString());
     }
 
     /**
@@ -54,9 +56,9 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "批量删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return userAccountService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.deletedBatch(batchDeletionDto.getIds());
     }
 
     /**
@@ -65,9 +67,11 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "修改用户信息",notes = "")
-    @PutMapping(value = "/modification")
+    @PostMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
-        return userAccountService.updateUserAccount(userAccount);
+        System.out.println(userAccount);
+        int n = userAccountService.updateUserAccountById(userAccount);
+        return ResponseResult.success();
     }
 
 
@@ -84,7 +88,6 @@ public class UserAccountController {
         return userAccountService.getAllStudent(pageDto);
     }
 
-
     /**
      * 获取所有教师数据信息
      * @param pageDto
@@ -96,6 +99,16 @@ public class UserAccountController {
         return userAccountService.getAllTeacher(pageDto);
     }
 
+    /**
+     * 获取所有教师数据信息
+     * @return
+     */
+    @ApiOperation(value = "获取教师分配班主任",notes = "")
+    @PostMapping(value = "/headmaster")
+    public ResponseResult getAllTeacherMessage(){
+        return userAccountService.getAllTeacherMessage();
+    }
+
 
     /**
      * 新增用户数据信息
@@ -105,8 +118,48 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
+        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
     }
 
+    @ApiOperation(value = "修改学生状态接口")
+    @PostMapping(value = "/status")
+    public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
+        int n = userAccountService.updateStatusById(userAccount);
+        return ResponseResult.success();
+    }
 
+    /**
+     * 查询未被分配的学生
+     * @param pageDto
+     * @return
+     */
+    @ApiOperation(value = "查询未被分配的学生",notes = "")
+    @PostMapping(value = "/undistributed")
+    public ResponseResult getAllUndistributedStudents(@RequestBody PageDto pageDto){
+        return userAccountService.getAllUndistributedStudent(pageDto);
+    }
+
+    /**
+     * 模糊查询学生数据
+     * @param batchDeletionDto
+     * @return
+     */
+    @ApiOperation(value = "模糊查询学生数据",notes = "ids为keywords关键字")
+    @PostMapping(value = "/student/like")
+    public ResponseResult findStudentLike(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.findStudentLike(batchDeletionDto.getIds());
+    }
+
+
+    /**
+     * 模糊查询教师数据
+     * @param batchDeletionDto
+     * @return
+     */
+    @ApiOperation(value = "模糊查询教师数据",notes = "ids为keywords关键字")
+    @PostMapping(value = "/teacher/like")
+    public ResponseResult findTeacherLike(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.findTeacherLike(batchDeletionDto.getIds());
+    }
 }

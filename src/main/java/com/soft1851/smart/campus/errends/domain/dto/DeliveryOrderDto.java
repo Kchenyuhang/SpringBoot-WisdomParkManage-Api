@@ -87,4 +87,7 @@ public class DeliveryOrderDto{
      * 物品价格范围
      */
     private String priceRang;
+
+    private Integer currentPage;
+    private Integer size;
 }

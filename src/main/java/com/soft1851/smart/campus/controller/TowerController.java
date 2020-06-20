@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.IntSingleParam;
 import com.soft1851.smart.campus.model.entity.Tower;
 import com.soft1851.smart.campus.service.TowerService;
 import io.swagger.annotations.Api;
@@ -49,13 +50,22 @@ public class TowerController {
 
     @PostMapping("/single")
     public ResponseResult updateByTowerId(@RequestBody Tower tower) {
+        System.out.println(tower);
         towerService.updateTowerByTowerId(tower);
         return ResponseResult.success();
     }
 
-    @DeleteMapping("/id/{id}")
-    public ResponseResult deleteByTowerId(@PathVariable int id) {
-        towerService.deleteTowerById(id);
+    @PostMapping("/id")
+    public ResponseResult deleteByTowerId(@RequestBody IntSingleParam intSingleParam) {
+        towerService.deleteTowerById(intSingleParam.getId());
         return ResponseResult.success();
     }
+
+    @ApiOperation(value = "查询所有教学楼栋及其房间信息")
+    @PostMapping(value = "/list/teach")
+    public List<Map<String, Object>> getAllTowers() {
+        return towerService.getAllTowerRooms();
+    }
+
+
 }
