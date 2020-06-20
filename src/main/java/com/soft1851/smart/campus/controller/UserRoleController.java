@@ -37,7 +37,7 @@ public class UserRoleController {
      * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletion/id")
+    @PostMapping(value = "/deletion/id")
     public ResponseResult deletedAdmin(@RequestBody BatchDeletionDto batchDeletionDto){
         return userRoleService.deletedAdmin(batchDeletionDto.getIds());
     }

@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.service.UserAccountService;
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "分页查询所有账号",notes = "")
-    @GetMapping(value = "/all")
+    @PostMapping(value = "/all")
     public ResponseResult findInfoType(PageDto pageDto){
         return userAccountService.findAllUserAccount(pageDto);
     }
@@ -41,13 +42,13 @@ public class UserAccountController {
 
     /**
      * 删除用户账号
-     * @param batchDeletionDto
+     * @param
      * @return
      */
     @ApiOperation(value = "删除用户账号",notes = "")
-    @PostMapping(value = "/deletion/id")
-    public ResponseResult deleteInfoType(@RequestBody BatchDeletionDto batchDeletionDto){
-        return userAccountService.deleteUserAccount(batchDeletionDto.getIds());
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteInfoType(@RequestBody QueryDto queryDto){
+        return userAccountService.deleteUserAccount(queryDto.getField().toString());
     }
 
     /**
@@ -55,7 +56,7 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "批量删除用户账号",notes = "")
-    @PostMapping(value = "/deletionBath/ids")
+    @PostMapping(value = "/deletionBath")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
         return userAccountService.deletedBatch(batchDeletionDto.getIds());
     }

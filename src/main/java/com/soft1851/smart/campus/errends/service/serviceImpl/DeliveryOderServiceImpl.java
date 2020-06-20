@@ -59,6 +59,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
         List<DeliveryOrder> deliveryOrders = deliveryOrderMapper.selectList(deliveryOrderQueryWrapper);
 
         for (DeliveryOrder deliveryOrder : deliveryOrders) {
+
             //查出商品信息
             Commodity commodity = commodityMapper.selectById(deliveryOrder.getCommodityId());
             //查出发单人信息
@@ -66,7 +67,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
             userAccountQueryWrapper.select("nickname", "job_number", "phone_number")
                     .eq("job_number", deliveryOrder.getFounderId());
             UserAccount userAccount = userAccountMapper.selectOne(userAccountQueryWrapper);
-
+log.info(String.valueOf(userAccount));
             //根据不同状态追加不同值
             if (finshOrderDto.getStatus() == 0 || finshOrderDto.getStatus() == 1) {
                 if (finshOrderDto.getStatus() == 1) {
@@ -89,7 +90,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
                     list.add(deliveryOderInformationVo);
                     //发布的信息
                 } else if (finshOrderDto.getStatus() == 0) {
-                    log.info(userAccount.getJobNumber());
+                    log.info(deliveryOrder.getFounderName());
                     DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                             .amount(deliveryOrder.getAmount())
                             .priceRange(commodity.getPriceRang()).type(commodity.getType()).deliveryTime(deliveryOrder.getDeliveryTime())

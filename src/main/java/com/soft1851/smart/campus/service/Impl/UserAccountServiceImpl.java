@@ -96,7 +96,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
                         .status(false)
-                        .brithday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();

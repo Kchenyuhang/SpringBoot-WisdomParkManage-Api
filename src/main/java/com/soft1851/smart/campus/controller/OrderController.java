@@ -56,7 +56,7 @@ public class OrderController {
     }
 
     @ApiOperation(value = "修改订单金额和描述",notes = "")
-    @PostMapping(value = "/modification")
+    @PostMapping(value = "order/modification")
     public ResponseResult modificationOrder(@RequestBody UpdateOrderDto updateOrderDto){
         return orderService.updateOrder(updateOrderDto);
     }
