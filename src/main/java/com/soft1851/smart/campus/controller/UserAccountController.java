@@ -68,10 +68,8 @@ public class UserAccountController {
      */
     @ApiOperation(value = "修改用户信息",notes = "")
     @PostMapping(value = "/modification")
-    public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
-        int n = userAccountService.updateUserAccountById(userAccount);
-        return ResponseResult.success();
+    public int updateInfoType(@RequestBody UserAccount userAccount){
+       return userAccountService.updateUserAccountById(userAccount);
     }
 
 

@@ -30,7 +30,7 @@ public interface  UserAccountService {
 
 
     /**
-     * 单个删除账号
+     * 单个删除账号逻辑删除
      *
      * @param id
      * @return
@@ -48,10 +48,10 @@ public interface  UserAccountService {
     /**
      * 修改账号
      *
-     * @param UserAccount
+     * @param userAccount
      * @return
      */
-    ResponseResult updateUserAccount(UserAccount UserAccount);
+    ResponseResult updateUserAccount(UserAccount userAccount);
 
     /**
      * 获取所有学生数据
