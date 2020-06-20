@@ -1,6 +1,8 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
 import com.soft1851.smart.campus.model.entity.InfoType;
 import com.soft1851.smart.campus.service.InfoTypeService;
 import io.swagger.annotations.Api;
@@ -26,11 +28,11 @@ public class InfoTypeController {
     private InfoTypeService infoTypeService;
 
     /**
-     * 查找所有资讯
+     * 查找所有资讯分类
      * @return List<InfoManage>
      */
     @ApiOperation(value = "查询资讯分类",notes = "")
-    @GetMapping(value = "/all")
+    @PostMapping(value = "/all")
     public ResponseResult findInfoType(){
         return infoTypeService.findAllInfoType();
     }
@@ -48,13 +50,13 @@ public class InfoTypeController {
 
     /**
      * 删除资讯分类
-     * @param id
+     * @param singleParam
      * @return
      */
     @ApiOperation(value = "删除资讯分类",notes = "")
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deleteInfoType(@PathVariable Long id){
-        return infoTypeService.deleteInfoType(id);
+    @PostMapping(value = "/deletion/id")
+    public ResponseResult deleteInfoType(@RequestBody SingleParam singleParam){
+        return infoTypeService.deleteInfoType(singleParam.getPkId());
     }
 
     /**
@@ -62,9 +64,9 @@ public class InfoTypeController {
      * @return
      */
     @ApiOperation(value = "批量删除咨询分类",notes = "")
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return infoTypeService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath/ids")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return infoTypeService.deletedBatch(batchDeletionDto.getIds());
     }
 
     /**
@@ -73,7 +75,7 @@ public class InfoTypeController {
      * @return
      */
     @ApiOperation(value = "修改资讯分类",notes = "")
-    @PutMapping(value = "/modification")
+    @PostMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody InfoType infoType){
         return infoTypeService.updateInfoType(infoType);
     }

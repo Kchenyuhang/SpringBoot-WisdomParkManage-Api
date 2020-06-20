@@ -67,4 +67,11 @@ class UserAccountMapperTest {
         List<String> stringList = userAccountMapper.findStudentsByClazzId((long)1);
         System.out.println(stringList);
     }
+
+
+    @Test
+    void findJobNumberByClazzId() throws SQLException{
+        List<String> stringList = userAccountMapper.findJobNumberByClazzId((long)10);
+        System.out.println(stringList);
+    }
 }

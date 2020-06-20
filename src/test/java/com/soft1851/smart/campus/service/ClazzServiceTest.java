@@ -51,4 +51,10 @@ class ClazzServiceTest {
         ResponseResult responseResult = clazzService.deleteBatchByClazzId(ids);
         System.out.println(responseResult);
     }
+
+    @Test
+    void getAllClazzs() {
+        ResponseResult responseResult = clazzService.getAllClazzs("软件");
+        System.out.println(responseResult);
+    }
 }

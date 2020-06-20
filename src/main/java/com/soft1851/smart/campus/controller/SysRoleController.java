@@ -1,12 +1,8 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.QueryDto;
-import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.SysRole;
-import com.soft1851.smart.campus.repository.UserRoleRepository;
 import com.soft1851.smart.campus.service.RoleMenuService;
 import com.soft1851.smart.campus.service.RoleService;
 import com.soft1851.smart.campus.service.SysRoleService;
@@ -60,12 +56,12 @@ public class SysRoleController {
 
     /**
      * 批量删除角色数据
-     * @param ids
+     * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return sysRoleService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath/ids")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysRoleService.deletedBatch(batchDeletionDto.getIds());
     }
 
 //    /**

@@ -100,4 +100,12 @@ public interface UserAccountService {
      * @return
      */
     ResponseResult findStudentLike(String keywords);
+
+
+    /**
+     * 通过教工号或者教师姓名查询教师信息
+     * @param keywords
+     * @return
+     */
+    ResponseResult findTeacherLike(String keywords);
 }

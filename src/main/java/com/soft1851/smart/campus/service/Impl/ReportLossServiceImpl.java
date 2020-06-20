@@ -143,9 +143,9 @@ public class ReportLossServiceImpl implements ReportLossService {
         if (userAccount != null) {
             //一卡通状态为启用状态
            if (sysCard!=null){
-               if (!sysCard.getStatus()){
+               if (sysCard.getStatus()){
                    //禁用一卡通
-                   cardRepository.updateStatus(sysCard.getPkCardId(), true);
+                   cardRepository.updateStatus(sysCard.getPkCardId(), false);
                    //新增挂失记录
                    ReportLoss reportLoss1 = ReportLoss.builder()
                            .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))

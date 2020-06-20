@@ -41,13 +41,13 @@ public class UserAccountController {
 
     /**
      * 删除用户账号
-     * @param id
+     * @param batchDeletionDto
      * @return
      */
     @ApiOperation(value = "删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deleteInfoType(@PathVariable String id){
-        return userAccountService.deleteUserAccount(id);
+    @PostMapping(value = "/deletion/id")
+    public ResponseResult deleteInfoType(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.deleteUserAccount(batchDeletionDto.getIds());
     }
 
     /**
@@ -55,9 +55,9 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "批量删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return userAccountService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath/ids")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.deletedBatch(batchDeletionDto.getIds());
     }
 
     /**
@@ -148,5 +148,17 @@ public class UserAccountController {
     @PostMapping(value = "/student/like")
     public ResponseResult findStudentLike(@RequestBody BatchDeletionDto batchDeletionDto){
         return userAccountService.findStudentLike(batchDeletionDto.getIds());
+    }
+
+
+    /**
+     * 模糊查询教师数据
+     * @param batchDeletionDto
+     * @return
+     */
+    @ApiOperation(value = "模糊查询教师数据",notes = "ids为keywords关键字")
+    @PostMapping(value = "/teacher/like")
+    public ResponseResult findTeacherLike(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.findTeacherLike(batchDeletionDto.getIds());
     }
 }
