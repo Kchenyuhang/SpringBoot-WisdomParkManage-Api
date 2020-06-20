@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -84,7 +81,7 @@ public class DeliveryOrder {
     /**
      * 商品详细信息
      */
-    @Column(name = "commodity_id", nullable = false)
+    @Column(name = "commodity_id", nullable = false,insertable = false,updatable = false)
     private String commodityId;
     /**
      * 订单创建时间
@@ -143,5 +140,8 @@ public class DeliveryOrder {
 //    @JsonIgnore
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    private Commodity commodity;
 
 }

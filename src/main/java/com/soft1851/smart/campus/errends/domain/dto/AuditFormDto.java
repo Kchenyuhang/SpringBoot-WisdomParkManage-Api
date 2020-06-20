@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuditFormDto {
-private String FounderId;
+
     private String remark;
     private String founderId;
     private String reviewerId;

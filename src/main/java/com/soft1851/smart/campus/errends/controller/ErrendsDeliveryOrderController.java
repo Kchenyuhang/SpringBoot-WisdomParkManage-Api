@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.errends.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.errends.domain.dto.DeliveryOrderDto;
 import com.soft1851.smart.campus.errends.domain.dto.FinshOrderDto;
 import com.soft1851.smart.campus.errends.service.DeliveryOrderService;
 import io.swagger.annotations.Api;
@@ -25,9 +26,14 @@ public class ErrendsDeliveryOrderController {
     @Resource
     private DeliveryOrderService deliveryOrderService;
 
+
     @PostMapping(value = "/serach/differentOrder")
     public ResponseResult getDeliveryOrder(@RequestBody FinshOrderDto finshOrderDto) {
-
         return deliveryOrderService.getOrder(finshOrderDto);
+    }
+
+    @PostMapping("/search/getOrder")
+    public ResponseResult getOrder(@RequestBody DeliveryOrderDto orderDto){
+        return deliveryOrderService.getOrderByFoundIdOrFounderName(orderDto);
     }
 }
