@@ -91,8 +91,11 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .jobNumber(userAccount.getJobNumber())
                         .nickname("用户" + userAccount.getJobNumber())
                         .password("123456")
+                        .address(userAccount.getAddress())
+
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
+                        .clazzId(userAccount.getClazzId())
                         .status(false)
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())

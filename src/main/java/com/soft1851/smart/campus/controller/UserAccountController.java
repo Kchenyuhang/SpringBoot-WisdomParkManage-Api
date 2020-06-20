@@ -35,7 +35,8 @@ public class UserAccountController {
      */
     @ApiOperation(value = "分页查询所有账号",notes = "")
     @PostMapping(value = "/all")
-    public ResponseResult findInfoType(PageDto pageDto){
+    public ResponseResult findInfoType(@RequestBody PageDto pageDto){
+        System.out.println(pageDto);
         return userAccountService.findAllUserAccount(pageDto);
     }
 
@@ -48,7 +49,7 @@ public class UserAccountController {
     @ApiOperation(value = "删除用户账号",notes = "")
     @PostMapping(value = "/deletion")
     public ResponseResult deleteInfoType(@RequestBody QueryDto queryDto){
-        return userAccountService.deleteUserAccount(queryDto.getField().toString());
+        return userAccountService.deleteUserAccount(queryDto.getFiled1());
     }
 
     /**
