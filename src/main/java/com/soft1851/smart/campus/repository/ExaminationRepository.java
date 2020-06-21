@@ -2,7 +2,6 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Examination;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -52,4 +51,6 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
             "ORDER BY exa.pk_examination_id\n" +
             "LIMIT :#{#pageDto.pageSize} OFFSET :#{#pageDto.currentPage}", nativeQuery = true)
     List<Object> selectAll(@Param("pageDto") PageDto pageDto);
+
+
 }

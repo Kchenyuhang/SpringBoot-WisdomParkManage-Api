@@ -66,4 +66,9 @@ public interface SysFeedbackService {
      * @return
      */
     ResponseResult getSysFeedbackByTime(TimeBorrowPageDto timeBorrowPageDto);
+
+    /**
+     * 导出反馈数据
+     */
+    void exportData();
 }

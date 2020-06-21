@@ -31,10 +31,10 @@ public interface SysSemesterService {
     /**
      * 根据id删除学期信息
      *
-     * @param id
+     * @param sysSemester
      * @return
      */
-    void deleteSemesterById(long id);
+    void updateIsDeletedById(SysSemester sysSemester);
 
     /**
      * 根据id修改学期信息

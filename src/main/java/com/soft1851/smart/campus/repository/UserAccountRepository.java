@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.model.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -34,14 +35,14 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     UserAccount findByPkUserAccountId(String id);
 
-    /**
-     * 批量删除
-     * @param ids
-     */
-    @Modifying
-    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
-    @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
-    void deleteBatch(List<Long> ids);
+//    /**
+//     * 批量删除
+//     * @param ids
+//     */
+//    @Modifying
+//    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
+//    @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
+//    void deleteBatch(List<Long> ids);
 
 
 
@@ -53,4 +54,55 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     @Query(value = "select * from user_account as ua where ua.card_number=?1 ", nativeQuery = true)
     Optional<UserAccount> findByCardNumber(String cardNumber);
+
+    /**
+     * 根据卡号查找用户
+     * @param cardNumber
+     * @return
+     */
+    UserAccount findUserAccountByCardNumber(String cardNumber);
+
+    /**
+     * 修改用户账号信息
+     * @param userAccount
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE UserAccount SET avatar=:#{#userAccount.avatar}, nickname=:#{#userAccount.nickname}, " +
+            "phoneNumber=:#{#userAccount.phoneNumber}, address=:#{#userAccount.address} " +
+            "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
+    int updateUserAccountById(@Param("userAccount") UserAccount userAccount);
+
+    /**
+     * 修改用户状态
+     * @param pkUserAccountId
+     * @param status
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update first_smart_campus.user_account set status=?2 " +
+            "where pk_user_account_id=?1",nativeQuery = true)
+    int updateStatusById(String pkUserAccountId,Boolean status);
+
+
+    /**
+     * 逻辑删除
+     * @param pkUserAccountId
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE first_smart_campus.user_account SET is_deleted = true WHERE pk_user_account_id=?1",nativeQuery = true)
+    void deleteUserAccount(String pkUserAccountId);
+
+    /**
+     * 批量逻辑删除
+     * @param ids
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update first_smart_campus.user_account f set f.is_deleted = true where f.pk_user_account_id in ?1",nativeQuery = true)
+    int deleteBatchByUserAccount(List<String> ids);
 }

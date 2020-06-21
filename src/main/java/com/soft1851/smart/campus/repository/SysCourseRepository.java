@@ -2,7 +2,10 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,4 +47,23 @@ public interface SysCourseRepository extends JpaRepository<SysCourse, Long> {
 //            "#{#sysCourse.gmtModified},#{#sysCourse.isDeleted},#{#sysCourse.weekDuration})",
 //            nativeQuery = true)
 //    void insertCourse(SysCourse sysCourse);
+
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE SysCourse SET roomId=:#{#sysCourse.roomId}, " +
+            "time=:#{#sysCourse.time}, userJobNumber=:#{#sysCourse.userJobNumber}, " +
+            "weekDay=:#{#sysCourse.weekDay},weekDuration=:#{#sysCourse.weekDuration} " +
+            "WHERE pkCourseId=:#{#sysCourse.pkCourseId} ")
+    int updateCourseById(@Param("sysCourse") SysCourse sysCourse);
+
+    /**
+     * 逻辑删除
+     * @param sysCourse
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE SysCourse SET isDeleted=true " +
+            "WHERE pkCourseId=?1 ")
+    int updateCourseIsDeletedById(long pkId);
 }

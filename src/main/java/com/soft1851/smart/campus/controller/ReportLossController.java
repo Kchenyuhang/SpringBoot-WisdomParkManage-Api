@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.BookBatchDeleteDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.service.ReportLossService;
@@ -52,19 +53,41 @@ public class ReportLossController {
      * @param queryDto
      * @return
      */
-    @PostMapping("/loss/deletion/{pk_card_id}")
+    @PostMapping("/loss/deletion")
     ResponseResult deleteReportLoss(@RequestBody QueryDto queryDto){
         return reportLossService.deleteReportLoss(Long.parseLong(queryDto.getField().toString()));
     }
+
     /**
      * 批量删除挂失
      * @return List<ReportLoss>
      */
     @ApiOperation(value = "批量删除挂失信息",notes = "")
-    @PostMapping(value = "/deletionBath/{ids}")
+    @PostMapping(value = "/deletionBath")
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
         return reportLossService.deletedBatch(batchDeletionDto.getIds());
     }
 
+//    /**
+//     * 申请挂失
+//     * @param reportLoss
+//     * @return
+//     */
+//    @ApiOperation(value = "申请挂失信息",notes = "")
+//    @PostMapping(value = "/increase")
+//    public ResponseResult increaseReportLoss(@RequestBody ReportLoss reportLoss){
+//        return reportLossService.insertReportLoss(reportLoss);
+//    }
+
+    /**
+     * 申请挂失
+     * @param bookBatchDeleteDto
+     * @return
+     */
+    @ApiOperation(value = "申请挂失信息",notes = "")
+    @PostMapping(value = "/increase")
+    public ResponseResult adminInsertReportLoss(@RequestBody BookBatchDeleteDto bookBatchDeleteDto){
+        return reportLossService.adminInsertReportLoss(bookBatchDeleteDto.getIds());
+    }
 
 }

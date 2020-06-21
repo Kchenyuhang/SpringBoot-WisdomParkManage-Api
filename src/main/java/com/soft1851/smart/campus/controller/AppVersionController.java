@@ -48,6 +48,7 @@ public class AppVersionController {
     @ApiOperation(value = "修改版本数据信息",notes = "")
     @PostMapping(value = "/modification")
     public ResponseResult updateAppVersion(@RequestBody UpdateAppVersionDto updateAppVersionDto) {
+        System.out.println(updateAppVersionDto);
         return appVersionService.modificationAppVersion(updateAppVersionDto);
     }
 
@@ -87,7 +88,6 @@ public class AppVersionController {
         return appVersionService.deletedBatch(batchDeletionDto.getIds());
     }
 
-
     /**
      * 时间范围内的查询
      * @param timeBorrowPageDto
@@ -98,5 +98,4 @@ public class AppVersionController {
     public ResponseResult getAppVersionsByTime(@RequestBody TimeBorrowPageDto timeBorrowPageDto) {
         return appVersionService.getAppVersionsByTime(timeBorrowPageDto);
     }
-
 }

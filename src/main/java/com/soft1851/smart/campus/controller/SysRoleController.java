@@ -1,12 +1,8 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.QueryDto;
-import com.soft1851.smart.campus.model.dto.UpdateSysRoleDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.SysRole;
-import com.soft1851.smart.campus.repository.UserRoleRepository;
 import com.soft1851.smart.campus.service.RoleMenuService;
 import com.soft1851.smart.campus.service.RoleService;
 import com.soft1851.smart.campus.service.SysRoleService;
@@ -36,6 +32,8 @@ public class SysRoleController {
     private RoleService roleService;
     @Resource
     private UserRoleService userRoleService;
+    @Resource
+    private RoleMenuService roleMenuService;
 
     /**
      * 分页查询所有
@@ -58,12 +56,12 @@ public class SysRoleController {
 
     /**
      * 批量删除角色数据
-     * @param ids
+     * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return sysRoleService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath/ids")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return sysRoleService.deletedBatch(batchDeletionDto.getIds());
     }
 
 //    /**
@@ -141,5 +139,11 @@ public class SysRoleController {
     public ResponseResult assignMenus(@RequestBody DoubleFieldDto doubleFieldDto) {
         System.out.println(doubleFieldDto);
         return userRoleService.insertUserRole(doubleFieldDto);
+    }
+
+    @PostMapping(value = "/delection/batch")
+    public ResponseResult batchDelete(@RequestBody DoubleFieldDto doubleFieldDto) {
+        sysRoleService.deleteRoleMenu(doubleFieldDto.getFirstField(), Long.parseLong(doubleFieldDto.getSecondField()));
+        return ResponseResult.success();
     }
 }

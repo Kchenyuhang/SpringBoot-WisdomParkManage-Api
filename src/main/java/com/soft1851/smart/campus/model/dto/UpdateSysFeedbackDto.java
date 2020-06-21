@@ -18,7 +18,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateSysFeedbackDto {
     private Long pkFeedbackId;
-    private String title;
-    private String content;
-    private String contactWay;
+    private Boolean isHandled;
 }

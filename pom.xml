@@ -149,9 +149,29 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!--导出excel-->
+        <!--poi-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <!--导入apache poi-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <!--poi-ooxml-schemas-->
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+
     </dependencies>
-
-
 
     <build>
         <plugins>

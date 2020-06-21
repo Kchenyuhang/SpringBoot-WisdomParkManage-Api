@@ -68,7 +68,6 @@ public class UserAccount {
     /**
      * 头像
      */
-    @Column(nullable = false ,length = 255)
     private String avatar;
 
     /**
@@ -93,7 +92,7 @@ public class UserAccount {
      * 所属班级id
      */
     @Column(nullable = false)
-    private Integer clazzId;
+    private Long clazzId;
 
     /**
      * 校园卡号
@@ -128,11 +127,10 @@ public class UserAccount {
     @Column(nullable = false, length = 2)
     private String gender;
 
-
-
     /**
      * 地址
      */
-    @Column(nullable = false,length = 128)
+    @Column(length = 128)
     private String address;
+
 }

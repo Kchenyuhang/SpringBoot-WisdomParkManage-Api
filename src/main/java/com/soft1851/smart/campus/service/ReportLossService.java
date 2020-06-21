@@ -3,6 +3,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.entity.ReportLoss;
 
 /**
  * @ClassName ReportLossService
@@ -44,5 +45,19 @@ public interface ReportLossService {
      * @return
      */
     ResponseResult getAllReportLoss(PageDto pageDto);
+
+    /**
+     * 新增挂失
+     * @param reportLoss
+     * @return
+     */
+    ResponseResult insertReportLoss(ReportLoss reportLoss);
+
+    /**
+     * 管理员新增接口
+     * @param cardNumber
+     * @return
+     */
+    ResponseResult adminInsertReportLoss(String cardNumber);
 
 }

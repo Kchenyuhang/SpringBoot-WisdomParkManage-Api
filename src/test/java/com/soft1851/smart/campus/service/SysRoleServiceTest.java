@@ -61,4 +61,9 @@ class SysRoleServiceTest {
         ResponseResult responseResult = sysRoleService.findAllSysRole();
         System.out.println(responseResult);
     }
+
+    @Test
+    void batchDelete(){
+        //System.out.println(sysRoleService.deleteRoleMenu("[70,71,72]"));
+    }
 }

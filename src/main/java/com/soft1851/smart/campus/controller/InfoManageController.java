@@ -1,7 +1,10 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
+import com.soft1851.smart.campus.model.dto.SingleParam;
 import com.soft1851.smart.campus.model.entity.InfoManage;
 import com.soft1851.smart.campus.model.vo.InfoManageTypeIdVo;
 import com.soft1851.smart.campus.service.InfoManageService;
@@ -50,13 +53,13 @@ public class InfoManageController {
 
     /**
      * 单个删除咨询
-     * @param id
+     * @param singleParam
      * @return
      */
     @ApiOperation(value = "单个删除咨询",notes = "")
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deletedInfo(@PathVariable Long id){
-        return infoManageService.deleteInfoManage(id);
+    @PostMapping(value = "/deletion/id")
+    public ResponseResult deletedInfo(@RequestBody SingleParam singleParam){
+        return infoManageService.deleteInfoManage(singleParam.getPkId());
     }
 
     /**
@@ -64,9 +67,9 @@ public class InfoManageController {
      * @return List<InfoManage>
      */
     @ApiOperation(value = "批量删除咨询",notes = "")
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return infoManageService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath/ids")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return infoManageService.deletedBatch(batchDeletionDto.getIds());
     }
 
     /**
@@ -75,8 +78,19 @@ public class InfoManageController {
      * @return
      */
     @ApiOperation(value = "修改资讯",notes = "给全部字段")
-    @PutMapping(value = "/modification")
+    @PostMapping(value = "/modification")
     public ResponseResult updateInfoManage(@RequestBody InfoManage infoManage){
         return infoManageService.updateInfoManage(infoManage);
+    }
+
+    /**
+     *
+     * @param queryDto
+     * @return
+     */
+    @ApiOperation(value = "修改资讯置顶状态",notes = "请求参数id/isTop")
+    @PostMapping(value = "/isTop")
+    public ResponseResult changeInfoMange(@RequestBody QueryDto queryDto){
+        return infoManageService.changeInfoMange(queryDto);
     }
 }
