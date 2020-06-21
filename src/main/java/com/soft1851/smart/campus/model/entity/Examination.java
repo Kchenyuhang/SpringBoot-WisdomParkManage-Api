@@ -55,6 +55,12 @@ public class Examination {
     @Column(nullable = false, length = 32)
     private String teacherName;
 
+    /**
+     * 监考老师用户id
+     */
+    @Column(nullable = false, length = 32)
+    private String teacherId;
+
 
     /**
      * 地点

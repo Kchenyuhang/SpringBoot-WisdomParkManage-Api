@@ -6,10 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class ExaminationMapperTest {
@@ -53,6 +51,19 @@ class ExaminationMapperTest {
         }else {
             System.out.println("时间相同");
         }
+
+    }
+
+    @Test
+    void getExaminationsByTeacherId() {
+        List<Examination> examinationList = examinationMapper.getExaminationsByTeacherId("12","2012-2013学年第一学期");
+        //多条件过滤   将收集的结果转换为另一种类型: collectingAndThen  根据班级id和学科id
+        List<Examination> examinationList1 = examinationList.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(
+                        Comparator.comparing(o->o.getSubjectId()+";"+o.getClazzId())
+                )),ArrayList::new)
+        );
+        System.out.println(examinationList1);
 
     }
 }

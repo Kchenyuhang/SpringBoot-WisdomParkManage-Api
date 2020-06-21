@@ -60,4 +60,14 @@ public interface ExaminationMapper {
      */
     @Select("SELECT * FROM examination WHERE semester = #{semester} AND clazz_id = #{clazzId}")
     List<Examination> getExaminationBySemesterAndClazzId(String semester,Long clazzId);
+
+    /**
+     * 查询本学期为被删除的考务中的监考教师数据
+     * @param teacherId
+     * @param semester
+     * @return
+     */
+    @Select("SELECT * FROM examination WHERE teacher_id = #{teacherId} AND semester = #{semester} AND is_deleted = false")
+    List<Examination> getExaminationsByTeacherId(String teacherId,String semester);
 }
+

@@ -44,7 +44,7 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     SysCard findByPkCardId(Long id);
 
     /**
-     * 根据id删除一卡通信息
+     * 逻辑删除 根据id删除一卡通信息
      *
      * @param pkCardId
      * @return
@@ -56,7 +56,7 @@ public interface CardRepository extends JpaRepository<SysCard, Long> {
     void deleteByPkCardId(Long pkCardId);
 
     /**
-     * 批量删除
+     * 批量逻辑删除
      *
      * @param ids
      */
