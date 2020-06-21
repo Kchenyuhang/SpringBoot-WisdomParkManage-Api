@@ -137,5 +137,5 @@ public class UserAccount {
     private String address;
 
     @Column(nullable = false)
-    private Date brithday;
+    private Date birthday;
 }

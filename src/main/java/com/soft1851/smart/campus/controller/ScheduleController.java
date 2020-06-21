@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.ScheduleDto;
+import com.soft1851.smart.campus.model.dto.SchedulesDto;
 import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.service.ScheduleService;
 import io.swagger.annotations.Api;
@@ -49,11 +50,13 @@ public class ScheduleController {
     /**
      * 新增课表
      *
-     * @param schedule
+     * @param schedulesDto
      */
     @PostMapping("/increase")
-    public void increase(@RequestBody Schedule schedule) {
-        System.out.println(schedule);
-        scheduleService.increase(schedule);
+    public void increase(@RequestBody SchedulesDto schedulesDto) {
+        System.out.println(schedulesDto);
+        scheduleService.increase(schedulesDto);
     }
+
+
 }

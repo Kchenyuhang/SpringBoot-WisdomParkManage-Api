@@ -2,7 +2,9 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.service.UserAccountService;
 import io.swagger.annotations.Api;
@@ -11,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yujie_Zhao
@@ -148,5 +152,28 @@ public class UserAccountController {
     @PostMapping(value = "/student/like")
     public ResponseResult findStudentLike(@RequestBody BatchDeletionDto batchDeletionDto){
         return userAccountService.findStudentLike(batchDeletionDto.getIds());
+    }
+
+    @ApiOperation(value = "查询所有学生", notes = "无参")
+    @PostMapping(value = "/student/list")
+    public List<Map<String, Object>> getAllStudents() {
+        return userAccountService.getAllStudents();
+    }
+
+    @PostMapping(value = "/modification/id")
+    public ResponseResult updateClazzId(@RequestBody DoubleFieldDto doubleFieldDto) {
+        System.out.println("分配学生参数:>>>>>>>>>>>>>>" + doubleFieldDto);
+        userAccountService.updateClazzIdById(doubleFieldDto);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 根据班课id查询班课学生信息
+     * @param queryDto
+     * @return
+     */
+    @PostMapping(value = "/list/clazzId")
+    public List<Map<String, Object>> getUserAccountByClazzId(@RequestBody QueryDto queryDto) {
+        return userAccountService.getUserAccountByClazzId(Long.parseLong(queryDto.getField().toString()));
     }
 }

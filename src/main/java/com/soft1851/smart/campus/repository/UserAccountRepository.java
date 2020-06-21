@@ -83,4 +83,13 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
     @Query(value = "UPDATE UserAccount SET status=:#{#userAccount.status} " +
             "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
     int updateStatusById(@Param("userAccount") UserAccount userAccount);
+
+    /**
+     * 修改用户账号的clazz_id
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE UserAccount SET clazzId=?1 WHERE pkUserAccountId in ?2 ")
+    int updateClazzIdById(long clazzId, List<String> collection);
 }

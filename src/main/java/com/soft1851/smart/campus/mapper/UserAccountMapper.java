@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tao
@@ -21,6 +22,7 @@ import java.util.List;
  * @date 2020-06-14 13:03
  **/
 public interface UserAccountMapper extends BaseMapper<UserAccount> {
+
     /**
      * 分页查询所有学生数据
      *
@@ -36,7 +38,12 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
             "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
     List<UserAccountVo> getUserAccountVo(@Param("pageDto") PageDto pageDto);
 
-
+    /**
+     * 获取所有学生
+     * @return
+     */
+    @Select("SELECT job_number, user_name, pk_user_account_id FROM user_account WHERE role = 1 AND is_deleted = false AND clazz_id = 0 ")
+    List<Map<String, Object>> getAllStudents();
     /**
      * 分页查询所有教师数据
      *
@@ -116,7 +123,16 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      * @return
      * @throws SQLException
      */
-    @Select("SELECT pk_user_account_id FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted = false")
-    List<String> findStudentsByClazzId(Long clazzId) throws SQLException;
+    @Select("SELECT pk_user_account_id, job_number, user_name FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted = false")
+    List<Map<String, Object>> findStudentsByClazzId(Long clazzId) throws SQLException;
 
+    /**
+     * 查询某个班级的所有学生id
+     *
+     * @param clazzId
+     * @return
+     * @throws SQLException
+     */
+    @Select("SELECT pk_user_account_id FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted = false")
+    List<String> findUserIdByClazzId(Long clazzId) throws SQLException;
 }
