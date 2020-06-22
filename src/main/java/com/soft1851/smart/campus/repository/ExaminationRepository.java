@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,22 +21,6 @@ import java.util.List;
 public interface ExaminationRepository extends JpaRepository<Examination, Long> {
 
     /**
-     * 修改考务信息
-     *
-     * @param examination
-     */
-    @Transactional(rollbackFor = RuntimeException.class)
-    @Modifying
-    @Query(value = "UPDATE examination \n" +
-            "SET semester = :#{#examination.semester}, subject_id = :#{#examination.subjectId}, " +
-            "clazz_id = :#{#examination.clazzId}, teacher_name = :#{#examination.teacherName}, " +
-            "start_time = :#{#examination.startTime}, area = :#{#examination.area}, " +
-            "score = :#{#examination.score}, is_deleted = :#{#examination.isDeleted}, " +
-            "gmt_create = :#{#examination.gmtCreate}, gmt_modified = :#{#examination.gmtModified} \n" +
-            "WHERE pk_examination_id = :#{#examination.pkExaminationId}", nativeQuery = true)
-    void updateInfo(@Param("examination") Examination examination);
-
-    /**
      * 查询出所有与考务的基本信息
      *
      * @param pageDto
@@ -51,6 +36,35 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
             "ORDER BY exa.pk_examination_id\n" +
             "LIMIT :#{#pageDto.pageSize} OFFSET :#{#pageDto.currentPage}", nativeQuery = true)
     List<Object> selectAll(@Param("pageDto") PageDto pageDto);
+
+
+    /**
+     * 批量修改考务数据信息
+     * @param updateExaminationDto
+     * @param ids
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Modifying
+    @Query(value = "update first_smart_campus.examination e set e.area=:#{#updateExaminationDto.area}," +
+            "e.start_time=:#{#updateExaminationDto.startTime}," +
+            "e.finish_time=:#{#updateExaminationDto.finishTime}," +
+            "e.subject_id=:#{#updateExaminationDto.subjectId}," +
+            "e.teacher_name=:#{#updateExaminationDto.teacherName}," +
+            "e.teacher_id=:#{#updateExaminationDto.teacherId}," +
+            "e.type=:#{#updateExaminationDto.type} " +
+            "where e.pk_examination_id in ?1",nativeQuery = true)
+    void updateStudentExamination(List<Long> ids,@Param("updateExaminationDto") UpdateExaminationDto updateExaminationDto);
+
+
+    /**
+     * 根据学期和学科和班级查询考务数据
+     * @param semester
+     * @param subjectId
+     * @param clazzId
+     * @return
+     */
+    @Query(value = "select pk_examination_id from first_smart_campus.examination where semester=?1 and subject_id=?2 and clazz_id=?3 and is_deleted=false",nativeQuery = true)
+    List<Long> findExaminationsBySemesterAndSubjectId(String semester,Long subjectId,long clazzId);
 
 
 }
