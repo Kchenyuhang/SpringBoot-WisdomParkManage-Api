@@ -1,15 +1,22 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.soft1851.smart.campus.model.dto.SchedulesDto;
 import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.model.vo.CourseVo;
+import com.soft1851.smart.campus.model.vo.SchedulesVo;
 import com.soft1851.smart.campus.repository.*;
 import com.soft1851.smart.campus.service.ScheduleService;
 import com.soft1851.smart.campus.utils.DateUtil;
+import org.apache.tomcat.jni.Local;
+import org.apache.tomcat.jni.Time;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,16 +64,45 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void increase(Schedule schedule) {
-        Timestamp timestamp = DateUtil.getTimestamp();
-        if (schedule.getGmtCreate() == null) {
-            schedule.setGmtCreate(timestamp);
+    public void increase(SchedulesDto schedulesDto) {
+        long clazzId = schedulesDto.getClazzId();
+        long semesterId = schedulesDto.getSemesterId();
+        long n = 123;
+        JSONArray courses = JSONArray.parseArray(schedulesDto.getCourses());
+        List<SchedulesVo> coursesList = courses.toJavaList(SchedulesVo.class);
+        JSONArray weeks = JSONArray.parseArray(schedulesDto.getWeeks());
+        System.out.println(coursesList);
+        for (Object week : weeks) {
+            long scheduleId = n++;
+            Schedule schedule = Schedule.builder()
+                    .pkSchoolTimetableId(scheduleId)
+                    .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                    .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                    .isDeleted(false)
+                    .clazzId(schedulesDto.getClazzId())
+                    .name("")
+                    .semesterId(schedulesDto.getSemesterId())
+                    .week(Integer.parseInt(week.toString()))
+                    .build();
+            scheduleRepository.save(schedule);
+            for (SchedulesVo cours : coursesList) {
+                SysCourse course = SysCourse.builder()
+                        .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
+                        .gmtModified(Timestamp.valueOf(LocalDateTime.now()))
+                        .isDeleted(false)
+                        .scheduleId(scheduleId)
+                        .time(cours.getTime())
+                        .weekDay(cours.getWeekDay())
+                        .weekDuration("")
+                        .userJobNumber("")
+                        .roomId(cours.getRoomId())
+                        .weekDuration(String.valueOf(week))
+                        .subjectId(cours.getCourseId())
+                        .userJobNumber(cours.getTeacherId())
+                        .build();
+                sysCourseRepository.save(course);
+            }
         }
-        if (schedule.getGmtModified() == null) {
-            schedule.setGmtModified(timestamp);
-        }
-        schedule.setIsDeleted(false);
-        scheduleRepository.saveAndFlush(schedule);
     }
 
     /**

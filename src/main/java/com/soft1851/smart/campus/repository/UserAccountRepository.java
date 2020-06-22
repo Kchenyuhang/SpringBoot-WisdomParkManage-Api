@@ -1,6 +1,8 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.UserAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -35,14 +37,14 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     UserAccount findByPkUserAccountId(String id);
 
-    /**
-     * 批量删除
-     * @param ids
-     */
-    @Modifying
-    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
-    @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
-    void deleteBatch(List<Long> ids);
+//    /**
+//     * 批量删除
+//     * @param ids
+//     */
+//    @Modifying
+//    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
+//    @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
+//    void deleteBatch(List<Long> ids);
 
 
 
@@ -64,23 +66,58 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
 
     /**
      * 修改用户账号信息
+     * @param userAccount
      * @return
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query(value = "UPDATE UserAccount SET gender=:#{#userAccount.gender}, jobNumber=:#{#userAccount.jobNumber}, " +
-            "phoneNumber=:#{#userAccount.phoneNumber}, userName=:#{#userAccount.userName}, " +
-            "status=:#{#userAccount.status} " +
+    @Query(value = "UPDATE UserAccount SET avatar=:#{#userAccount.avatar}, nickname=:#{#userAccount.nickname}, " +
+            "phoneNumber=:#{#userAccount.phoneNumber}, address=:#{#userAccount.address} " +
             "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
     int updateUserAccountById(@Param("userAccount") UserAccount userAccount);
 
     /**
-     * 修改用户账号信息
+     * 修改用户状态
+     * @param pkUserAccountId
+     * @param status
      * @return
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query(value = "UPDATE UserAccount SET status=:#{#userAccount.status} " +
+    /*@Query(value = "UPDATE UserAccount SET status=:#{#userAccount.status} " +
             "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
-    int updateStatusById(@Param("userAccount") UserAccount userAccount);
+    int updateStatusById(@Param("userAccount") UserAccount userAccount);*/
+
+    @Query(value = "update first_smart_campus.user_account set status=?2 " +
+            "where pk_user_account_id=?1",nativeQuery = true)
+    int updateStatusById(String pkUserAccountId,Boolean status);
+
+
+    /**
+     * 逻辑删除
+     * @param pkUserAccountId
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE first_smart_campus.user_account SET is_deleted = true WHERE pk_user_account_id=?1",nativeQuery = true)
+    void deleteUserAccount(String pkUserAccountId);
+
+    /**
+     * 批量逻辑删除
+     * @param clazzId
+     * @param collection
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE UserAccount SET clazzId=?1 WHERE pkUserAccountId in ?2 ")
+    int updateClazzIdById(long clazzId, List<String> collection);
+
+    /**
+     * 分页查询所有用户
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select * from first_smart_campus.user_account where is_deleted = false",nativeQuery = true)
+    Page<UserAccount> getAllUserAccount(Pageable pageable);
 }

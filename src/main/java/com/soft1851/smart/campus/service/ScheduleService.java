@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.model.dto.SchedulesDto;
 import com.soft1851.smart.campus.model.entity.Schedule;
 import com.soft1851.smart.campus.model.entity.SysCourse;
 import com.soft1851.smart.campus.model.vo.CourseVo;
@@ -36,7 +37,7 @@ public interface ScheduleService {
     /**
      * 增加课表的方法
      *
-     * @param schedule
+     * @param schedulesDto
      */
-    void increase(Schedule schedule);
+    void increase(SchedulesDto schedulesDto);
 }

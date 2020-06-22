@@ -1,9 +1,11 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.model.entity.UserAccount;
@@ -26,6 +28,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -58,7 +61,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public ResponseResult insertUserAccount(UserAccount userAccount) {
 
-        System.out.println("***************" + userAccount.getAddress());
         //查询用户是否还存在
         UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
         //查询一卡通数据是否存在
@@ -93,13 +95,15 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .jobNumber(userAccount.getJobNumber())
                         .nickname("用户" + userAccount.getJobNumber())
                         .password("123456")
+                        .address(userAccount.getAddress())
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
+                        .clazzId(userAccount.getClazzId())
                         .status(false)
+                        .birthday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
-                System.out.println(userAccount1);
                 userAccountRepository.save(userAccount1);
                 return ResponseResult.success();
             } else {
@@ -122,9 +126,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkUserAccountId");
-        Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<UserAccount> userAccountList = userAccountRepository.getAllUserAccount(pageable);
         return ResponseResult.success(userAccountList.getContent());
     }
 
@@ -138,6 +142,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public ResponseResult deleteUserAccount(String id) {
         UserAccount userAccount = userAccountRepository.findByPkUserAccountId(id);
         if (userAccount != null) {
+            userAccountRepository.deleteUserAccount(id);
             return ResponseResult.success("删除成功");
         } else {
             return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
@@ -145,7 +150,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     /**
-     * 批量删除账号
+     * 批量逻辑删除账号
      *
      * @param ids
      * @return
@@ -156,17 +161,18 @@ public class UserAccountServiceImpl implements UserAccountService {
         if (ids.length() != 0) {
             //将接收到的ids字符串，使用逗号分割
             String[] idArr = ids.split(",");
-            List<Long> idsList = new ArrayList<Long>();
+            List<String> idsList = new ArrayList<String>();
             for (String id : idArr) {
                 //遍历所有id存入到list
-                idsList.add(Long.valueOf(id));
+                idsList.add(id);
             }
-            userAccountRepository.deleteBatch(idsList);
-            return ResponseResult.success("删除成功");
+            //userAccountRepository.deleteBatchByUserAccount(idsList);
+            return ResponseResult.success("批量删除用户成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
         }
     }
+
 
     /**
      * 修改账号
@@ -178,21 +184,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public ResponseResult updateUserAccount(UserAccount userAccount) {
         UserAccount userAccount1 = userAccountRepository.findByPkUserAccountId(userAccount.getPkUserAccountId());
         if (userAccount1 != null) {
-            userAccount1.setUserAccount(userAccount.getUserAccount());
-            userAccount1.setUserName(userAccount.getUserName());
-            userAccount1.setNickname(userAccount.getNickname());
-            userAccount1.setJobNumber(userAccount.getJobNumber());
-            userAccount1.setAvatar(userAccount.getAvatar());
-            userAccount1.setRole(userAccount.getRole());
-            userAccount1.setPhoneNumber(userAccount.getPhoneNumber());
-            userAccount1.setStatus(userAccount.getStatus());
-            userAccount1.setClazzId(userAccount.getClazzId());
-            userAccount1.setCardNumber(userAccount.getCardNumber());
-            userAccount1.setIsDeleted(userAccount.getIsDeleted());
-            userAccount1.setPassword(userAccount.getPassword());
-            userAccount1.setAddress(userAccount.getAddress());
-            userAccount1.setGender(userAccount.getGender());
-            userAccountRepository.saveAndFlush(userAccount1);
+            userAccountRepository.updateUserAccountById(userAccount);
             return ResponseResult.success("修改成功");
         }
         return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
@@ -228,14 +220,24 @@ public class UserAccountServiceImpl implements UserAccountService {
         return n;
     }
 
+    /**
+     * 修改状态
+     * @param pkUserAccountId
+     * @param status
+     * @return
+     */
     @Override
-    public int updateStatusById(UserAccount userAccount) {
-        int result = userAccountRepository.updateStatusById(userAccount);
-        if (result > 0) {
-            return result;
+    public ResponseResult updateStatusById(String pkUserAccountId, Boolean status) {
+        UserAccount userAccount = userAccountRepository.findByPkUserAccountId(pkUserAccountId);
+        if (userAccount!=null){
+            userAccountRepository.updateStatusById(pkUserAccountId,status);
+            return ResponseResult.success("修改状态");
+        }else{
+            return ResponseResult.failure(ResultCode.USER_NOT_FOUND);
         }
-        throw new CustomException("修改账户状态异常", ResultCode.DATA_UPDATE_ERROR);
     }
+
+
     /**
      * 获取所有教师数据(用户班级选择班主任)
      *
@@ -268,6 +270,28 @@ public class UserAccountServiceImpl implements UserAccountService {
             e.printStackTrace();
         }
         return ResponseResult.success(studentVos);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllStudents() {
+        return userAccountMapper.getAllStudents();
+    }
+
+    @Override
+    public int updateClazzIdById(DoubleFieldDto doubleFieldDto) {
+        JSONArray array = JSONArray.parseArray(doubleFieldDto.getFirstField());
+        List<String> ids = array.toJavaList(String.class);
+        int n = userAccountRepository.updateClazzIdById(Integer.parseInt(doubleFieldDto.getSecondField()), ids);
+        return n;
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserAccountByClazzId(long clazzId) {
+        try {
+            return userAccountMapper.findStudentsByClazzId(clazzId);
+        } catch (SQLException e) {
+            throw new CustomException("根据班课id查询学生信息异常", ResultCode.RESULT_CODE_DATA_NONE);
+        }
     }
 
     @Override

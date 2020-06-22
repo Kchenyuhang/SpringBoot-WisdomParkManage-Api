@@ -1,6 +1,8 @@
 package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.Dynamic;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +18,14 @@ import java.util.List;
  * @Version 1.0
  **/
 public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
+
+    @Query(value = "select m " +
+            "FROM Dynamic m " +
+            "where  m.isDeleted = false ")
+    Page<Dynamic> findAllByIsDeleted(Pageable pageable);
+
     /**
-     * 根据动态id查询存在id
+     * 根据动态id查询存在
      * @param id
      * @param isDelete
      * @return

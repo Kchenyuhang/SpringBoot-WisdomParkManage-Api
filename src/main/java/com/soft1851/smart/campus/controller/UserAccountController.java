@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yujie_Zhao
@@ -35,7 +38,8 @@ public class UserAccountController {
      */
     @ApiOperation(value = "分页查询所有账号",notes = "")
     @PostMapping(value = "/all")
-    public ResponseResult findInfoType(PageDto pageDto){
+    public ResponseResult findInfoType(@RequestBody PageDto pageDto){
+        System.out.println(pageDto);
         return userAccountService.findAllUserAccount(pageDto);
     }
 
@@ -48,7 +52,7 @@ public class UserAccountController {
     @ApiOperation(value = "删除用户账号",notes = "")
     @PostMapping(value = "/deletion")
     public ResponseResult deleteInfoType(@RequestBody QueryDto queryDto){
-        return userAccountService.deleteUserAccount(queryDto.getField().toString());
+        return userAccountService.deleteUserAccount(queryDto.getFiled1());
     }
 
     /**
@@ -69,12 +73,8 @@ public class UserAccountController {
     @ApiOperation(value = "修改用户信息",notes = "")
     @PostMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
-        int n = userAccountService.updateUserAccountById(userAccount);
-        return ResponseResult.success();
+       return userAccountService.updateUserAccount(userAccount);
     }
-
-
 
 
     /**
@@ -118,16 +118,20 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
     }
 
-    @ApiOperation(value = "修改学生状态接口")
+    /**
+     * 修改用户状态
+     * @param queryDto
+     * @return
+     */
+    @ApiOperation(value = "修改用户状态",notes = "")
     @PostMapping(value = "/status")
-    public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
-        int n = userAccountService.updateStatusById(userAccount);
-        return ResponseResult.success();
+    public ResponseResult updateStatusById(@RequestBody QueryDto queryDto){
+        return userAccountService.updateStatusById(queryDto.getFiled1(),queryDto.getStatus());
     }
+
 
     /**
      * 查询未被分配的学生
@@ -151,12 +155,33 @@ public class UserAccountController {
         return userAccountService.findStudentLike(batchDeletionDto.getIds());
     }
 
+    @ApiOperation(value = "查询所有学生", notes = "无参")
+    @PostMapping(value = "/student/list")
+    public List<Map<String, Object>> getAllStudents() {
+        return userAccountService.getAllStudents();
+    }
 
+    @PostMapping(value = "/modification/id")
+    public ResponseResult updateClazzId(@RequestBody DoubleFieldDto doubleFieldDto) {
+        System.out.println("分配学生参数:>>>>>>>>>>>>>>" + doubleFieldDto);
+        userAccountService.updateClazzIdById(doubleFieldDto);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 根据班课id查询班课学生信息
+     * @param queryDto
+     * @return
+     */
+    @PostMapping(value = "/list/clazzId")
+    public List<Map<String, Object>> getUserAccountByClazzId(@RequestBody QueryDto queryDto) {
+        return userAccountService.getUserAccountByClazzId(Long.parseLong(queryDto.getField().toString()));
+    }
     /**
      * 模糊查询教师数据
      * @param batchDeletionDto
      * @return
-     */
+     **/
     @ApiOperation(value = "模糊查询教师数据",notes = "ids为keywords关键字")
     @PostMapping(value = "/teacher/like")
     public ResponseResult findTeacherLike(@RequestBody BatchDeletionDto batchDeletionDto){
