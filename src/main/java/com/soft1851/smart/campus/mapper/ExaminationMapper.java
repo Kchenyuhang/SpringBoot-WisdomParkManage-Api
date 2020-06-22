@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.mapper;
 
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExamVo;
+import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -81,5 +82,22 @@ public interface ExaminationMapper {
             "ON e.subject_id = s.pk_subject_id " +
             "WHERE e.is_deleted = false")
     List<ExamVo> getAllExamination();
+
+    /**
+     * 查询某个考务下的学生数据
+     * @param subjectId
+     * @param clazzId
+     * @param semester
+     * @return
+     */
+    @Select("SELECT e.job_number,u.user_name,s.name " +
+            "FROM examination e " +
+            "LEFT JOIN user_account u " +
+            "ON e.job_number = u.job_number " +
+            "LEFT JOIN sys_subject s " +
+            "ON e.subject_id = s.pk_subject_id " +
+            "WHERE e.subject_id=#{subjectId} AND e.clazz_id=#{clazzId} " +
+            "AND e.semester=#{semester} AND e.is_deleted=false")
+    List<ExaminationStudentVo> getAllExaminationStudents(Long subjectId,Long clazzId,String semester);
 }
 

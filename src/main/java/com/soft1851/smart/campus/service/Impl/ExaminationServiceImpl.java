@@ -8,6 +8,7 @@ import com.soft1851.smart.campus.model.dto.UpdateExaminationDto;
 import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExamVo;
+import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
 import com.soft1851.smart.campus.repository.ExaminationRepository;
 import com.soft1851.smart.campus.service.ExaminationService;
 import com.soft1851.smart.campus.utils.DateUtil;
@@ -39,6 +40,7 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     /**
      * 修改考务数据：地址/开始时间/结束时间/学科id/监考老师名/监考老师id/类型
+     *
      * @param updateNewExaminationDto
      * @return
      */
@@ -162,6 +164,7 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     /**
      * 查询所有教务数据
+     *
      * @return
      */
     @Override
@@ -176,9 +179,32 @@ public class ExaminationServiceImpl implements ExaminationService {
     }
 
 
+    /**
+     * 删除单条教务数据(包含所有考务内的学生数据全部删除）
+     *
+     * @param updateNewExaminationDto
+     * @return
+     */
     @Override
-    public Long countNum() {
-        return examinationRepository.count();
+    public ResponseResult deletedExamination(UpdateNewExaminationDto updateNewExaminationDto) {
+        List<Long> examinationList = examinationRepository.findExaminationsBySemesterAndSubjectId(updateNewExaminationDto.getSemester(), updateNewExaminationDto.getSubjectId(), updateNewExaminationDto.getClazzId());
+        if (examinationList.size() != 0) {
+            examinationRepository.deletedExamination(examinationList);
+            return ResponseResult.success("成功删除教务");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    /**
+     * 查询某个教务下面的学生数据
+     * @param updateNewExaminationDto
+     * @return
+     */
+    @Override
+    public ResponseResult selectStudentInExamination(UpdateNewExaminationDto updateNewExaminationDto) {
+        List<ExaminationStudentVo> examinationStudentVos = examinationMapper.getAllExaminationStudents(updateNewExaminationDto.getSubjectId(),updateNewExaminationDto.getClazzId(),updateNewExaminationDto.getSemester());
+        return ResponseResult.success(examinationStudentVos);
     }
 
 
