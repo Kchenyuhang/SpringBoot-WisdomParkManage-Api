@@ -127,8 +127,8 @@ public class UserAccountServiceImpl implements UserAccountService {
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
                 Sort.Direction.DESC,
-                "gmtCreate");
-        Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
+                "gmt_create");
+        Page<UserAccount> userAccountList = userAccountRepository.getAllUserAccount(pageable);
         return ResponseResult.success(userAccountList.getContent());
     }
 
