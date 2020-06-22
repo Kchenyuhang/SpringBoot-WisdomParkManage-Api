@@ -128,7 +128,7 @@ public class ClazzServiceImpl implements ClazzService {
             List<String> ids = null;
             //将学生的id存入到ids中，进行批量修改班级的操作
             try {
-                ids = userAccountMapper.findStudentsByClazzId(clazzId);
+                ids = userAccountMapper.findUserIdByClazzId(clazzId);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -160,6 +160,7 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public ResponseResult deleteBatchByClazzId(String ids) {
+        ids = ids.substring(1, ids.length() - 1);
         // 判断是否有数据
         if (ids.length() != 0) {
             // 将接收到的ids字符串，使用逗号分割
@@ -172,7 +173,7 @@ public class ClazzServiceImpl implements ClazzService {
                 // 1.删除归属班级的学生班级id为0   遍历查找出归属此班级的学生进行批量置空操作
                 List<String> studentIds = null;
                 try {
-                    studentIds = userAccountMapper.findStudentsByClazzId(Long.valueOf(id));
+                    studentIds = userAccountMapper.findUserIdByClazzId(Long.valueOf(id));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
