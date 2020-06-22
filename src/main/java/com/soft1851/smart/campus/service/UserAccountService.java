@@ -1,8 +1,13 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.UserAccount;
+import com.soft1851.smart.campus.model.vo.UserAccountVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Yujie_Zhao
@@ -101,6 +106,24 @@ public interface  UserAccountService {
      */
     ResponseResult findStudentLike(String keywords);
 
+    /**
+     * 查询所有未分配的学生信息
+     * @return
+     */
+    List<Map<String, Object>> getAllStudents();
+
+    /**
+     * 修改账户信息
+     * @param doubleFieldDto
+     * @return
+     */
+    int updateClazzIdById(DoubleFieldDto doubleFieldDto);
+
+    /**
+     * 根据班课id查询用户信息
+     * @return
+     */
+    List<Map<String, Object>> getUserAccountByClazzId(long clazzId);
 
     /**
      * 通过教工号或者教师姓名查询教师信息

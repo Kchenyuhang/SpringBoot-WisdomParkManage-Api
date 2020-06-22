@@ -142,5 +142,4 @@ public class DeliveryOrder {
     private Boolean isDeleted;
 
 
-
 }

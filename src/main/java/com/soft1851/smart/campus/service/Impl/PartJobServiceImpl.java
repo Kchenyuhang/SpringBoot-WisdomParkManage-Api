@@ -68,27 +68,34 @@ public class PartJobServiceImpl extends ServiceImpl<PartJobMapper, PartJob> impl
         return partJobMapper.insert(partJob);
     }
 
+    @Override
+    public int updateJob(PartJobDto partJobDto) {
+        PartJob partJob = new PartJob();
+        UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
+        wrapper.set("name",partJobDto.getName())
+                .set("description",partJobDto.getDescription())
+                .set("workplace", partJobDto.getWorkplace())
+                .set("working_date", partJobDto.getWorkingDate())
+                .set("working_time", partJobDto.getWorkingTime())
+                .set("pay", partJobDto.getPay())
+                .set("pay_type", partJobDto.getPayType())
+                .set("job_type", partJobDto.getJobType())
+                .set("number", partJobDto.getNumber())
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
+                .eq("pk_part_job_id", partJobDto.getId());
+        return partJobMapper.update(partJob, wrapper);
+    }
 
-//    @Override
-//    public int delete(JobDto jobDto) {
-//        return partJobMapper.deleteById(jobDto.getId());
-//    }
 
-//    @Override
-//    public Boolean updateJob(PartJobDto partJobDto) {
-//        UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
-//        wrapper.set("name",partJobDto.getName())
-//                .set("description",partJobDto.getDescription())
-//                .set("workplace", partJobDto.getWorkplace())
-//                .set("working_date", partJobDto.getWorkingDate())
-//                .set("working_time", partJobDto.getWorkingTime())
-//                .set("pay", partJobDto.getPay())
-//                .set("pay_type", partJobDto.getPayType())
-//                .set("job_type", partJobDto.getJobType())
-//                .set("number", partJobDto.getNumber())
-//                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
-//                .eq("pk_part_job_id", partJobDto.getId());
-//        return partJobMapper.update();
-//    }
+    @Override
+    public int delete(JobDto jobDto) {
+        PartJob partJob = new PartJob();
+        UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
+        wrapper.set("is_deleted", 1)
+                .eq("pk_part_job_id", jobDto.getId());
+        return partJobMapper.update(partJob, wrapper);
+    }
+
+
 
 }

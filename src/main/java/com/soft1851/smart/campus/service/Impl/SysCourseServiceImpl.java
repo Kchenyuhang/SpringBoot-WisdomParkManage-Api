@@ -66,9 +66,10 @@ public class SysCourseServiceImpl implements SysCourseService {
     public List<Map<String, Object>> getAllCourses(PageDto pageDto) {
         List<Map<String, Object>> courses = sysCourseMapper.getAllSysCourse(pageDto.getCurrentPage(), pageDto.getPageSize());
         courses.forEach(course -> {
-            System.out.println(course);
             Map<String, Object> semester = scheduleMapper.getScheduleSemesterById(Long.parseLong(course.get("schedule_id").toString()));
             String subject = sysSubjectRepository.getSubjectName(Long.parseLong(course.get("subject_id").toString()));
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            System.out.println(semester.toString());
             Clazz clazz = clazzRepository.getOne(Long.parseLong(semester.get("clazz_id").toString()));
             Map<String, Object> tower = roomMapper.getRoomTowerByRoomId(Long.parseLong(course.get("room_id").toString()));
             course.put("subjectName", subject);

@@ -1,15 +1,15 @@
 package com.soft1851.smart.campus.mapper;
 
 import com.soft1851.smart.campus.model.entity.Examination;
+import com.soft1851.smart.campus.model.vo.ExamVo;
+import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class ExaminationMapperTest {
@@ -46,13 +46,45 @@ class ExaminationMapperTest {
     void timeTest() {
         Timestamp a = Timestamp.valueOf("2020-06-04 05:56:20");
         Timestamp b = Timestamp.valueOf("2020-06-04 05:56:20");
-        if (b.before(a)){
+        if (b.before(a)) {
             System.out.println("b时间比a早");
-        }else if (b.after(a)){
+        } else if (b.after(a)) {
             System.out.println("b时间比a迟");
-        }else {
+        } else {
             System.out.println("时间相同");
         }
 
+    }
+
+    @Test
+    void getExaminationsByTeacherId() {
+        List<Examination> examinationList = examinationMapper.getExaminationsByTeacherId("12", "2012-2013学年第一学期");
+        //多条件过滤   将收集的结果转换为另一种类型: collectingAndThen  根据班级id和学科id
+        List<Examination> examinationList1 = examinationList.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.comparing(o -> o.getSubjectId() + ";" + o.getClazzId())
+                )), ArrayList::new)
+        );
+        System.out.println(examinationList1);
+
+    }
+
+    @Test
+    void getAllExamination() {
+        List<ExamVo> examinationList = examinationMapper.getAllExamination();
+        List<ExamVo> examinationList1 = examinationList.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.comparing(o -> o.getSubjectId() + ";" + o.getClazzId() + ";" + o.getSemester())
+                )), ArrayList::new)
+        );
+        for (ExamVo examination : examinationList1) {
+            System.out.println(examination);
+        }
+    }
+
+    @Test
+    void getAllExaminationStudents() {
+        List<ExaminationStudentVo> examinationStudentVos = examinationMapper.getAllExaminationStudents((long)2,(long)2,"2012-2013学年第一学期");
+        System.out.println(examinationStudentVos);
     }
 }

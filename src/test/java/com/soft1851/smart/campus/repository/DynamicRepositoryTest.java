@@ -1,7 +1,12 @@
 package com.soft1851.smart.campus.repository;
 
+import com.soft1851.smart.campus.model.entity.Dynamic;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -41,5 +46,16 @@ class DynamicRepositoryTest {
 //        BigInteger maxInt = new BigInteger(max2);
 //        System.out.println(maxInt);
 
+    }
+
+    @Test
+    void findAllByIsDeleted() {
+        Pageable pageable = PageRequest.of(
+                1,
+                3,
+                Sort.Direction.DESC,
+                "pkDynamicId");
+        Page<Dynamic> sysBooks = dynamicRepository.findAllByIsDeleted(pageable);
+        System.out.println(sysBooks.getContent());
     }
 }
