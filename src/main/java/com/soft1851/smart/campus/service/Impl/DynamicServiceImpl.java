@@ -47,7 +47,7 @@ public class DynamicServiceImpl implements DynamicService {
         Dynamic dynamic = Dynamic.builder()
                 .pkDynamicId(String.valueOf(new SnowFlake(1, 3).nextId()))
                 .comments(0)
-                .isDeleted(true)
+                .isDeleted(false)
                 .title("")
                 .thumbs(0)
                 .type(dynamicDto.getType())
@@ -69,11 +69,12 @@ public class DynamicServiceImpl implements DynamicService {
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkDynamicId");
-        Page<Dynamic> dynamicPage = dynamicRepository.findAll(pageable);
+        Page<Dynamic> dynamicPage = dynamicRepository.findAllByIsDeleted(pageable);
         List<DynamicFindDto> dynamicFindDtos = new ArrayList<>();
         dynamicPage.forEach(dynamic -> {
             UserAccount userAccount = userAccountRepository.findByPkUserAccountId(dynamic.getUserId());
             DynamicFindDto dynamicFindDto = DynamicFindDto.builder()
+                    .pkDynamicId(dynamic.getPkDynamicId())
                     .comments(dynamic.getComments())
                     .content(dynamic.getContent())
                     .gmtCreate(dynamic.getGmtCreate())

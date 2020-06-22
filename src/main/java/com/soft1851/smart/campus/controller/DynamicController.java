@@ -58,6 +58,7 @@ public class DynamicController {
     @ApiOperation(value = "删除单个动态",notes = "")
     @PostMapping(value = "/deletion")
     public ResponseResult deleteDynamic(@RequestBody DeletionDto deletionDto){
+        System.out.println(deletionDto.getId());
         return dynamicService.deleteDynamic(deletionDto.getId());
     }
 
