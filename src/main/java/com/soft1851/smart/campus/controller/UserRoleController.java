@@ -2,8 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.AdminDto;
-import com.soft1851.smart.campus.model.dto.AdminUpdateDto;
-import com.soft1851.smart.campus.model.entity.SysUser;
+import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
 import com.soft1851.smart.campus.service.UserRoleService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +34,12 @@ public class UserRoleController {
 
     /**
      * 删除单个管理员数据（删除用户表、用户角色关联表数据）
-     * @param id
+     * @param batchDeletionDto
      * @return
      */
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deletedAdmin(@PathVariable String id){
-        return userRoleService.deletedAdmin(id);
+    @PostMapping(value = "/deletion/id")
+    public ResponseResult deletedAdmin(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userRoleService.deletedAdmin(batchDeletionDto.getIds());
     }
 
     /**

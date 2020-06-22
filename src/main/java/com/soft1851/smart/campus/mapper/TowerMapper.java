@@ -30,6 +30,7 @@ public interface TowerMapper extends BaseMapper<Tower> {
     @Select(value = "SELECT name FROM tower WHERE pk_tower_id = #{towerId}")
     Map<String, Object> getTowerById(Long towerId);
 
+
     /**
      * 根据类型查询教学楼
      * @return
@@ -42,5 +43,6 @@ public interface TowerMapper extends BaseMapper<Tower> {
      * @return
      */
     List<Map<String, Object>> getRoomByTowerId(long towerId);
+
 
 }

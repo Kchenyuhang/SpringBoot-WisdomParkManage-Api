@@ -128,8 +128,6 @@ public class UserAccount {
     @Column(nullable = false, length = 2)
     private String gender;
 
-
-
     /**
      * 地址
      */

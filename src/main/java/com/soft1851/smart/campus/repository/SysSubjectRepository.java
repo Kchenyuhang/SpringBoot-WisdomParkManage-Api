@@ -30,4 +30,6 @@ public interface SysSubjectRepository extends JpaRepository<SysSubject, Long> {
      */
     @Query(value = "SELECT background_color FROM sys_subject WHERE pk_subject_id = ?1", nativeQuery = true)
     String getSubjectBackgroundColor(Long id);
+
+
 }

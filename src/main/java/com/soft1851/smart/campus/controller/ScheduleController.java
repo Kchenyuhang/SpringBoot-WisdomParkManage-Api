@@ -3,7 +3,7 @@ package com.soft1851.smart.campus.controller;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.ScheduleDto;
 import com.soft1851.smart.campus.model.dto.SchedulesDto;
-import com.soft1851.smart.campus.model.entity.Schedule;
+import com.soft1851.smart.campus.model.dto.SingleParam;
 import com.soft1851.smart.campus.service.ScheduleService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +39,12 @@ public class ScheduleController {
     /**
      * 获取课表 id 查找课表信息接口
      *
-     * @param scheduleId
+     * @param singleParam
      * @return
      */
-    @GetMapping("/{scheduleId}")
-    public ResponseResult getInfoById(@PathVariable Long scheduleId) {
-        return ResponseResult.success(scheduleService.getScheduleInfoById(scheduleId));
+    @PostMapping("/scheduleId")
+    public ResponseResult getInfoById(@RequestBody SingleParam singleParam) {
+        return ResponseResult.success(scheduleService.getScheduleInfoById(singleParam.getPkId()));
     }
 
     /**

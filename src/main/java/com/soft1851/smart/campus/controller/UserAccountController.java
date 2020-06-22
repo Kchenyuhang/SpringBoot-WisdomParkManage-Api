@@ -37,21 +37,22 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "分页查询所有账号",notes = "")
-    @GetMapping(value = "/all")
-    public ResponseResult findInfoType(PageDto pageDto){
+    @PostMapping(value = "/all")
+    public ResponseResult findInfoType(@RequestBody PageDto pageDto){
+        System.out.println(pageDto);
         return userAccountService.findAllUserAccount(pageDto);
     }
 
 
     /**
      * 删除用户账号
-     * @param id
+     * @param
      * @return
      */
     @ApiOperation(value = "删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletion/{id}")
-    public ResponseResult deleteInfoType(@PathVariable String id){
-        return userAccountService.deleteUserAccount(id);
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteInfoType(@RequestBody QueryDto queryDto){
+        return userAccountService.deleteUserAccount(queryDto.getFiled1());
     }
 
     /**
@@ -59,9 +60,9 @@ public class UserAccountController {
      * @return
      */
     @ApiOperation(value = "批量删除用户账号",notes = "")
-    @DeleteMapping(value = "/deletionBath/{ids}")
-    public ResponseResult deletedBatch(@PathVariable String ids){
-        return userAccountService.deletedBatch(ids);
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.deletedBatch(batchDeletionDto.getIds());
     }
 
     /**
@@ -72,12 +73,8 @@ public class UserAccountController {
     @ApiOperation(value = "修改用户信息",notes = "")
     @PostMapping(value = "/modification")
     public ResponseResult updateInfoType(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
-        int n = userAccountService.updateUserAccountById(userAccount);
-        return ResponseResult.success();
+       return userAccountService.updateUserAccount(userAccount);
     }
-
-
 
 
     /**
@@ -121,16 +118,20 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
-        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
     }
 
-    @ApiOperation(value = "修改学生状态接口")
+    /**
+     * 修改用户状态
+     * @param queryDto
+     * @return
+     */
+    @ApiOperation(value = "修改用户状态",notes = "")
     @PostMapping(value = "/status")
-    public ResponseResult updateUserAccountStatusById(@RequestBody UserAccount userAccount) {
-        int n = userAccountService.updateStatusById(userAccount);
-        return ResponseResult.success();
+    public ResponseResult updateStatusById(@RequestBody QueryDto queryDto){
+        return userAccountService.updateStatusById(queryDto.getFiled1(),queryDto.getStatus());
     }
+
 
     /**
      * 查询未被分配的学生
@@ -175,5 +176,15 @@ public class UserAccountController {
     @PostMapping(value = "/list/clazzId")
     public List<Map<String, Object>> getUserAccountByClazzId(@RequestBody QueryDto queryDto) {
         return userAccountService.getUserAccountByClazzId(Long.parseLong(queryDto.getField().toString()));
+    }
+    /**
+     * 模糊查询教师数据
+     * @param batchDeletionDto
+     * @return
+     **/
+    @ApiOperation(value = "模糊查询教师数据",notes = "ids为keywords关键字")
+    @PostMapping(value = "/teacher/like")
+    public ResponseResult findTeacherLike(@RequestBody BatchDeletionDto batchDeletionDto){
+        return userAccountService.findTeacherLike(batchDeletionDto.getIds());
     }
 }

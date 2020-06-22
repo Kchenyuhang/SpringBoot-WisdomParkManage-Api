@@ -58,6 +58,12 @@ public interface ClazzService {
      */
     ResponseResult deleteBatchByClazzId(String ids);
 
+    /**
+     * 模糊查询班级
+     * @param keywords
+     * @return
+     */
+    ResponseResult getAllClazzs(String keywords);
 
 
 }

@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.StudentToClazzDto;
-import com.soft1851.smart.campus.model.dto.UpdateClazzDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.Clazz;
 import com.soft1851.smart.campus.service.ClazzService;
 import io.swagger.annotations.Api;
@@ -68,6 +65,12 @@ public class ClazzController {
     @PostMapping(value = "/deletionBath")
     ResponseResult deleteBatchByClazzId(@RequestBody BatchDeletionDto batchDeletionDto) {
         return clazzService.deleteBatchByClazzId(batchDeletionDto.getIds());
+    }
+
+    @ApiOperation(value = "根据年级或者班级名模糊查询班级id", notes = "请求参数为：Filed1")
+    @PostMapping(value = "/like")
+    ResponseResult getAllClazzs(@RequestBody QueryDto queryDto) {
+        return clazzService.getAllClazzs(queryDto.getFiled1());
     }
 }
 

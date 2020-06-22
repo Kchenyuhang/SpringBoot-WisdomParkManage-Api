@@ -111,9 +111,28 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
             "<when test='keywords!=null'> ",
             "AND user_name LIKE CONCAT('%',#{keywords},'%') ",
             "OR job_number LIKE CONCAT('%',#{keywords},'%') ",
+            "AND role = 1 ",
             "</when> ",
             "</script>"})
     List<StudentVo> findStudentLike(String keyword) throws SQLException;
+
+    /**
+     * 模糊查询教师
+     *
+     * @param keyword
+     * @return
+     * @throws SQLException
+     */
+    @Select({"<script>",
+            "SELECT job_number,user_name FROM user_account ",
+            "WHERE 1=1 ",
+            "<when test='keywords!=null'> ",
+            "AND user_name LIKE CONCAT('%',#{keywords},'%') ",
+            "OR job_number LIKE CONCAT('%',#{keywords},'%') ",
+            "AND role = 2 ",
+            "</when> ",
+            "</script>"})
+    List<TeacherVo> findTeacherLike(String keyword) throws SQLException;
 
 
     /**
@@ -127,7 +146,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     List<Map<String, Object>> findStudentsByClazzId(Long clazzId) throws SQLException;
 
     /**
-     * 查询某个班级的所有学生id
+     * 查询某个班级的所有学生学号
      *
      * @param clazzId
      * @return
@@ -135,4 +154,8 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      */
     @Select("SELECT pk_user_account_id FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted = false")
     List<String> findUserIdByClazzId(Long clazzId) throws SQLException;
+
+    @Select("SELECT job_number FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted=false AND role=1")
+    List<String> findJobNumberByClazzId(Long clazzId) throws SQLException;
+
 }

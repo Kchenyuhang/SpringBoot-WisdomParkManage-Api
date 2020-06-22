@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.service;
 
+import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.entity.SysSubject;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,12 @@ public interface SysSubjectService {
      * @return
      */
     List<SysSubject> selectAll();
+
+    /**
+     * 模糊查询学科
+     * @param keywords
+     * @return
+     */
+    ResponseResult getSubjectLike(String keywords);
+
 }
