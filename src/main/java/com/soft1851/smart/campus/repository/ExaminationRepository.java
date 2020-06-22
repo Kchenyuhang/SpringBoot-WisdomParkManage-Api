@@ -67,4 +67,12 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     List<Long> findExaminationsBySemesterAndSubjectId(String semester,Long subjectId,long clazzId);
 
 
+    /**
+     * 删除单个的教务数据
+     * @param ids
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Modifying
+    @Query(value = "update first_smart_campus.examination e set e.is_deleted=true where e.pk_examination_id in ?1",nativeQuery = true)
+    void deletedExamination(List<Long> ids);
 }

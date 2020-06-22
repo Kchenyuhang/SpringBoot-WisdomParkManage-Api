@@ -59,14 +59,26 @@ public class ExaminationController {
         return examinationService.selectAllExamination();
     }
 
+    /**
+     * 删除单条考务
+     * @return
+     */
+    @ApiOperation(value = "删除单条考务",notes = "")
+    @PostMapping(value = "/deletion")
+    public ResponseResult deletedExamination(@RequestBody UpdateNewExaminationDto updateNewExaminationDto){
+        return examinationService.deletedExamination(updateNewExaminationDto);
+    }
 
-//    /**
-//     * 统计出考务数据的总量接口
-//     *
-//     * @return
-//     */
-//    @PostMapping("/count")
-//    public Long totalNum() {
-//        return examinationService.countNum();
-//    }
+    /**
+     * 查询某个教务下面的学生数据
+     * @return
+     */
+    @ApiOperation(value = "查询某个教务下面的学生数据",notes = "请求参数：班级id、科目id、学期")
+    @PostMapping(value = "/student")
+    public ResponseResult selectStudentInExamination(@RequestBody UpdateNewExaminationDto updateNewExaminationDto){
+        return examinationService.selectStudentInExamination(updateNewExaminationDto);
+    }
+
+
+
 }

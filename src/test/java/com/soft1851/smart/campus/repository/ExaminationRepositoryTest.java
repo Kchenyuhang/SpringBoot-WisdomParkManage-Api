@@ -34,8 +34,14 @@ class ExaminationRepositoryTest {
 
     @Test
     void findExaminationsBySemesterAndSubjectId() {
-        List<Long> examinationList = examinationRepository.findExaminationsBySemesterAndSubjectId("2012-2013学年第一学期",(long)19,(long)2);
+        List<Long> examinationList = examinationRepository.findExaminationsBySemesterAndSubjectId("2012-2013学年第一学期",(long)19,2);
         System.out.println(examinationList);
 
+    }
+
+    @Test
+    void deletedExamination() {
+        List<Long> examinationList = examinationRepository.findExaminationsBySemesterAndSubjectId("2012-2013学年第一学期",(long)20, 2);
+        examinationRepository.deletedExamination(examinationList);
     }
 }

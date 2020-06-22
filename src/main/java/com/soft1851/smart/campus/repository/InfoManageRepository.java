@@ -2,6 +2,8 @@ package com.soft1851.smart.campus.repository;
 
 import com.soft1851.smart.campus.model.entity.InfoManage;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,6 +57,14 @@ public interface InfoManageRepository extends JpaRepository<InfoManage, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "update InfoManage set isTop = ?2 where pkInfoManageId = ?1")
     void changeIsTop(Long pkInfoManageId,Boolean isTop);
+
+    /**
+     * 分页查询所有资讯
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select * from first_smart_campus.info_manage where is_deleted = false",nativeQuery = true)
+    Page<InfoManage> getAllInfoManage(Pageable pageable);
 
 
 

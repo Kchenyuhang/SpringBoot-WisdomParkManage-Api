@@ -1,8 +1,6 @@
 package com.soft1851.smart.campus.service.Impl;
 
-import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.exception.CustomException;
@@ -24,11 +22,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author Yujie_Zhao
@@ -60,7 +61,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public ResponseResult insertUserAccount(UserAccount userAccount) {
 
-        System.out.println("***************" + userAccount.getAddress());
         //查询用户是否还存在
         UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
         //查询一卡通数据是否存在
@@ -96,7 +96,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .nickname("用户" + userAccount.getJobNumber())
                         .password("123456")
                         .address(userAccount.getAddress())
-
                         .phoneNumber(userAccount.getPhoneNumber())
                         .role(userAccount.getRole())
                         .clazzId(userAccount.getClazzId())
@@ -105,7 +104,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
-                System.out.println(userAccount1);
                 userAccountRepository.save(userAccount1);
                 return ResponseResult.success();
             } else {
@@ -128,8 +126,8 @@ public class UserAccountServiceImpl implements UserAccountService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkUserAccountId");
+                Sort.Direction.DESC,
+                "gmtCreate");
         Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
         return ResponseResult.success(userAccountList.getContent());
     }

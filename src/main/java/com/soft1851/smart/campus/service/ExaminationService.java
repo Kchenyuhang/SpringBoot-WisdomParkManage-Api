@@ -35,11 +35,18 @@ public interface ExaminationService {
 
 
     /**
-     * 统计出考务数据的总数
-     *
+     * 逻辑删除考务数据
+     * @param updateNewExaminationDto
      * @return
      */
-    Long countNum();
+    ResponseResult deletedExamination(UpdateNewExaminationDto updateNewExaminationDto);
+
+    /**
+     * 查询某个教务包含的学生数据
+     * @param updateNewExaminationDto
+     * @return
+     */
+    ResponseResult selectStudentInExamination(UpdateNewExaminationDto updateNewExaminationDto);
 
 
 }

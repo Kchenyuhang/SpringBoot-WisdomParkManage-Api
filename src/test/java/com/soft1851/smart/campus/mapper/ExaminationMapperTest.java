@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.mapper;
 
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExamVo;
+import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -79,5 +80,11 @@ class ExaminationMapperTest {
         for (ExamVo examination : examinationList1) {
             System.out.println(examination);
         }
+    }
+
+    @Test
+    void getAllExaminationStudents() {
+        List<ExaminationStudentVo> examinationStudentVos = examinationMapper.getAllExaminationStudents((long)2,(long)2,"2012-2013学年第一学期");
+        System.out.println(examinationStudentVos);
     }
 }
