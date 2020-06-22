@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.CompanyDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.service.CompanyService;
 import io.swagger.annotations.Api;
@@ -34,6 +35,18 @@ public class CompanyController {
     @ApiOperation(value = "公司列表",  notes = "请求参数为JobPageDto")
     public ResponseResult typeList(@RequestBody JobPageDto jobPageDto){
         return ResponseResult.success(companyService.findAll(jobPageDto));
+    }
+
+    @PostMapping("/add")
+    @ApiOperation(value = "添加公司",  notes = "请求参数为CompanyDto")
+    public ResponseResult addCompany(@RequestBody CompanyDto companyDto){
+        return ResponseResult.success(companyService.addCompany(companyDto));
+    }
+
+    @PostMapping("/update")
+    @ApiOperation(value = "更新公司",  notes = "请求参数为CompanyDto")
+    public ResponseResult upCompany(@RequestBody CompanyDto companyDto){
+        return ResponseResult.success(companyService.update(companyDto));
     }
 
 }

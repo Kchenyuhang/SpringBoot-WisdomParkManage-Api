@@ -141,4 +141,5 @@ public class DeliveryOrder {
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
 
+
 }
