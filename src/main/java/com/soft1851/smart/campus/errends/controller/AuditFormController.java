@@ -56,4 +56,12 @@ public class AuditFormController {
     public ResponseResult getErredsFrom(@RequestBody FinshOrderDto finshOrderDto) {
         return auditFormService.selectReviewForm(finshOrderDto);
     }
+
+    /**
+     * 删除所有跑腿申请
+     */
+    @PostMapping(value = "/delete/errends")
+    public ResponseResult deteleErrends(@RequestBody FinshOrderDto finshOrderDto) {
+        return auditFormService.DeleteErrends(finshOrderDto);
+    }
 }
