@@ -1,11 +1,8 @@
 package com.soft1851.smart.campus.service;
 
-import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
-import com.soft1851.smart.campus.model.vo.EntityVo;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
-
-import java.util.List;
 
 /**
  * @author xunmi
@@ -18,25 +15,24 @@ public interface ExaminationService {
 
     /**
      * 修改考务信息
-     *
-     * @param examination
+     * @param updateNewExaminationDto
+     * @return
      */
-    void updateInfo(Examination examination);
+    ResponseResult updateInfo(UpdateNewExaminationDto updateNewExaminationDto);
 
     /**
      * 新增考务信息
-     *
      * @param examination
-     */
-    void increaseInfo(Examination examination);
-
-    /**
-     * 分页查找所有考务信息数据
-     *
-     * @param pageDto
      * @return
      */
-    List<EntityVo> findAllByPage(PageDto pageDto);
+    ResponseResult increaseInfo(Examination examination);
+
+    /**
+     * 查询所有教务数据
+     * @return
+     */
+    ResponseResult selectAllExamination();
+
 
     /**
      * 统计出考务数据的总数
@@ -44,4 +40,6 @@ public interface ExaminationService {
      * @return
      */
     Long countNum();
+
+
 }

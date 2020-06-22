@@ -37,7 +37,7 @@ public interface InfoManageRepository extends JpaRepository<InfoManage, Long> {
     void  deleteByPkInfoManageId(Long pkInfoManageId);
 
     /**
-     * 批量删除
+     * 批量逻辑删除
      * @param ids
      */
     @Modifying

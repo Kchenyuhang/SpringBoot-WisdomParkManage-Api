@@ -3,7 +3,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://rm-m5ee476bu350735gjeo.mysql.rds.aliyuncs.com:3306/first_smart_campus?useUnide=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT
+    url: jdbc:mysql://rm-m5ee476bu350735gjeo.mysql.rds.aliyuncs.com:3306/first_smart_campus?useUnide=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
     username: root
     password: XuNiit_#
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,7 +26,6 @@ spring:
   #redis配置数据
   redis:
     database: 0
-#    password:
     port: 6379
     host: 101.37.31.188
     lettuce:

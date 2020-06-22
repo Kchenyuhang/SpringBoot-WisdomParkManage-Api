@@ -1,16 +1,17 @@
 package com.soft1851.smart.campus.controller;
 
-import cn.hutool.db.Page;
-import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
-import com.soft1851.smart.campus.model.vo.EntityVo;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
 import com.soft1851.smart.campus.service.ExaminationService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author xunmi
@@ -27,38 +28,45 @@ public class ExaminationController {
     @Resource
     private ExaminationService examinationService;
 
-    @PutMapping("/modification")
-    public void updateInfo(@RequestBody Examination examination) {
-        examinationService.updateInfo(examination);
-    }
-
-    @PostMapping("/increase")
-    public void increaseInfo(@RequestBody Examination examination) {
-        examinationService.increaseInfo(examination);
-    }
-
-    @PostMapping("/all/page")
-    public List<EntityVo> findAllByPage(@RequestBody PageDto pageDto) {
-        // 首先排除前端传过来的参数出现 第0页 和 第 ‘负数’ 页的情况
-        if (pageDto.getCurrentPage() < 1) {
-            pageDto.setCurrentPage(1);
-        }
-        /*
-         重新计算参数值，实现分页效果
-         LIMIT 始终设定为 pageSize
-         OFFSET 计算公式为： pageSize * (currentPage - 1)
-         */
-        pageDto.setCurrentPage(pageDto.getPageSize() * (pageDto.getCurrentPage() - 1));
-        return examinationService.findAllByPage(pageDto);
+    /**
+     * 修改考务
+     * @param updateNewExaminationDto
+     */
+    @ApiOperation(value = "修改考务",notes = "")
+    @PostMapping("/modification")
+    public void updateInfo(@RequestBody UpdateNewExaminationDto updateNewExaminationDto) {
+        examinationService.updateInfo(updateNewExaminationDto);
     }
 
     /**
-     * 统计出考务数据的总量接口
-     *
+     * 新增考务
+     * @param examination
      * @return
      */
-    @GetMapping("/count")
-    public Long totalNum() {
-        return examinationService.countNum();
+    @ApiOperation(value = "新增考务",notes = "")
+    @PostMapping(value = "/increase")
+    public ResponseResult increaseSysFeedback(@RequestBody Examination examination){
+        return examinationService.increaseInfo(examination);
     }
+
+    /**
+     * 查询所有考务
+     * @return
+     */
+    @ApiOperation(value = "查询所有考务",notes = "")
+    @PostMapping(value = "/all")
+    public ResponseResult selectAllExamination(){
+        return examinationService.selectAllExamination();
+    }
+
+
+//    /**
+//     * 统计出考务数据的总量接口
+//     *
+//     * @return
+//     */
+//    @PostMapping("/count")
+//    public Long totalNum() {
+//        return examinationService.countNum();
+//    }
 }

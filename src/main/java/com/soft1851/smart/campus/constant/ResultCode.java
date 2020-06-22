@@ -40,6 +40,9 @@ public enum ResultCode {
     TOKEN_NOT_USE(30002, "token已失效"),
     UPLOAD_ERROR(30003, "上传文件业务出现问题"),
     CARD_REPORT(30004,"一卡通已挂失"),
+    EXAMINATION_REPETITION(30005,"此班级已考此科目"),
+    STUDENT_EXAMINATION_REPETITION(30006,"该班级同时间还有其他考试"),
+    TEACHER_EXAMINATION_REPETITION(30006,"该老师同时间还有其他监考"),
 
     /* 数据错误：40001-49999 */
     RESULT_CODE_DATA_NONE(50001, "数据未找到"),

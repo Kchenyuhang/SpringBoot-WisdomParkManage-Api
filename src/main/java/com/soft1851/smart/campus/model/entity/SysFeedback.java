@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.model.entity;
 
+import com.soft1851.smart.campus.annotation.ExcelVoAttribute;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,24 +27,28 @@ public class SysFeedback {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ExcelVoAttribute(name = "反馈id",column = 0)
     private Long pkFeedbackId;
 
     /**
      * 标题
      */
     @Column(name = "title")
+    @ExcelVoAttribute(name = "标题",column = 1)
     private String title;
 
     /**
      * 内容
      */
     @Column(name = "content")
+    @ExcelVoAttribute(name = "内容",column = 2)
     private String content;
 
     /**
      * 联系方式
      */
     @Column(name = "contact_way")
+    @ExcelVoAttribute(name = "联系电话",column = 3)
     private String contactWay;
 
     /**

@@ -59,7 +59,7 @@ public class SysCourse {
      * 房间id
      */
     @Column(name ="room_id",nullable = false, length = 11)
-    private Integer roomId;
+    private Long roomId;
 
     /**
      * 周几

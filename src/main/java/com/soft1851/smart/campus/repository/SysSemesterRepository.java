@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author xunmi
  * @ClassName SemesterRepository
@@ -27,4 +29,23 @@ public interface SysSemesterRepository extends JpaRepository<SysSemester, Long> 
             "week_count=:#{#sysSemester.weekCount} WHERE pk_semester_id=:#{#sysSemester.pkSemesterId}",
             nativeQuery = true)
     void updateSemesterById(@Param("sysSemester") SysSemester sysSemester);
+
+    /**
+     * 逻辑删除
+     *
+     * @param sysSemester
+     */
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Modifying
+    @Query(value = "UPDATE sys_Semester SET is_deleted=true " +
+            "WHERE pk_semester_id=:#{#sysSemester.pkSemesterId}",
+            nativeQuery = true)
+    void updateIsDeletedById(@Param("sysSemester") SysSemester sysSemester);
+
+    /**
+     * 查询所有未删除的学期信息
+     * @param isDeleted
+     * @return
+     */
+    List<SysSemester> getSysSemesterByIsDeleted(boolean isDeleted);
 }

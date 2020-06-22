@@ -42,6 +42,7 @@ public class Examination {
      */
     @Column(nullable = false)
     private Long subjectId;
+
     /**
      * 班级id
      */
@@ -55,10 +56,11 @@ public class Examination {
     private String teacherName;
 
     /**
-     * 开始时间
+     * 监考老师用户id
      */
-    @Column(nullable = false)
-    private String testPeriod;
+    @Column(nullable = false, length = 32)
+    private String teacherId;
+
 
     /**
      * 地点
@@ -79,10 +81,17 @@ public class Examination {
     private String type;
 
     /**
+     * 考生学号
+     */
+    @Column(nullable = false ,length = 32)
+    private String jobNumber;
+
+    /**
      * 创建时间
      */
     @Column(nullable = false)
     private Timestamp gmtCreate;
+
 
     /**
      * 修改时间
@@ -98,9 +107,19 @@ public class Examination {
     private Boolean isDeleted;
 
     /**
+     * 是否参与（0 未参与， 1 已参与）
+     */
+    @Column(nullable = false,length = 4)
+    private Boolean isJoin;
+
+    /**
      * 考试结束时间
      */
     @Column(nullable = false)
     private Timestamp finishTime;
-
+    /**
+     * 考试开始时间
+     */
+    @Column(nullable = false)
+    private Timestamp startTime;
 }
