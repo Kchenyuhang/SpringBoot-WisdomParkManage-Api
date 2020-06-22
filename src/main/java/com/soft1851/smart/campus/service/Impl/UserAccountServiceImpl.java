@@ -1,8 +1,13 @@
 package com.soft1851.smart.campus.service.Impl;
 
+import cn.hutool.core.convert.Convert;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.exception.CustomException;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
+import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
 import com.soft1851.smart.campus.model.entity.UserAccount;
@@ -22,9 +27,8 @@ import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.sql.Date;
 
 /**
  * @author Yujie_Zhao
@@ -97,6 +101,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .role(userAccount.getRole())
                         .clazzId(userAccount.getClazzId())
                         .status(false)
+                        .birthday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
@@ -163,7 +168,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 //遍历所有id存入到list
                 idsList.add(id);
             }
-            userAccountRepository.deleteBatchByUserAccount(idsList);
+            //userAccountRepository.deleteBatchByUserAccount(idsList);
             return ResponseResult.success("批量删除用户成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
@@ -267,6 +272,28 @@ public class UserAccountServiceImpl implements UserAccountService {
             e.printStackTrace();
         }
         return ResponseResult.success(studentVos);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllStudents() {
+        return userAccountMapper.getAllStudents();
+    }
+
+    @Override
+    public int updateClazzIdById(DoubleFieldDto doubleFieldDto) {
+        JSONArray array = JSONArray.parseArray(doubleFieldDto.getFirstField());
+        List<String> ids = array.toJavaList(String.class);
+        int n = userAccountRepository.updateClazzIdById(Integer.parseInt(doubleFieldDto.getSecondField()), ids);
+        return n;
+    }
+
+    @Override
+    public List<Map<String, Object>> getUserAccountByClazzId(long clazzId) {
+        try {
+            return userAccountMapper.findStudentsByClazzId(clazzId);
+        } catch (SQLException e) {
+            throw new CustomException("根据班课id查询学生信息异常", ResultCode.RESULT_CODE_DATA_NONE);
+        }
     }
 
     @Override

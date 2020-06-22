@@ -57,6 +57,7 @@ public class ClazzController {
     @ApiOperation(value = "修改班级数据", notes = "修改参数为：班级id，班主任教工号/学院id/年级/班级名")
     @PostMapping(value = "/modification")
     ResponseResult increaseStudentToClazz(@RequestBody UpdateClazzDto updateClazzDto) {
+        System.out.println(updateClazzDto);
         return clazzService.updateClazz(updateClazzDto);
     }
 
