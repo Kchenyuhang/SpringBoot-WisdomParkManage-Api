@@ -52,13 +52,13 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
         List<DeliveryOderInformationVo> list = new ArrayList<>();
 
         //分页减一
-            Pageable pageable = PageRequest.of(finshOrderDto.getNum(), finshOrderDto.getSize());
+        Pageable pageable = PageRequest.of(finshOrderDto.getNum(), finshOrderDto.getSize());
 
         //查询所有完成的值
         QueryWrapper<DeliveryOrder> deliveryOrderQueryWrapper = new QueryWrapper<>();
         deliveryOrderQueryWrapper.orderByDesc("oder_create_time").eq("status", finshOrderDto.getStatus());
         List<DeliveryOrder> deliveryOrders = deliveryOrderMapper.selectList(deliveryOrderQueryWrapper);
-
+log.info(String.valueOf(deliveryOrders));
         for (DeliveryOrder deliveryOrder : deliveryOrders) {
 
             //查出商品信息
@@ -68,12 +68,12 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
             userAccountQueryWrapper.select("nickname", "job_number", "phone_number")
                     .eq("job_number", deliveryOrder.getFounderId());
             UserAccount userAccount = userAccountMapper.selectOne(userAccountQueryWrapper);
-log.info(String.valueOf(userAccount));
+            log.info(String.valueOf(userAccount));
             //根据不同状态追加不同值
             if (finshOrderDto.getStatus() == 0 || finshOrderDto.getStatus() == 1) {
                 if (finshOrderDto.getStatus() == 1) {
                     QueryWrapper<CancleDeliveryOrder>cancleDeliveryOrderQueryWrapper=new QueryWrapper<>();
-             cancleDeliveryOrderQueryWrapper.select("cancle_time").eq("oder_id",deliveryOrder.getId());
+                    cancleDeliveryOrderQueryWrapper.select("cancle_time").eq("oder_id",deliveryOrder.getId());
                     CancleDeliveryOrder cancleDeliveryOrder = cancleDeliveryOderMapper.selectOne(cancleDeliveryOrderQueryWrapper);
                     DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                             .amount(deliveryOrder.getAmount())
@@ -96,7 +96,7 @@ log.info(String.valueOf(userAccount));
                             .amount(deliveryOrder.getAmount())
                             .priceRange(commodity.getPriceRang()).type(commodity.getType()).deliveryTime(deliveryOrder.getDeliveryTime())
                             .destination(deliveryOrder.getDestination())
-                                .founderId(userAccount.getJobNumber())
+                            .founderId(userAccount.getJobNumber())
                             .founderName(deliveryOrder.getFounderName())
                             .founderPhonenumber(deliveryOrder.getFounderPhonenumber())
                             .id(deliveryOrder.getId())
@@ -153,10 +153,12 @@ log.info(String.valueOf(userAccount));
         return ResponseResult.success(map);
     }
 
+
+
     @Override
     public ResponseResult getOrderByFoundIdOrFounderName(DeliveryOrderDto deliveryOrderDto) {
-//        QueryWrapper<DeliveryOderInformationVo> pa = (QueryWrapper<DeliveryOderInformationVo>) deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto);
-//        List<DeliveryOderInformationVo> page = pa
-        return ResponseResult.success(deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto));
+    //        QueryWrapper<DeliveryOderInformationVo> pa = (QueryWrapper<DeliveryOderInformationVo>) deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto);
+    //        List<DeliveryOderInformationVo> page = pa
+            return ResponseResult.success(deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto));
     }
 }
