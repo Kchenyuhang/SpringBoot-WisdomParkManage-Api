@@ -35,7 +35,7 @@ public class ReplyComment {
 
 
     /**
-     * 动态id
+     * 评论id
      */
     @Column(name = "comment_id", nullable = false)
     private String commentId;

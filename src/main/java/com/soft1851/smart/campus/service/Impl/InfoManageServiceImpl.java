@@ -82,11 +82,10 @@ public class InfoManageServiceImpl implements InfoManageService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkInfoManageId");
-        Page<InfoManage> infoManagePage = infoManageRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<InfoManage> infoManagePage = infoManageRepository.getAllInfoManage(pageable);
         return ResponseResult.success(infoManagePage.getContent());
-
     }
 
     /**

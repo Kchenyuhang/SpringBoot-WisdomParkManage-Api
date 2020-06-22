@@ -55,7 +55,7 @@ public interface BookRepository extends JpaRepository<SysBook, Long> {
     int setBookResidueByBookName(String bookName, int bookResidueNumber);
 
     /**
-     * 批量删除书籍种类
+     * 批量逻辑删除书籍种类
      *
      * @return
      */

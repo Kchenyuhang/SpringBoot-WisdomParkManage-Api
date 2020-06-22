@@ -3,9 +3,12 @@ package com.soft1851.smart.campus.service.Impl;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.model.dto.DynamicDto;
+import com.soft1851.smart.campus.model.dto.DynamicFindDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.Dynamic;
+import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.repository.DynamicRepository;
+import com.soft1851.smart.campus.repository.UserAccountRepository;
 import com.soft1851.smart.campus.service.DynamicService;
 import com.soft1851.smart.campus.utils.SnowFlake;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,8 @@ public class DynamicServiceImpl implements DynamicService {
 
     @Resource
     private DynamicRepository dynamicRepository;
+    @Resource
+    private UserAccountRepository userAccountRepository;
 
     /**
      * 添加动态资讯
@@ -42,7 +47,7 @@ public class DynamicServiceImpl implements DynamicService {
         Dynamic dynamic = Dynamic.builder()
                 .pkDynamicId(String.valueOf(new SnowFlake(1, 3).nextId()))
                 .comments(0)
-                .isDeleted(true)
+                .isDeleted(false)
                 .title("")
                 .thumbs(0)
                 .type(dynamicDto.getType())
@@ -64,8 +69,25 @@ public class DynamicServiceImpl implements DynamicService {
                 pageDto.getPageSize(),
                 Sort.Direction.ASC,
                 "pkDynamicId");
-        Page<Dynamic> dynamicPage = dynamicRepository.findAll(pageable);
-        return ResponseResult.success(dynamicPage.getContent());
+        Page<Dynamic> dynamicPage = dynamicRepository.findAllByIsDeleted(pageable);
+        List<DynamicFindDto> dynamicFindDtos = new ArrayList<>();
+        dynamicPage.forEach(dynamic -> {
+            UserAccount userAccount = userAccountRepository.findByPkUserAccountId(dynamic.getUserId());
+            DynamicFindDto dynamicFindDto = DynamicFindDto.builder()
+                    .pkDynamicId(dynamic.getPkDynamicId())
+                    .comments(dynamic.getComments())
+                    .content(dynamic.getContent())
+                    .gmtCreate(dynamic.getGmtCreate())
+                    .gmtModified(dynamic.getGmtModified())
+                    .isDeleted(dynamic.getIsDeleted())
+                    .thumbs(dynamic.getThumbs())
+                    .type(dynamic.getType())
+                    .userName(userAccount.getUserName())
+                    .nickName(userAccount.getNickname())
+                    .build();
+            dynamicFindDtos.add(dynamicFindDto);
+        });
+        return ResponseResult.success(dynamicFindDtos);
     }
 
     /**
@@ -121,4 +143,5 @@ public class DynamicServiceImpl implements DynamicService {
     public ResponseResult updateDynamic(Dynamic dynamic) {
         return null;
     }
+
 }
