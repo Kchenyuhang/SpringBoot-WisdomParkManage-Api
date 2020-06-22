@@ -21,7 +21,7 @@ public interface PartJobService extends IService<PartJob> {
 
     int add(PartJobDto partJobDto);
 
-//    Boolean updateJob(PartJobDto partJobDto);
+    int updateJob(PartJobDto partJobDto);
 
-//    int delete(JobDto jobDto);
+    int delete(JobDto jobDto);
 }
