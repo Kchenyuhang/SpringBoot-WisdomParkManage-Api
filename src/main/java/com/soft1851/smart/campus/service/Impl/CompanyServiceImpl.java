@@ -6,9 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft1851.smart.campus.mapper.CompanyMapper;
+import com.soft1851.smart.campus.mapper.JobMapper;
 import com.soft1851.smart.campus.model.dto.CompanyDto;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.model.entity.Company;
+import com.soft1851.smart.campus.model.entity.Job;
 import com.soft1851.smart.campus.service.CompanyService;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +33,13 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
     @Resource
     private CompanyMapper companyMapper;
 
+    @Resource
+    private JobMapper jobMapper;
+
     @Override
     public List<Company> findAll(JobPageDto jobPageDto) {
         QueryWrapper<Company> wrapper = new QueryWrapper<>();
+        wrapper.eq("is_deleted", false);
         IPage<Company> page = new Page<>(jobPageDto.getCurrentPage(), jobPageDto.getPageSize());
         return companyMapper.selectPage(page, wrapper).getRecords();
     }
@@ -78,6 +85,21 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
                 .set("latitude", companyDto.getLatitude())
                 .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("pk_company_id", companyDto.getId());
+        return companyMapper.update(company, wrapper);
+    }
+
+    @Override
+    public int delete(JobDto jobDto) {
+        Company company = new Company();
+        Job job = new Job();
+        UpdateWrapper<Company> wrapper = new UpdateWrapper<>();
+        wrapper.set("is_deleted", true)
+                .eq("pk_company_id", jobDto.getId());
+        //把公司相关的职位删除
+        UpdateWrapper<Job> jobWrapper = new UpdateWrapper<>();
+        jobWrapper.set("is_deleted", true)
+                .eq("company_id", jobDto.getId());
+        jobMapper.update(job, jobWrapper);
         return companyMapper.update(company, wrapper);
     }
 
