@@ -25,7 +25,7 @@ import java.util.Map;
  **/
 @RestController
 @Slf4j
-@RequestMapping(value = "/userAccount")
+    @RequestMapping(value = "/userAccount")
 @Api(value = "UserAccountController",tags = {"用户账号接口"})
 public class UserAccountController {
 ;
@@ -118,6 +118,8 @@ public class UserAccountController {
     @ApiOperation(value = "新增学生数据信息",notes = "")
     @PostMapping(value = "/insert")
     public ResponseResult insertUserAccount(@RequestBody UserAccount userAccount){
+        System.out.println("参数>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(userAccount);
         return userAccountService.insertUserAccount(userAccount);
     }
 
@@ -186,5 +188,19 @@ public class UserAccountController {
     @PostMapping(value = "/teacher/like")
     public ResponseResult findTeacherLike(@RequestBody BatchDeletionDto batchDeletionDto){
         return userAccountService.findTeacherLike(batchDeletionDto.getIds());
+    }
+
+    @ApiOperation(value = "导出学生信息数据")
+    @PostMapping(value = "export/student")
+    public ResponseResult exportStudentInfo() {
+        userAccountService.exportStudentInfo();
+        return ResponseResult.success();
+    }
+
+    @ApiOperation(value = "导出教师信息数据")
+    @PostMapping(value = "export/teacher")
+    public ResponseResult exportTeacherInfo() {
+        userAccountService.exportTeacherInfo();
+        return ResponseResult.success();
     }
 }

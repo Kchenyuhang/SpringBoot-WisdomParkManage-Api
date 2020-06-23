@@ -34,7 +34,7 @@ public class TowerServiceImpl implements TowerService {
 
     @Override
     public List<Tower> findAll() {
-        return towerRepository.findAll();
+        return towerRepository.getTowerByIsDeletedOrderByGmtCreateDesc(false);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class TowerServiceImpl implements TowerService {
 
     @Override
     public void deleteTowerById(long towerId) {
-        towerRepository.deleteById(towerId);
+        towerRepository.updateTowerIsDeletedById(towerId);
     }
 
     @Override

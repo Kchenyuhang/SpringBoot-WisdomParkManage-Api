@@ -61,4 +61,13 @@ class UserAccountMapperTest {
         List<String> stringList = userAccountMapper.findJobNumberByClazzId((long)10);
         System.out.println(stringList);
     }
+
+    @Test
+    void getAllStudentInfo() {
+        PageDto dto = PageDto.builder()
+                .currentPage(1)
+                .pageSize(100)
+                .build();
+        System.out.println(userAccountMapper.getUserAccountVo(dto));
+    }
 }

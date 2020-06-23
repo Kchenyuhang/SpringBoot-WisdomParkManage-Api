@@ -69,7 +69,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query(value = "UPDATE UserAccount SET avatar=:#{#userAccount.avatar}, nickname=:#{#userAccount.nickname}, " +
+    @Query(value = "UPDATE UserAccount SET nickname=:#{#userAccount.nickname}, " +
             "phoneNumber=:#{#userAccount.phoneNumber}, address=:#{#userAccount.address} " +
             "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
     int updateUserAccountById(@Param("userAccount") UserAccount userAccount);

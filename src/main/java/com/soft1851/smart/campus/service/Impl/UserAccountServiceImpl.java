@@ -10,6 +10,7 @@ import com.soft1851.smart.campus.mapper.UserAccountMapper;
 import com.soft1851.smart.campus.model.dto.DoubleFieldDto;
 import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.SysCard;
+import com.soft1851.smart.campus.model.entity.SysFeedback;
 import com.soft1851.smart.campus.model.entity.UserAccount;
 import com.soft1851.smart.campus.model.vo.StudentVo;
 import com.soft1851.smart.campus.model.vo.TeacherVo;
@@ -17,18 +18,30 @@ import com.soft1851.smart.campus.model.vo.UserAccountVo;
 import com.soft1851.smart.campus.repository.CardRepository;
 import com.soft1851.smart.campus.repository.UserAccountRepository;
 import com.soft1851.smart.campus.service.UserAccountService;
+import com.soft1851.smart.campus.utils.ExcelConsumer;
+import com.soft1851.smart.campus.utils.ExportDataAdapter;
+import com.soft1851.smart.campus.utils.ThreadPool;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.sql.Date;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Yujie_Zhao
@@ -60,7 +73,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public ResponseResult insertUserAccount(UserAccount userAccount) {
 
-        System.out.println("***************" + userAccount.getAddress());
         //查询用户是否还存在
         UserAccount selectUserAccount = userAccountMapper.getUserAccountByJobNumber(userAccount.getJobNumber());
         //查询一卡通数据是否存在
@@ -96,11 +108,11 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .nickname("用户" + userAccount.getJobNumber())
                         .password("123456")
                         .address(userAccount.getAddress())
-
                         .phoneNumber(userAccount.getPhoneNumber())
+                        .address("")
                         .role(userAccount.getRole())
-                        .clazzId(userAccount.getClazzId())
-                        .status(false)
+                        .clazzId((long) 0)
+                        .status(userAccount.getStatus())
                         .birthday(Date.valueOf("2020-06-12"))
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
@@ -186,7 +198,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public ResponseResult updateUserAccount(UserAccount userAccount) {
         UserAccount userAccount1 = userAccountRepository.findByPkUserAccountId(userAccount.getPkUserAccountId());
         if (userAccount1 != null) {
-            userAccountRepository.updateUserAccountById(userAccount);
+            userAccountMapper.updateUserAccountById(userAccount);
             return ResponseResult.success("修改成功");
         }
         return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
@@ -307,5 +319,102 @@ public class UserAccountServiceImpl implements UserAccountService {
         return ResponseResult.success(teacherVos);
     }
 
+    @Override
+    public void exportTeacherInfo() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        HttpServletResponse response = attributes.getResponse();
+        assert response != null;
+//        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+//        response.setHeader("Content-Disposition","attachment");
+        String fileName = "sysFeedback.xls";
+        response.setContentType("application/x-msdownload");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        //导出excel对象
+        SXSSFWorkbook sxssfWorkbook = new SXSSFWorkbook(1000);
+        //数据缓冲
+        ExportDataAdapter<UserAccount> exportDataAdapter = new ExportDataAdapter<>();
+        //线程同步对象
+        CountDownLatch latch = new CountDownLatch(2);
+        //启动线程获取数据(生产者)
+        ThreadPool.getExecutor().submit(() -> produceExportData(exportDataAdapter, latch));
+        //启动线程导出数据（消费者）
+        ThreadPool.getExecutor().submit(() -> new ExcelConsumer<>(UserAccount.class, exportDataAdapter, sxssfWorkbook, latch, "反馈数据").run());
+        try {
+            latch.await();
+            //使用字节流写数据
+            OutputStream outputStream = null;
+            outputStream = response.getOutputStream();
+            sxssfWorkbook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            throw new CustomException("导出教师信息异常", ResultCode.DATA_UPDATE_ERROR);
+        }
+
+    }
+
+
+    @Override
+    public void exportStudentInfo() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert attributes != null;
+        HttpServletResponse response = attributes.getResponse();
+        assert response != null;
+//        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+//        response.setHeader("Content-Disposition","attachment");
+        String fileName = "sysFeedback.xls";
+        response.setContentType("application/x-msdownload");
+        response.setHeader("Content-Disposition","attachment;filename="+ URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        //导出excel对象
+        SXSSFWorkbook sxssfWorkbook = new SXSSFWorkbook(1000);
+        //数据缓冲
+        ExportDataAdapter<UserAccount> exportDataAdapter = new ExportDataAdapter<>();
+        //线程同步对象
+        CountDownLatch latch = new CountDownLatch(2);
+        //启动线程获取数据(生产者)
+        ThreadPool.getExecutor().submit(() -> produceStudentInfo(exportDataAdapter, latch));
+        //启动线程导出数据（消费者）
+        ThreadPool.getExecutor().submit(() -> new ExcelConsumer<>(UserAccount.class, exportDataAdapter, sxssfWorkbook, latch, "反馈数据").run());
+        try {
+            latch.await();
+            //使用字节流写数据
+            OutputStream outputStream = null;
+            outputStream = response.getOutputStream();
+            sxssfWorkbook.write(outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            throw new CustomException("导出学生信息异常", ResultCode.DATA_UPDATE_ERROR);
+        }
+    }
+
+    /**
+     * 生产教师数据
+     *
+     * @param exportDataAdapter
+     * @param latch
+     */
+    private void produceExportData(ExportDataAdapter<UserAccount> exportDataAdapter, CountDownLatch latch) {
+        List<UserAccount> userAccounts = userAccountMapper.getAllTeacherInfo();
+        userAccounts.forEach(exportDataAdapter::addData);
+        System.out.println("数据生产完成");
+        //数据生产结束
+        latch.countDown();
+    }
+
+    /**
+     * 生产学生数据
+     *
+     * @param exportDataAdapter
+     * @param latch
+     */
+    private void produceStudentInfo(ExportDataAdapter<UserAccount> exportDataAdapter, CountDownLatch latch) {
+        List<UserAccount> userAccounts = userAccountMapper.getAllStudentInfo();
+        userAccounts.forEach(exportDataAdapter::addData);
+        System.out.println("数据生产完成");
+        //数据生产结束
+        latch.countDown();
+    }
 
 }

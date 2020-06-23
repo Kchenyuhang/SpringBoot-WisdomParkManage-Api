@@ -63,7 +63,6 @@ public class Room {
     /**
      * 更新时间
      */
-    @UpdateTimestamp
     @Column(nullable = false)
     private Timestamp gmtModified;
 
