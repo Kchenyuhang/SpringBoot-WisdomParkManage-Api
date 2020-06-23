@@ -18,5 +18,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class JobDto {
     private Long id;
-    private Long toId;
+    private String field;
 }
