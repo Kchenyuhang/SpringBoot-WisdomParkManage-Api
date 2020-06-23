@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.CompanyDto;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.service.CompanyService;
 import io.swagger.annotations.Api;
@@ -49,4 +50,9 @@ public class CompanyController {
         return ResponseResult.success(companyService.update(companyDto));
     }
 
+    @PostMapping("/remove")
+    @ApiOperation(value = "删除公司信息",  notes = "请求参数为CompanyDto")
+    public ResponseResult upCompany(@RequestBody JobDto jobDto){
+        return ResponseResult.success(companyService.delete(jobDto));
+    }
 }
