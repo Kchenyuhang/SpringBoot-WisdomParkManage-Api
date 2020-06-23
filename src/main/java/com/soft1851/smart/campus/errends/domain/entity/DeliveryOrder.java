@@ -141,7 +141,5 @@ public class DeliveryOrder {
     @Column(nullable = false, length = 4)
     private Boolean isDeleted;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    private Commodity commodity;
 
 }

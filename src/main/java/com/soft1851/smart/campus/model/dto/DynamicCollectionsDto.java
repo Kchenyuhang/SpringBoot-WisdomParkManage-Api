@@ -6,17 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author su
- * @className JobDto
+ * @author Yujie_Zhao
+ * @ClassName CollectionsDto
  * @Description TODO
- * @Date 2020/6/20
+ * @Date 2020/6/15  14:08
  * @Version 1.0
  **/
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class JobDto {
-    private Long id;
-    private String field;
+public class DynamicCollectionsDto {
+
+    private String dynamicId;
+    private String userId;
+
 }

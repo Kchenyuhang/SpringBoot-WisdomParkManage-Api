@@ -1,6 +1,6 @@
 package com.soft1851.smart.campus.repository;
 
-import com.soft1851.smart.campus.model.entity.Dynamic;
+import com.soft1851.smart.campus.model.entity.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,17 +12,30 @@ import java.util.List;
 
 /**
  * @author Yujie_Zhao
- * @ClassName DynamicRepository
- * @Description 动态
- * @Date 2020/6/12  15:36
+ * @ClassName DiscussRepository
+ * @Description 评论
+ * @Date 2020/6/19  16:08
  * @Version 1.0
  **/
-public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
+public interface DiscussRepository extends JpaRepository<Comment,String> {
 
-    @Query(value = "select m " +
-            "FROM Dynamic m " +
-            "where  m.isDeleted = false ")
-    Page<Dynamic> findAllByIsDeleted(Pageable pageable);
+
+    /**
+     *
+     * @param isDelete
+     * @return
+     */
+    List<Comment> findAllByIsDeleted(Boolean isDelete);
+
+    /**
+     * 分页
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select c  " +
+            "FROM Comment c " +
+            "where  c.isDeleted = false ")
+    Page<Comment> findAllByIsDeleted(Pageable pageable);
 
     /**
      * 根据动态id查询存在
@@ -30,7 +43,7 @@ public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
      * @param isDelete
      * @return
      */
-    Dynamic findDynamicByPkDynamicIdAndIsDeleted(String id,Boolean isDelete);
+    Comment findDynamicByPkCommentIdAndIsDeleted(String id, Boolean isDelete);
 
     /**
      * 批量修改
@@ -39,6 +52,6 @@ public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query("update Dynamic t set t.isDeleted = true where t.pkDynamicId in (?1)")
+    @Query("update Comment t set t.isDeleted = true where t.pkCommentId in (?1)")
     int updateIsDelete(List<String> ids);
 }

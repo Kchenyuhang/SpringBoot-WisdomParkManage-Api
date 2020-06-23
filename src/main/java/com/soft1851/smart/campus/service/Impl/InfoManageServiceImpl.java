@@ -82,11 +82,10 @@ public class InfoManageServiceImpl implements InfoManageService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkInfoManageId");
-        Page<InfoManage> infoManagePage = infoManageRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<InfoManage> infoManagePage = infoManageRepository.getAllInfoManage(pageable);
         return ResponseResult.success(infoManagePage.getContent());
-
     }
 
     /**
@@ -143,7 +142,6 @@ public class InfoManageServiceImpl implements InfoManageService {
         InfoManage infoManage1 = infoManageRepository.findByPkInfoManageId(infoManage.getPkInfoManageId());
         if (infoManage1 != null) {
             infoManage1.setText(infoManage.getText());
-            infoManage1.setIsTop(infoManage.getIsTop());
             infoManage1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
             infoManage1.setIsDeleted(false);
             infoManageRepository.saveAndFlush(infoManage1);

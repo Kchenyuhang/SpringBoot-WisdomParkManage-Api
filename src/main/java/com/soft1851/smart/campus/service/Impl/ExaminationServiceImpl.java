@@ -4,13 +4,13 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.mapper.ExaminationMapper;
 import com.soft1851.smart.campus.mapper.UserAccountMapper;
-import com.soft1851.smart.campus.model.dto.PageDto;
+import com.soft1851.smart.campus.model.dto.UpdateExaminationDto;
+import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
-import com.soft1851.smart.campus.model.vo.EntityVo;
-import com.soft1851.smart.campus.model.vo.ExaminationVo;
+import com.soft1851.smart.campus.model.vo.ExamVo;
+import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
 import com.soft1851.smart.campus.repository.ExaminationRepository;
 import com.soft1851.smart.campus.service.ExaminationService;
-import com.soft1851.smart.campus.utils.DataTypeChange;
 import com.soft1851.smart.campus.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
@@ -38,10 +38,33 @@ public class ExaminationServiceImpl implements ExaminationService {
     @Resource
     private ExaminationMapper examinationMapper;
 
-
+    /**
+     * 修改考务数据：地址/开始时间/结束时间/学科id/监考老师名/监考老师id/类型
+     *
+     * @param updateNewExaminationDto
+     * @return
+     */
     @Override
-    public ResponseResult updateInfo(Examination examination) {
-        return null;
+    public ResponseResult updateInfo(UpdateNewExaminationDto updateNewExaminationDto) {
+        //subjectId分修改之前的和修改后的 旧的subjectId的作用是用来查找需要修改的数据 新的用来修改字段
+        UpdateExaminationDto updateExaminationDto = UpdateExaminationDto.builder()
+                .area(updateNewExaminationDto.getArea())
+                .startTime(updateNewExaminationDto.getStartTime())
+                .finishTime(updateNewExaminationDto.getFinishTime())
+                .subjectId(updateNewExaminationDto.getSubjectId())
+                .teacherName(updateNewExaminationDto.getTeacherName())
+                .teacherId(updateNewExaminationDto.getTeacherId())
+                .type(updateNewExaminationDto.getType())
+                .build();
+        //查询需要修改的考务数据
+        List<Long> ids = examinationRepository.findExaminationsBySemesterAndSubjectId(updateNewExaminationDto.getSemester(), updateNewExaminationDto.getOldSubjectId(), updateNewExaminationDto.getClazzId());
+        if (ids.size() != 0) {
+            //进行批量修改操作
+            examinationRepository.updateStudentExamination(ids, updateExaminationDto);
+            return ResponseResult.success("修改成功！");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
     }
 
     /**
@@ -139,18 +162,49 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     }
 
-
+    /**
+     * 查询所有教务数据
+     *
+     * @return
+     */
     @Override
-    public List<EntityVo> findAllByPage(PageDto pageDto) {
-        // 第一步：调用底层 Repository 中的分页查询方法，返回结果为 List<Object> 对象
-        List<Object> examinationVos = examinationRepository.selectAll(pageDto);
-        // 第二步：调用工具类，处理 List<Object> 对象
-        return DataTypeChange.changeObj(examinationVos, ExaminationVo.class);
+    public ResponseResult selectAllExamination() {
+        List<ExamVo> examinationList = examinationMapper.getAllExamination();
+        List<ExamVo> examinationList1 = examinationList.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.comparing(o -> o.getSubjectId() + ";" + o.getClazzId() + ";" + o.getSemester())
+                )), ArrayList::new)
+        );
+        return ResponseResult.success(examinationList1);
     }
 
+
+    /**
+     * 删除单条教务数据(包含所有考务内的学生数据全部删除）
+     *
+     * @param updateNewExaminationDto
+     * @return
+     */
     @Override
-    public Long countNum() {
-        return examinationRepository.count();
+    public ResponseResult deletedExamination(UpdateNewExaminationDto updateNewExaminationDto) {
+        List<Long> examinationList = examinationRepository.findExaminationsBySemesterAndSubjectId(updateNewExaminationDto.getSemester(), updateNewExaminationDto.getSubjectId(), updateNewExaminationDto.getClazzId());
+        if (examinationList.size() != 0) {
+            examinationRepository.deletedExamination(examinationList);
+            return ResponseResult.success("成功删除教务");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    /**
+     * 查询某个教务下面的学生数据
+     * @param updateNewExaminationDto
+     * @return
+     */
+    @Override
+    public ResponseResult selectStudentInExamination(UpdateNewExaminationDto updateNewExaminationDto) {
+        List<ExaminationStudentVo> examinationStudentVos = examinationMapper.getAllExaminationStudents(updateNewExaminationDto.getSubjectId(),updateNewExaminationDto.getClazzId(),updateNewExaminationDto.getSemester());
+        return ResponseResult.success(examinationStudentVos);
     }
 
 

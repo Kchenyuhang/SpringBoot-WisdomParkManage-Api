@@ -1,8 +1,6 @@
 package com.soft1851.smart.campus.service.Impl;
 
-import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.exception.CustomException;
@@ -32,7 +30,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -117,7 +114,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                         .userAccount(userAccount.getJobNumber())
                         .userName(userAccount.getUserName())
                         .build();
-                System.out.println(userAccount1);
                 userAccountRepository.save(userAccount1);
                 return ResponseResult.success();
             } else {
@@ -140,9 +136,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkUserAccountId");
-        Page<UserAccount> userAccountList = userAccountRepository.findAll(pageable);
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<UserAccount> userAccountList = userAccountRepository.getAllUserAccount(pageable);
         return ResponseResult.success(userAccountList.getContent());
     }
 
@@ -180,7 +176,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 //遍历所有id存入到list
                 idsList.add(id);
             }
-            //userAccountRepository.deleteBatchByUserAccount(idsList);
+            userAccountRepository.deleteBatchByUserAccount(idsList);
             return ResponseResult.success("批量删除用户成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
