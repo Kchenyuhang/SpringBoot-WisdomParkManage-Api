@@ -19,6 +19,19 @@ import java.util.List;
  **/
 public interface DiscussRepository extends JpaRepository<Comment,String> {
 
+
+    /**
+     *
+     * @param isDelete
+     * @return
+     */
+    List<Comment> findAllByIsDeleted(Boolean isDelete);
+
+    /**
+     * 分页
+     * @param pageable
+     * @return
+     */
     @Query(value = "select c  " +
             "FROM Comment c " +
             "where  c.isDeleted = false ")

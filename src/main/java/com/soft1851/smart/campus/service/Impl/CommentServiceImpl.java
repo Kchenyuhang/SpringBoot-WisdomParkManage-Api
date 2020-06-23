@@ -33,6 +33,14 @@ public class CommentServiceImpl implements CommentService {
     private DiscussRepository discussRepository;
     @Resource
     private ReplyCommentRepository replyCommentRepository;
+
+    @Override
+    public ResponseResult findAll(Boolean isDelete) {
+        List<Comment> commentList = discussRepository.findAllByIsDeleted(false);
+        System.out.println(commentList.size());
+        return ResponseResult.success(commentList);
+    }
+
     @Override
     public ResponseResult findAllComment(PageDto pageDto) {
         Pageable pageable = PageRequest.of(
@@ -46,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
             CommentDto commentDto = new CommentDto();
             commentDto.setContent(comment.getContent());
             commentDto.setGmtCreate(comment.getGmtCreate());
-            commentDto.setPkCommentId(comment.getPkCommentId());
+            commentDto.setCommentId(comment.getPkCommentId());
             commentDto.setUserId(comment.getUserId());
             commentDto.setDynamicId(comment.getDynamicId());
             List<ReplyComment> replyComment = replyCommentRepository.findReplyCommentByCommentId(comment.getPkCommentId());

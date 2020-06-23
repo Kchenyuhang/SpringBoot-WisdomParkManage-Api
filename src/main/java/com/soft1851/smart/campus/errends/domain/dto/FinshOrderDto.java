@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author wl
  * @ClassNameFinshOrderDto
@@ -33,4 +35,16 @@ public class FinshOrderDto{
      * 分页数
      */
     private Integer size;
+    /**
+     * 订单id
+     */
+    private String id;
+    /**
+     *
+     */
+    private String name;
+    /**
+     * 删除id
+     */
+    private List<String> reqId;
 }

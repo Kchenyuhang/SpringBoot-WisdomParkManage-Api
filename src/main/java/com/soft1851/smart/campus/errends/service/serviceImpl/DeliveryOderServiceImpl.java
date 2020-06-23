@@ -59,7 +59,7 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
         QueryWrapper<DeliveryOrder> deliveryOrderQueryWrapper = new QueryWrapper<>();
         deliveryOrderQueryWrapper.orderByDesc("oder_create_time").eq("status", finshOrderDto.getStatus());
         List<DeliveryOrder> deliveryOrders = deliveryOrderMapper.selectList(deliveryOrderQueryWrapper);
-
+log.info(String.valueOf(deliveryOrders));
         for (DeliveryOrder deliveryOrder : deliveryOrders) {
             //查出商品信息
             Commodity commodity = commodityMapper.selectById(deliveryOrder.getCommodityId());
@@ -72,8 +72,10 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
             //根据不同状态追加不同值
             if (finshOrderDto.getStatus() == 0 || finshOrderDto.getStatus() == 1) {
                 if (finshOrderDto.getStatus() == 1) {
-                    QueryWrapper<CancleDeliveryOrder> cancleDeliveryOrderQueryWrapper = new QueryWrapper<>();
-                    cancleDeliveryOrderQueryWrapper.select("cancle_time").eq("oder_id", deliveryOrder.getId());
+
+                    QueryWrapper<CancleDeliveryOrder>cancleDeliveryOrderQueryWrapper=new QueryWrapper<>();
+                    cancleDeliveryOrderQueryWrapper.select("cancle_time").eq("oder_id",deliveryOrder.getId());
+
                     CancleDeliveryOrder cancleDeliveryOrder = cancleDeliveryOderMapper.selectOne(cancleDeliveryOrderQueryWrapper);
                     DeliveryOderInformationVo deliveryOderInformationVo = DeliveryOderInformationVo.builder()
                             .amount(deliveryOrder.getAmount())
@@ -153,10 +155,12 @@ public class DeliveryOderServiceImpl implements DeliveryOrderService {
         return ResponseResult.success(map);
     }
 
+
+
     @Override
     public ResponseResult getOrderByFoundIdOrFounderName(DeliveryOrderDto deliveryOrderDto) {
-//        QueryWrapper<DeliveryOderInformationVo> pa = (QueryWrapper<DeliveryOderInformationVo>) deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto);
-//        List<DeliveryOderInformationVo> page = pa
-        return ResponseResult.success(deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto));
+    //        QueryWrapper<DeliveryOderInformationVo> pa = (QueryWrapper<DeliveryOderInformationVo>) deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto);
+    //        List<DeliveryOderInformationVo> page = pa
+            return ResponseResult.success(deliveryOrderMapper.getByOrderIdOrFounderName(deliveryOrderDto));
     }
 }

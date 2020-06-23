@@ -11,8 +11,11 @@ import com.soft1851.smart.campus.model.dto.PageDto;
  * @Version 1.0
  **/
 public interface CommentService {
+
+    ResponseResult findAll(Boolean isDelete);
+
     /**
-     * 查询所有咨讯
+     * 分页查询所有咨讯
      * @param pageDto
      * @return ResponseResult
      */
