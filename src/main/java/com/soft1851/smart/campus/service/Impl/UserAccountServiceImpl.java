@@ -166,7 +166,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 //遍历所有id存入到list
                 idsList.add(id);
             }
-            //userAccountRepository.deleteBatchByUserAccount(idsList);
+            userAccountRepository.deleteBatchByUserAccount(idsList);
             return ResponseResult.success("批量删除用户成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
