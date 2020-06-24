@@ -4,6 +4,7 @@ import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.service.SysBorrowService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,19 +56,10 @@ public class SysBorrowController {
         return sysBorrowService.borrowInsert(borrowInsertDto);
     }
 
-    /**
-     * 修改借阅状态
-     *
-     * @param updateBorrowDto
-     * @return
-     */
-    @PostMapping(value = "/deletion")
-    public ResponseResult deleteSysFeedback(@RequestBody UpdateBorrowDto updateBorrowDto) {
-        return sysBorrowService.deletedSysRole(updateBorrowDto.getId(), updateBorrowDto.getIsDeleted());
-    }
 
     /**
      * 时间范围内的查询
+     *
      * @param timeBorrowPageDto
      * @return
      */
@@ -77,4 +69,38 @@ public class SysBorrowController {
     }
 
 
+    /**
+     * 修改还书状态
+     * @param singleParam
+     * @return
+     */
+    @ApiOperation(value = "修改还书状态", notes = "")
+    @PostMapping(value = "/modification/return")
+    public ResponseResult deleteSysFeedback(@RequestBody SingleParam singleParam) {
+        return sysBorrowService.setIsReturn(singleParam.getPkId());
+    }
+
+
+    /**
+     * 逻辑删除借阅记录
+     * @param singleParam
+     * @return
+     */
+    @ApiOperation(value = "逻辑删除借阅记录",notes = "")
+    @PostMapping(value = "/deletion")
+    public ResponseResult deleteSysBorrows(@RequestBody SingleParam singleParam){
+        return sysBorrowService.deleteSysBorrows(singleParam.getPkId());
+    }
+
+    /**
+     * 批量逻辑删除借阅记录
+     * @param batchDeletionDto
+     * @return
+     */
+    @ApiOperation(value = "批量逻辑删除借阅记录",notes = "")
+    @PostMapping(value = "/deletionBath")
+    public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
+        log.info(">>>>>>>>>>>>>>>" + batchDeletionDto);
+        return sysBorrowService.deletedBatch(batchDeletionDto.getIds());
+    }
 }
