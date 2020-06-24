@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
+import javax.xml.transform.Result;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -82,10 +83,12 @@ public class AuditFormServiceImpl implements AuditFormService {
         QueryWrapper<ReviewForm> reviewFormQueryWrapper = new QueryWrapper<>();
         reviewFormQueryWrapper.eq("status", finshOrderDto.getStatus());
         List<ReviewForm> reviewForms = reviwFormMapper.selectList(reviewFormQueryWrapper);
+        log.info(String.valueOf(reviewForms));
         if (reviewForms.size() != 0) {
             //通过状态
             if (finshOrderDto.getStatus() == 1) {
                 for (ReviewForm reviewForm : reviewForms) {
+
                     //统计订单量
                     QueryWrapper<Transaction> transactionQueryWrapper = new QueryWrapper<>();
                     transactionQueryWrapper.eq("errands_id", reviewForm.getRequesterId());
@@ -95,8 +98,8 @@ public class AuditFormServiceImpl implements AuditFormService {
                     auditFormQueryWrapper.select("founder_id", "reviewer_id").eq("founder_id", reviewForm.getRequesterId());
                     AuditForm auditForm = auditFormMapper.selectOne(auditFormQueryWrapper);
                     QueryWrapper<SysUser> userAccountQueryWrapper = new QueryWrapper<>();
+                    log.info(String.valueOf(auditForm));
                     userAccountQueryWrapper.select("sys_user_name").eq("sys_user_phone_number", auditForm.getReviewerId());
-
                     SysUser sysUser = sysUserMapper.selectOne(userAccountQueryWrapper);
                     ErrensCountVo errensCountVo = ErrensCountVo.builder()
                             .countOrder(transaction)
@@ -185,4 +188,24 @@ public class AuditFormServiceImpl implements AuditFormService {
 
 
     }
+
+    @Override
+    public ResponseResult DeleteErrends(FinshOrderDto finshOrderDto) {
+        //循环删除
+for (String id:finshOrderDto.getReqId()){
+
+    QueryWrapper<ReviewForm>reviewFormQueryWrapper=new QueryWrapper<>();
+    reviewFormQueryWrapper.eq("requester_id",id);
+    int delete = reviwFormMapper.delete(reviewFormQueryWrapper);
+    if (delete==1){
+        QueryWrapper<AuditForm>auditFormQueryWrapper=new QueryWrapper<>();
+        auditFormQueryWrapper.eq("founder_id",finshOrderDto.getFounderId());
+      auditFormMapper.delete(auditFormQueryWrapper);
+      return ResponseResult.success();
+    }
+}
+
+        return  null;
+    }
+
 }

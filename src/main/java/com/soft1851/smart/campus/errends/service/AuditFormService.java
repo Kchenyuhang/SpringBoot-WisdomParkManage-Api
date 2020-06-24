@@ -28,9 +28,18 @@ public interface AuditFormService {
 
     /**
      * 查询跑腿审核订单
+     *
      * @param finshOrderDto
      * @return
      */
 
     ResponseResult selectReviewForm(FinshOrderDto finshOrderDto);
+
+    /**
+     * 删除跑腿人员
+     *
+     * @return
+     */
+
+    ResponseResult DeleteErrends(FinshOrderDto finshOrderDto);
 }

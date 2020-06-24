@@ -35,7 +35,8 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
             "LEFT JOIN clazz c " +
             "ON u.clazz_id = c.pk_clazz_id " +
             "WHERE u.role = 1 AND u.is_deleted = false " +
-            "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
+            "ORDER BY gmt_create DESC " +
+            "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize} ")
     List<UserAccountVo> getUserAccountVo(@Param("pageDto") PageDto pageDto);
 
     /**
@@ -56,6 +57,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
             "LEFT JOIN clazz c " +
             "ON u.clazz_id = c.pk_clazz_id " +
             "WHERE u.role = 2 AND u.is_deleted = false " +
+            "ORDER BY gmt_create DESC " +
             "LIMIT ${pageDto.pageSize*(pageDto.currentPage-1)},#{pageDto.pageSize}")
     List<UserAccountVo> getTeacherUserAccountVo(@Param("pageDto") PageDto pageDto);
 
@@ -83,8 +85,22 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      *
      * @return
      */
-    @Select("SELECT t.pk_user_account_id,t.job_number,t.user_name FROM user_account t WHERE t.is_deleted = false AND t.role = 2 ")
+    @Select("SELECT t.pk_user_account_id,t.job_number,t.user_name FROM user_account t WHERE t.is_deleted = false AND t.role = 2 ORDER BY gmt_create DESC ")
     List<TeacherVo> getAllTeacher();
+
+    /**
+     * 查询所有教师的所有信息
+     * @return
+     */
+    @Select("SELECT t.* FROM user_account t WHERE t.is_deleted = false AND t.role = 2 ORDER BY gmt_create DESC ")
+    List<UserAccount> getAllTeacherInfo();
+
+    /**
+     * 查询所有学生的所有信息
+     * @return
+     */
+    @Select("SELECT t.* FROM user_account t WHERE t.is_deleted = false AND t.role = 1 ORDER BY gmt_create DESC ")
+    List<UserAccount> getAllStudentInfo();
 
     /**
      * 查询未被分配的学生
@@ -155,6 +171,12 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     @Select("SELECT pk_user_account_id FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted = false")
     List<String> findUserIdByClazzId(Long clazzId) throws SQLException;
 
+    /**
+     * 根据班级id查询用户教工号
+     * @param clazzId
+     * @return
+     * @throws SQLException
+     */
     @Select("SELECT job_number FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted=false AND role=1")
     List<String> findJobNumberByClazzId(Long clazzId) throws SQLException;
 

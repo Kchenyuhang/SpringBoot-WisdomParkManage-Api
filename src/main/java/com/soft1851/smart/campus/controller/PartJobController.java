@@ -53,28 +53,13 @@ public class PartJobController {
     @PostMapping("/update")
     @ApiOperation(value = "更新兼职",  notes = "请求参数为PartJobDto")
     public ResponseResult update(@RequestBody PartJobDto partJobDto){
-        UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
-        wrapper.set("name",partJobDto.getName())
-                .set("description",partJobDto.getDescription())
-                .set("workplace", partJobDto.getWorkplace())
-                .set("working_date", partJobDto.getWorkingDate())
-                .set("working_time", partJobDto.getWorkingTime())
-                .set("pay", partJobDto.getPay())
-                .set("pay_type", partJobDto.getPayType())
-                .set("job_type", partJobDto.getJobType())
-                .set("number", partJobDto.getNumber())
-                .set("gmt_modified", timestamp)
-                .eq("pk_part_job_id", partJobDto.getId());
-        return ResponseResult.success(partJobService.update(wrapper));
+        return ResponseResult.success(partJobService.updateJob(partJobDto));
     }
 
     @PostMapping("/remove")
     @ApiOperation(value = "删除兼职",  notes = "请求参数为PartJobDto")
     public ResponseResult deleteJob(@RequestBody JobDto jobDto){
-        UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
-        wrapper.set("is_deleted", 1)
-                .eq("pk_part_job_id", jobDto.getId());
-        return ResponseResult.success(partJobService.update(wrapper));
+        return ResponseResult.success(partJobService.delete(jobDto));
     }
 
 }

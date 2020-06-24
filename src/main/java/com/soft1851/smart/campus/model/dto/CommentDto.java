@@ -25,7 +25,7 @@ public class CommentDto {
     /**
      * 评论id
      */
-    private String pkCommentId;
+    private String commentId;
 
     private String dynamicId;
     /**

@@ -32,13 +32,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
      * 查询所有房间信息
      * @return
      */
-    @Query(value = "SELECT NEW com.soft1851.smart.campus.model.vo.TowerVo (r.id, r.name, t.name, u.name, r.gmtCreate, r.electricityBalance) " +
+    @Query(value = "SELECT NEW com.soft1851.smart.campus.model.vo.TowerVo (r.id, r.name, t.name,r.towerId, u.unitId, u.name, r.gmtCreate, r.electricityBalance) " +
             "FROM Room r " +
             "LEFT JOIN Tower t " +
             "ON r.towerId = t.pkTowerId " +
             "LEFT JOIN TowerUnit u " +
             "ON r.unitId = u.unitId " +
-            "ORDER BY r.gmtCreate ")
+            "WHERE r.isDeleted=false " +
+            "ORDER BY r.gmtCreate DESC ")
     List<TowerVo> selectAll();
 
     /**
@@ -60,4 +61,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "UPDATE Room SET towerId=?2 WHERE id=?1 ")
     int updateRoomTowerIdById(long id, long towerId);
+
+    /**
+     * 逻辑删除楼栋
+     * @param roomId
+     * @return
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE Room SET isDeleted=true WHERE id=?1 ")
+    int updateRoomIsDeletedById(long roomId);
 }

@@ -62,7 +62,7 @@ public class ReportLossServiceImpl implements ReportLossService {
     @Override
     public ResponseResult deleteReportLoss(Long pkReportLossId) {
         reportLossRepository.deleteBypkReportLossId(pkReportLossId);
-        return ResponseResult.success();
+        return ResponseResult.success("删除成功");
 
     }
 
