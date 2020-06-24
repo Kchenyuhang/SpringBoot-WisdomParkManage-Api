@@ -2,7 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
-import com.soft1851.smart.campus.model.entity.Examination;
+import com.soft1851.smart.campus.model.vo.InsertExamVo;
 import com.soft1851.smart.campus.service.ExaminationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,13 +40,13 @@ public class ExaminationController {
 
     /**
      * 新增考务
-     * @param examination
+     * @param insertExamVo
      * @return
      */
     @ApiOperation(value = "新增考务",notes = "")
     @PostMapping(value = "/increase")
-    public ResponseResult increaseSysFeedback(@RequestBody Examination examination){
-        return examinationService.increaseInfo(examination);
+    public ResponseResult increaseSysFeedback(@RequestBody InsertExamVo insertExamVo){
+        return examinationService.increaseInfo(insertExamVo);
     }
 
     /**

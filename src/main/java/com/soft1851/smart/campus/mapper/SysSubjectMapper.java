@@ -26,4 +26,12 @@ public interface SysSubjectMapper {
             "</when> ",
             "</script>"})
     List<SysSubjectVo> findSubjectLike(String keyword) throws SQLException;
+
+    /**
+     * 查询所有科目
+     * @return
+     * @throws SQLException
+     */
+    @Select("SELECT pk_subject_id,name FROM sys_subject WHERE is_deleted = false")
+    List<SysSubjectVo> findAllSubject() throws SQLException;
 }

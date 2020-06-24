@@ -18,4 +18,10 @@ class SysSubjectServiceTest {
         ResponseResult responseResult = sysSubjectService.getSubjectLike("大学生");
         System.out.println(responseResult);
     }
+
+    @Test
+    void getAllSysSubjectVo() {
+        ResponseResult responseResult = sysSubjectService.getAllSysSubjectVo();
+        System.out.println(responseResult);
+    }
 }

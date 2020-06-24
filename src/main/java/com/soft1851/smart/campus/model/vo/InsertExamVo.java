@@ -1,4 +1,4 @@
-package com.soft1851.smart.campus.model.dto;
+package com.soft1851.smart.campus.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,24 +8,23 @@ import lombok.NoArgsConstructor;
 /**
  * @author Tao
  * @version 1.0
- * @ClassName UpdateNewExaminationDto
+ * @ClassName InsertExamVo
  * @Description TODO
- * @date 2020-06-21 22:54
+ * @date 2020-06-23 15:34
  **/
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateNewExaminationDto {
-    private String area;
-    private String startTime;
-    private String finishTime;
+public class InsertExamVo {
+    private String semester;
     private Long subjectId;
+    private Long clazzId;
     private String teacherName;
     private String teacherId;
+    private String area;
+    private Integer score;
     private String type;
-
-    private String semester;
-    private Long oldSubjectId;
-    private Long clazzId;
+    private String finishTime;
+    private String startTime;
 }
