@@ -40,4 +40,15 @@ public class SysSubjectServiceImpl implements SysSubjectService {
         }
         return ResponseResult.success(mapList);
     }
+
+    @Override
+    public ResponseResult getAllSysSubjectVo() {
+        List<SysSubjectVo> mapList = null;
+        try {
+            mapList = sysSubjectMapper.findAllSubject();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.success(mapList);
+    }
 }

@@ -27,4 +27,13 @@ public interface ClazzMapper {
             "</when> ",
             "</script>"})
     List<ClazzVo> findClazzLike(String keyword) throws SQLException;
+
+    /**
+     * 查找所有班级数据（用于下拉框）
+     *
+     * @return
+     */
+    @Select("SELECT pk_clazz_id,name FROM clazz WHERE is_deleted = false ")
+    List<ClazzVo> getAllClazz();
+
 }

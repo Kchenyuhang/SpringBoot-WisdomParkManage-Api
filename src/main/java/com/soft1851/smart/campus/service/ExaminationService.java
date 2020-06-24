@@ -2,7 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
-import com.soft1851.smart.campus.model.entity.Examination;
+import com.soft1851.smart.campus.model.vo.InsertExamVo;
 
 /**
  * @author xunmi
@@ -22,10 +22,10 @@ public interface ExaminationService {
 
     /**
      * 新增考务信息
-     * @param examination
+     * @param insertExamVo
      * @return
      */
-    ResponseResult increaseInfo(Examination examination);
+    ResponseResult increaseInfo(InsertExamVo insertExamVo);
 
     /**
      * 查询所有教务数据
