@@ -24,6 +24,7 @@ public interface FleaGoodsService {
 
     /**
      * 根据商品ID删除商品
+     *
      * @param pkGoodsId
      * @return
      */
@@ -36,4 +37,11 @@ public interface FleaGoodsService {
      * @return ResponseResult
      */
     ResponseResult batchLogicalDel(FleaRewardBatchIdDto fleaRewardBatchIdDto);
+
+    /**
+     * 查询top前五的标签
+     *
+     * @return ResponseResult
+     */
+    ResponseResult findTopFiveMark();
 }
