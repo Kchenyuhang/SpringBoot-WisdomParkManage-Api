@@ -54,5 +54,8 @@ public class FleaGoodsServiceImpl implements FleaGoodsService {
         return ResponseResult.success("成功删除" + n + "条数据");
     }
 
-
+    @Override
+    public ResponseResult findTopFiveMark() {
+        return ResponseResult.success(fleaGoodsRepository.selectTopFiveMark());
+    }
 }

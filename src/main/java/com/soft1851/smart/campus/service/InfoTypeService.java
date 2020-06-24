@@ -1,6 +1,7 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.InfoType;
 
 /**
@@ -13,10 +14,12 @@ import com.soft1851.smart.campus.model.entity.InfoType;
 public interface InfoTypeService {
 
     /**
-     * 查询所有资讯分类
+     * 分页查询所有资讯分类数据
+     * @param pageDto
      * @return
      */
-    ResponseResult findAllInfoType();
+    ResponseResult getAllInfoType(PageDto pageDto);
+
 
     /**
      * 单个添加

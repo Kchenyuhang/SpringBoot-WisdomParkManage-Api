@@ -131,4 +131,14 @@ public interface  UserAccountService {
      * @return
      */
     ResponseResult findTeacherLike(String keywords);
+
+    /**
+     * 导出教师信息
+     */
+    void exportTeacherInfo();
+
+    /**
+     * 导出学生信息
+     */
+    void exportStudentInfo();
 }

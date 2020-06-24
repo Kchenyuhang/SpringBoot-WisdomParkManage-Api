@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.soft1851.smart.campus.constant.ResponseResult;
+import com.soft1851.smart.campus.constant.ResultCode;
 import com.soft1851.smart.campus.mapper.SysBorrowMapper;
 import com.soft1851.smart.campus.model.dto.BorrowDto;
 import com.soft1851.smart.campus.model.dto.BorrowInsertDto;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +53,7 @@ public class SysBorrowServiceImpl implements SysBorrowService {
                 borrowDto.getPageSize());
         //查询所有符合条件的
         List<SysBorrow> sysBorrows = sysBorrowRepository.getSysBorrowsByGmtCreateBetween(Timestamp.valueOf(borrowDto.getStartTime()), Timestamp.valueOf(borrowDto.getEndTime()));
-        Page<SysBorrow> sysBorrowInfo = new PageImpl<SysBorrow>(sysBorrows,pageable,sysBorrows.size());
+        Page<SysBorrow> sysBorrowInfo = new PageImpl<SysBorrow>(sysBorrows, pageable, sysBorrows.size());
         return ResponseResult.success(sysBorrowInfo.getContent());
     }
 
@@ -74,19 +76,8 @@ public class SysBorrowServiceImpl implements SysBorrowService {
     }
 
     /**
-     * 修改借阅状态
-     * @param id
-     * @param isDeleted
-     * @return
-     */
-    @Override
-    public ResponseResult deletedSysRole(Long id, Boolean isDeleted) {
-        sysBorrowRepository.setIsDeletedByPkBorrowId(id,isDeleted);
-        return ResponseResult.success();
-    }
-
-    /**
      * 查询时间内的数据
+     *
      * @param timeBorrowPageDto
      * @return
      */
@@ -99,12 +90,55 @@ public class SysBorrowServiceImpl implements SysBorrowService {
         Timestamp timestamp1 = Timestamp.valueOf(endTime);
         List<SysBorrow> sysBorrowList = null;
         try {
-            sysBorrowList = sysBorrowMapper.getSysBorrowsByTime(timestamp,timestamp1,timeBorrowPageDto.getCurrentPage(),timeBorrowPageDto.getPageSize());
+            sysBorrowList = sysBorrowMapper.getSysBorrowsByTime(timestamp, timestamp1, timeBorrowPageDto.getCurrentPage(), timeBorrowPageDto.getPageSize());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return ResponseResult.success(sysBorrowList);
     }
+
+    @Override
+    public ResponseResult setIsReturn(Long pkBorrowId) {
+        SysBorrow sysBorrow = sysBorrowRepository.findByPkBorrowId(pkBorrowId);
+        if (sysBorrow != null) {
+            Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+            sysBorrowRepository.setIsReturn(pkBorrowId, timestamp);
+            return ResponseResult.success("还书成功");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+    @Override
+    public ResponseResult deletedBatch(String ids) {
+        //判断是否有数据
+        if (ids.length() != 0) {
+            //将接收到的ids字符串，使用逗号分割
+            String[] idArr = ids.split(",");
+            List<Long> idsList = new ArrayList<Long>();
+            for (String id : idArr) {
+                //遍历所有id存入到list
+                idsList.add(Long.valueOf(id));
+            }
+            sysBorrowRepository.deleteBatchByPkBorrowIds(idsList);
+            return ResponseResult.success("批量删除成功");
+        } else {
+            return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);
+        }
+    }
+
+    @Override
+    public ResponseResult deleteSysBorrows(Long sysPkSysBorrows) {
+        SysBorrow sysBorrow = sysBorrowRepository.findByPkBorrowId(sysPkSysBorrows);
+        if (sysBorrow != null) {
+            sysBorrowRepository.deleteSysBorrow(sysPkSysBorrows);
+            return ResponseResult.success("删除成功");
+        } else {
+            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
+        }
+    }
+
+
 
 
 }

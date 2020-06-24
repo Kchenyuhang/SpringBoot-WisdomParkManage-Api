@@ -69,11 +69,23 @@ public interface SysUserRepository extends JpaRepository<SysUser, Long> {
     @Query(value = "update first_smart_campus.sys_user u set u.sys_password=123456 where u.pk_user_id=?1",nativeQuery = true)
     int setPasswordByPkUserId(String pkUserId);
 
+    /**
+     * 修改用户是否被激活
+     * @param isEnabled
+     * @param userId
+     * @return
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE SysUser SET isEnabled = ?1 WHERE pkUserId = ?2")
     int updateIsEnabledById (boolean isEnabled, String userId);
 
+    /**
+     * 逻辑单个删除用户
+     * @param isDeleted
+     * @param phoneNumber
+     * @return
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE SysUser SET isDeleted = ?1 WHERE sysUserPhoneNumber = ?2")

@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Author wf
@@ -29,4 +31,22 @@ public interface TowerRepository extends JpaRepository<Tower, Long> {
             "longitude=:#{#tower.longitude} " +
             "WHERE pkTowerId=:#{#tower.pkTowerId} ")
     void updateTowerByTowerId(@Param("tower") Tower tower);
+
+    /**
+     * 根据id修改信息
+     * @param id
+     */
+    @Modifying
+    @Transactional
+    @LastModifiedBy
+    @Query(value = "UPDATE Tower SET isDeleted=true " +
+            "WHERE pkTowerId=?1 ")
+    void updateTowerIsDeletedById(long id);
+
+    /**
+     * 查询所有未删除的楼栋信息
+     * @param isDeleted
+     * @return
+     */
+    List<Tower> getTowerByIsDeletedOrderByGmtCreateDesc(boolean isDeleted);
 }

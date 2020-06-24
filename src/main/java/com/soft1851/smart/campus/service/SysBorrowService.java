@@ -34,18 +34,34 @@ public interface SysBorrowService {
     ResponseResult borrowInsert(BorrowInsertDto borrowInsertDto);
 
     /**
-     * 修改借阅状态
-     * @param id
-     * @param isDeleted
-     * @return
-     */
-    ResponseResult deletedSysRole(Long id,Boolean isDeleted);
-
-    /**
      * 时间范围内的时间
      * @param timeBorrowPageDto
      * @return
      */
     ResponseResult getSysBorrowsByTime(TimeBorrowPageDto timeBorrowPageDto);
+
+
+    /**
+     * 设置归还状态
+     * @param pkBorrowId
+     * @return
+     */
+    ResponseResult setIsReturn(Long pkBorrowId);
+
+
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    ResponseResult deletedBatch(String ids);
+
+    /**
+     * 逻辑删除
+     * @param sysPkSysBorrows
+     * @return
+     */
+    ResponseResult deleteSysBorrows(Long sysPkSysBorrows);
 
 }

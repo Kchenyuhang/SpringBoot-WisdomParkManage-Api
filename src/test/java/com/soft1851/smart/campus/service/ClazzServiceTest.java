@@ -57,4 +57,10 @@ class ClazzServiceTest {
         ResponseResult responseResult = clazzService.getAllClazzs("软件");
         System.out.println(responseResult);
     }
+
+    @Test
+    void getAllClazz() {
+       ResponseResult clazzVos = clazzService.getAllClazz();
+        System.out.println(clazzVos);
+    }
 }

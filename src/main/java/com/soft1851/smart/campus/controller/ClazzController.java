@@ -72,5 +72,11 @@ public class ClazzController {
     ResponseResult getAllClazzs(@RequestBody QueryDto queryDto) {
         return clazzService.getAllClazzs(queryDto.getFiled1());
     }
+
+    @ApiOperation(value = "查询所有班级用于下拉框", notes = "")
+    @PostMapping(value = "/exam/all")
+    ResponseResult getAllClazz() {
+        return clazzService.getAllClazz();
+    }
 }
 

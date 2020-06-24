@@ -1,12 +1,11 @@
 package com.soft1851.smart.campus.service;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.entity.Examination;
+import com.soft1851.smart.campus.model.vo.InsertExamVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 
 @SpringBootTest
 class ExaminationServiceTest {
@@ -17,17 +16,18 @@ class ExaminationServiceTest {
     @Test
     void increaseInfo() {
         String startTime = "2020-06-28 06:30:00";
-        Timestamp startTime1 = Timestamp.valueOf(startTime);
+
         String finishTime = "2020-06-28 08:40:00";
-        Timestamp finishTime1 = Timestamp.valueOf(finishTime);
-        Examination examination = Examination.builder()
+
+        InsertExamVo examination = InsertExamVo.builder()
                 .semester("2012-2013学年第一学期")
                 .subjectId((long)19)
-                .teacherName("赵岩")
+                .teacherName("贾利娟")
+                .teacherId("13")
                 .type("线上考试")
-                .startTime(startTime1)
-                .finishTime(finishTime1)
-                .area("教四408")
+                .startTime(startTime)
+                .finishTime(finishTime)
+                .area("教四404")
                 .score(150)
                 .clazzId((long)2)
                 .build();

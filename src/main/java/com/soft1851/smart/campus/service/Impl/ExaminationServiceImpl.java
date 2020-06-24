@@ -9,6 +9,7 @@ import com.soft1851.smart.campus.model.dto.UpdateNewExaminationDto;
 import com.soft1851.smart.campus.model.entity.Examination;
 import com.soft1851.smart.campus.model.vo.ExamVo;
 import com.soft1851.smart.campus.model.vo.ExaminationStudentVo;
+import com.soft1851.smart.campus.model.vo.InsertExamVo;
 import com.soft1851.smart.campus.repository.ExaminationRepository;
 import com.soft1851.smart.campus.service.ExaminationService;
 import com.soft1851.smart.campus.utils.DateUtil;
@@ -46,11 +47,13 @@ public class ExaminationServiceImpl implements ExaminationService {
      */
     @Override
     public ResponseResult updateInfo(UpdateNewExaminationDto updateNewExaminationDto) {
+        Timestamp startTime = Timestamp.valueOf(updateNewExaminationDto.getStartTime());
+        Timestamp finishTime = Timestamp.valueOf(updateNewExaminationDto.getFinishTime());
         //subjectId分修改之前的和修改后的 旧的subjectId的作用是用来查找需要修改的数据 新的用来修改字段
         UpdateExaminationDto updateExaminationDto = UpdateExaminationDto.builder()
                 .area(updateNewExaminationDto.getArea())
-                .startTime(updateNewExaminationDto.getStartTime())
-                .finishTime(updateNewExaminationDto.getFinishTime())
+                .startTime(startTime)
+                .finishTime(finishTime)
                 .subjectId(updateNewExaminationDto.getSubjectId())
                 .teacherName(updateNewExaminationDto.getTeacherName())
                 .teacherId(updateNewExaminationDto.getTeacherId())
@@ -70,46 +73,50 @@ public class ExaminationServiceImpl implements ExaminationService {
     /**
      * 新增考务
      *
-     * @param examination
+     * @param insertExamVo
      * @return
      */
     @Override
-    public ResponseResult increaseInfo(Examination examination) {
+    public ResponseResult increaseInfo(InsertExamVo insertExamVo) {
         // 组成考务list
         List<Examination> examinationList = new ArrayList<>();
         // 通过班级id查询所属班级的学生id
         List<String> studentIds = null;
         try {
-            studentIds = userAccountMapper.findJobNumberByClazzId(examination.getClazzId());
+            studentIds = userAccountMapper.findJobNumberByClazzId(insertExamVo.getClazzId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //****************判断此班级是否已经考过此科目*******************************
-        List<Examination> numberExamination1 = examinationMapper.selectExaminationByClazzIdAndSubject(examination.getClazzId(), examination.getSubjectId(), examination.getSemester());
-        List<Examination> numberExamination2 = examinationMapper.selectExaminationByClazzIdAndSubject1(examination.getClazzId(), examination.getSubjectId(), examination.getSemester());
-
+        List<Examination> numberExamination1 = examinationMapper.selectExaminationByClazzIdAndSubject(insertExamVo.getClazzId(), insertExamVo.getSubjectId(), insertExamVo.getSemester());
+        List<Examination> numberExamination2 = examinationMapper.selectExaminationByClazzIdAndSubject1(insertExamVo.getClazzId(), insertExamVo.getSubjectId(), insertExamVo.getSemester());
+        boolean a = (numberExamination1.size() == 0) && (numberExamination2.size() == 0);
+        System.out.println("**********"+a+"***********");
 
         //****************判断该班级同时间是否还有其他考试****************************
         //判断该班级同时间段是否存在其他的考试 时间冲突问题
         //1.首先根据班级id和学期id查询出该班级本学期的所有课程
-        List<Examination> examinationAllList = examinationMapper.getExaminationBySemesterAndClazzId(examination.getSemester(), examination.getClazzId());
+        List<Examination> examinationAllList = examinationMapper.getExaminationBySemesterAndClazzId(insertExamVo.getSemester(), insertExamVo.getClazzId());
         // 过滤重复的 保留每个学科的一条数据
         Set<Examination> examinations = new TreeSet<>((o1, o2) -> o1.getSubjectId().compareTo(o2.getSubjectId()));
         examinations.addAll(examinationAllList);
         // 存储过滤后的数据
         List<Examination> examinationAllList1 = new ArrayList<Examination>(examinations);
-        Boolean isClazzInsert = DateUtil.getTimeCompare(examination.getStartTime(), examination.getFinishTime(), examinationAllList1);
+
+        Timestamp startTime = Timestamp.valueOf(insertExamVo.getStartTime());
+        Timestamp finishTime = Timestamp.valueOf(insertExamVo.getFinishTime());
+        Boolean isClazzInsert = DateUtil.getTimeCompare(startTime, finishTime, examinationAllList1);
 
 
         //****************判断同时间该教师是否有其他监考场次****************************
-        List<Examination> examinationTeacherList = examinationMapper.getExaminationsByTeacherId(examination.getTeacherId(), examination.getSemester());
+        List<Examination> examinationTeacherList = examinationMapper.getExaminationsByTeacherId(insertExamVo.getTeacherId(), insertExamVo.getSemester());
         //多条件过滤   将收集的结果转换为另一种类型: collectingAndThen  根据班级id和学科id
         List<Examination> examinationTeacherList1 = examinationTeacherList.stream().collect(
                 Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(
                         Comparator.comparing(o -> o.getSubjectId() + ";" + o.getClazzId())
                 )), ArrayList::new)
         );
-        Boolean isTeacherInsert = DateUtil.getTimeCompare(examination.getStartTime(), examination.getFinishTime(), examinationTeacherList1);
+        Boolean isTeacherInsert = DateUtil.getTimeCompare(startTime, finishTime, examinationTeacherList1);
 
         //1.判断该班级是否考过此科目
         if ((numberExamination1.size() == 0) && (numberExamination2.size() == 0)) {
@@ -121,23 +128,23 @@ public class ExaminationServiceImpl implements ExaminationService {
                     for (String studentId : studentIds) {
                         Examination examination1 = Examination.builder()
                                 //查询所有学期下拉框选择学期
-                                .semester(examination.getSemester())
+                                .semester(insertExamVo.getSemester())
                                 //查询所有学科下拉框选择科目（模糊查询）
-                                .subjectId(examination.getSubjectId())
+                                .subjectId(insertExamVo.getSubjectId())
                                 //查询所有老师下拉框选择老师（模糊查询）
-                                .teacherName(examination.getTeacherName())
-                                .teacherId(examination.getTeacherId())
-                                .type(examination.getType())
+                                .teacherName(insertExamVo.getTeacherName())
+                                .teacherId(insertExamVo.getTeacherId())
+                                .type(insertExamVo.getType())
                                 //考试开始时间
-                                .startTime(examination.getStartTime())
+                                .startTime(startTime)
                                 //考试结束时间
-                                .finishTime(examination.getFinishTime())
+                                .finishTime(finishTime)
                                 //查询楼栋、房间名
-                                .area(examination.getArea())
+                                .area(insertExamVo.getArea())
                                 //考试总分
-                                .score(examination.getScore())
+                                .score(insertExamVo.getScore())
                                 //下拉框查询所有班级（模糊查询）
-                                .clazzId(examination.getClazzId())
+                                .clazzId(insertExamVo.getClazzId())
                                 .isJoin(false)
                                 .jobNumber(studentId)
                                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))

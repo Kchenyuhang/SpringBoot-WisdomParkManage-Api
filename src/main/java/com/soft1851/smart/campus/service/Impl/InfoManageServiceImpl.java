@@ -142,7 +142,6 @@ public class InfoManageServiceImpl implements InfoManageService {
         InfoManage infoManage1 = infoManageRepository.findByPkInfoManageId(infoManage.getPkInfoManageId());
         if (infoManage1 != null) {
             infoManage1.setText(infoManage.getText());
-            infoManage1.setIsTop(infoManage.getIsTop());
             infoManage1.setGmtCreate(Timestamp.valueOf(LocalDateTime.now()));
             infoManage1.setIsDeleted(false);
             infoManageRepository.saveAndFlush(infoManage1);

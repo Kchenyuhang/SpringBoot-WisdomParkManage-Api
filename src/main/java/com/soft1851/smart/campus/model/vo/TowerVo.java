@@ -22,6 +22,8 @@ public class TowerVo {
     private Long roomId;
     private String roomName;
     private String towerName;
+    private Long towerId;
+    private Long unitId;
     private String unitName;
     private Date gmtGreate;
     private Double electricityBalance;
