@@ -46,8 +46,8 @@ public class DynamicCollectionsServiceImpl implements DynamicCollectionsService 
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkCollectionId");
+                Sort.Direction.DESC,
+                "gmtCreate");
         Page<Collections> collectionsPage = collectionsRepository.findAll(pageable);
         return ResponseResult.success(collectionsPage.getContent());
     }

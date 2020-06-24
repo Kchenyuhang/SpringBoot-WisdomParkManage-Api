@@ -14,6 +14,17 @@ import com.soft1851.smart.campus.model.entity.Dynamic;
  **/
 public interface DynamicService {
 
+    /**
+     * 全部
+     * @return
+     */
+    ResponseResult findAll(Boolean isDelete);
+
+    /**
+     * 全部
+     * @return
+     */
+    ResponseResult findDynamicInfo(Boolean isDelete);
 
     /**
      * 单个添加
