@@ -32,7 +32,7 @@ public class JobTypeServiceImpl extends ServiceImpl<JobTypeMapper, JobType> impl
     @Override
     public List<JobType> typeList() {
         QueryWrapper<JobType> wrapper = new QueryWrapper<>();
-        wrapper.select("pk_job_type_id","name","parent_id","is_deleted", "gmt_create", "gmt_modified");
+        wrapper.select("pk_job_type_id","name","parent_id","is_deleted", "gmt_create", "gmt_modified").eq("is_deleted", false);
         return jobTypeMapper.selectList(wrapper);
     }
 
@@ -53,6 +53,7 @@ public class JobTypeServiceImpl extends ServiceImpl<JobTypeMapper, JobType> impl
         JobType jobType = new JobType();
         UpdateWrapper<JobType> wrapper = new UpdateWrapper<>();
         wrapper.set("name", jobDto.getField())
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("pk_job_type_id", jobDto.getId());
         return jobTypeMapper.update(jobType, wrapper);
     }

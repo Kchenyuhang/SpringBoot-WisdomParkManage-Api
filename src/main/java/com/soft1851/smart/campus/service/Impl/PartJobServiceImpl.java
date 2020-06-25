@@ -92,6 +92,7 @@ public class PartJobServiceImpl extends ServiceImpl<PartJobMapper, PartJob> impl
         PartJob partJob = new PartJob();
         UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
         wrapper.set("is_deleted", true)
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("pk_part_job_id", jobDto.getId());
         return partJobMapper.update(partJob, wrapper);
     }

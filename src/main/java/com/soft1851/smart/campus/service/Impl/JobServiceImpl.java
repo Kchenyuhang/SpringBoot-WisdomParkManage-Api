@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft1851.smart.campus.mapper.JobMapper;
 import com.soft1851.smart.campus.model.dto.JobAddDto;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.model.entity.Job;
 import com.soft1851.smart.campus.model.vo.JobVo;
@@ -53,7 +54,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
                 .experience(jobAddDto.getExperience())
                 .diploma(jobAddDto.getDiploma())
                 .jobTypeId(jobAddDto.getJobTypeId())
-                .number(0)
+                .number(jobAddDto.getNumber())
                 .resumes("")
                 .isDeleted(false)
                 .gmtCreate(Timestamp.valueOf(LocalDateTime.now()))
@@ -76,8 +77,19 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobSe
                 .set("experience", jobAddDto.getExperience())
                 .set("diploma", jobAddDto.getDiploma())
                 .set("job_type_id", jobAddDto.getJobTypeId())
+                .set("number", jobAddDto.getNumber())
                 .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("pk_job_id", jobAddDto.getId());
+        return jobMapper.update(job, wrapper);
+    }
+
+    @Override
+    public int deleteJob(JobDto jobDto) {
+        Job job = new Job();
+        UpdateWrapper<Job> wrapper = new UpdateWrapper<>();
+        wrapper.set("is_deleted", true)
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
+                .eq("pk_job_id", jobDto.getId());
         return jobMapper.update(job, wrapper);
     }
 }

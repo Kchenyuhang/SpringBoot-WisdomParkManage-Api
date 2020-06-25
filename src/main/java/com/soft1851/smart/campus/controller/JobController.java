@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.JobAddDto;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.service.JobService;
 import io.swagger.annotations.Api;
@@ -48,6 +49,11 @@ public class JobController {
         return ResponseResult.success(jobService.updateJob(jobAddDto));
     }
 
+    @PostMapping("/remove")
+    @ApiOperation(value = "删除职位")
+    public ResponseResult jobUpdate(@RequestBody JobDto jobDto){
+        return ResponseResult.success(jobService.deleteJob(jobDto));
+    }
 
 
 }

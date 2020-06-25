@@ -32,4 +32,5 @@ public class JobAddDto {
     private String experience;
     private String diploma;
     private Long jobTypeId;
+    private Integer number;
 }
