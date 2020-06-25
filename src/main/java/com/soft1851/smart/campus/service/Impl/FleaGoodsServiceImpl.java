@@ -36,11 +36,7 @@ public class FleaGoodsServiceImpl implements FleaGoodsService {
     @Override
     public ResponseResult getGoodsByTime(PageDto pageDto) {
         Pageable pageable = PageRequest.of(pageDto.getCurrentPage() - 1, pageDto.getPageSize(), Sort.Direction.DESC, "goodsCreateTime");
-        if (fleaGoodsRepository.getAllGoodsByTime(pageable).size() == 0) {
-            return ResponseResult.failure(ResultCode.RESULT_CODE_DATA_NONE);
-        }
         return ResponseResult.success(fleaGoodsRepository.getAllGoodsByTime(pageable));
-
     }
 
     @Override

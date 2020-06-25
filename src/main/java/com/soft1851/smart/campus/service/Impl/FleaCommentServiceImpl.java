@@ -41,7 +41,7 @@ public class FleaCommentServiceImpl implements FleaCommentService {
 
     @Override
     public ResponseResult getAll(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(pageDto.getCurrentPage() - 1,pageDto.getPageSize(), Sort.Direction.DESC,"createTime");
+        Pageable pageable = PageRequest.of(pageDto.getCurrentPage(),pageDto.getPageSize(), Sort.Direction.DESC,"createTime");
         return ResponseResult.success(commentRepository.selectAll(pageable));
     }
 
