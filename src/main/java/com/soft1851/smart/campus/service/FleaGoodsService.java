@@ -36,4 +36,13 @@ public interface FleaGoodsService {
      * @return ResponseResult
      */
     ResponseResult batchLogicalDel(FleaRewardBatchIdDto fleaRewardBatchIdDto);
+
+    /**
+     * 统计数据   不同类型商品售出的情况
+     * 统计数据  总利润 =  所有售出商品价格 *  0.5%       (佣金为千分之五，保留两位小数)
+     * @return
+     */
+    ResponseResult dashBorderShow();
+
+
 }

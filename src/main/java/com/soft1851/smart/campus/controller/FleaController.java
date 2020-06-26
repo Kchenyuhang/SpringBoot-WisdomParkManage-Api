@@ -137,12 +137,11 @@ public class FleaController {
     }
 
     @PostMapping("/goods/all")
-    public ResponseResult getGoods(@RequestBody PageDto pageDto){
+    public ResponseResult getGoods(@RequestBody PageDto pageDto) {
         return fleaGoodsService.getGoodsByTime(pageDto);
     }
 
     /**
-     *
      * @param fleaGoodsDto
      * @return
      */
@@ -157,12 +156,12 @@ public class FleaController {
     }
 
     @PostMapping("/comment/del")
-    public ResponseResult delOne(@RequestBody FleaCommentDto commentDto){
+    public ResponseResult delOne(@RequestBody FleaCommentDto commentDto) {
         return fleaCommentService.delComment(commentDto);
     }
 
     @PostMapping("/comment/all")
-    public ResponseResult getAll(@RequestBody PageDto pageDto){
+    public ResponseResult getAll(@RequestBody PageDto pageDto) {
         return fleaCommentService.getAll(pageDto);
     }
 
@@ -170,8 +169,15 @@ public class FleaController {
     public ResponseResult batchDel(@RequestBody FleaRewardBatchIdDto idDto) {
         return fleaCommentService.batchDel(idDto);
     }
+
     @PostMapping("type/increased")
     public ResponseResult typeIncreased(@RequestBody FleaTypeIncreasedDto fleaTypeIncreasedDto) {
         return fleaTypeService.typeIncreased(fleaTypeIncreasedDto);
     }
+
+    @PostMapping("dashBorder")
+    private ResponseResult sellTypePercent(){
+        return fleaGoodsService.dashBorderShow();
+    }
+
 }
