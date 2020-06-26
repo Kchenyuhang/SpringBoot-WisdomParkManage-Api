@@ -22,4 +22,5 @@
         select * from delivery_order t1 left join commodity t2 on t1.commodity_id = t2.id
         where t1.id like concat('%',concat(#{founderId}),'%') or t1.founder_name like concat('%',concat(#{founderId}),'%') order by t1.id limit #{currentPage},#{size}
         </select>
+
 </mapper>

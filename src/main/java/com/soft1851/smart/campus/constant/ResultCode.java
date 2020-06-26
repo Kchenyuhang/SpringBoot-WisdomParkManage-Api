@@ -42,7 +42,7 @@ public enum ResultCode {
     CARD_REPORT(30004,"一卡通已挂失"),
     EXAMINATION_REPETITION(30005,"此班级已考此科目"),
     STUDENT_EXAMINATION_REPETITION(30006,"该班级同时间还有其他考试"),
-    TEACHER_EXAMINATION_REPETITION(30006,"该老师同时间还有其他监考"),
+    TEACHER_EXAMINATION_REPETITION(30007,"该老师同时间还有其他监考"),
 
     /* 数据错误：40001-49999 */
     RESULT_CODE_DATA_NONE(50001, "数据未找到"),

@@ -24,6 +24,7 @@ public interface FleaGoodsService {
 
     /**
      * 根据商品ID删除商品
+     *
      * @param pkGoodsId
      * @return
      */
@@ -44,5 +45,10 @@ public interface FleaGoodsService {
      */
     ResponseResult dashBorderShow();
 
-
+    /*
+     * 查询top前五的标签
+     *
+     * @return ResponseResult
+     */
+    ResponseResult findTopFiveMark();
 }

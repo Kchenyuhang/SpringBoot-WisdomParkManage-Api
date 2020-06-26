@@ -39,7 +39,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoomById(long id) {
-        roomRepository.deleteById(id);
+        roomRepository.updateRoomIsDeletedById(id);
     }
 
     @Override

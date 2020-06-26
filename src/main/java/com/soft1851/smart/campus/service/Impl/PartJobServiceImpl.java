@@ -91,7 +91,7 @@ public class PartJobServiceImpl extends ServiceImpl<PartJobMapper, PartJob> impl
     public int delete(JobDto jobDto) {
         PartJob partJob = new PartJob();
         UpdateWrapper<PartJob> wrapper = new UpdateWrapper<>();
-        wrapper.set("is_deleted", 1)
+        wrapper.set("is_deleted", true)
                 .eq("pk_part_job_id", jobDto.getId());
         return partJobMapper.update(partJob, wrapper);
     }

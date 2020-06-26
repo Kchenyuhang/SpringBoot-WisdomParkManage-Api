@@ -37,14 +37,14 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     UserAccount findByPkUserAccountId(String id);
 
-//    /**
-//     * 批量删除
-//     * @param ids
-//     */
-//    @Modifying
-//    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
-//    @Query("delete from UserAccount A where A.pkUserAccountId in (?1)")
-//    void deleteBatch(List<Long> ids);
+    /**
+     * 批量删除
+     * @param ids
+     */
+    @Modifying
+    @Transactional(timeout = 10,rollbackFor = RuntimeException.class)
+    @Query("update UserAccount v set v.isDeleted = true where v.pkUserAccountId in ?1")
+    void deleteBatchByUserAccount(List<String> ids);
 
 
 
@@ -71,7 +71,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query(value = "UPDATE UserAccount SET avatar=:#{#userAccount.avatar}, nickname=:#{#userAccount.nickname}, " +
+    @Query(value = "UPDATE UserAccount SET nickname=:#{#userAccount.nickname}, " +
             "phoneNumber=:#{#userAccount.phoneNumber}, address=:#{#userAccount.address} " +
             "WHERE pkUserAccountId=:#{#userAccount.pkUserAccountId} ")
     int updateUserAccountById(@Param("userAccount") UserAccount userAccount);
@@ -103,7 +103,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
     void deleteUserAccount(String pkUserAccountId);
 
     /**
-     * 批量逻辑删除
+     * 修改班级id
      * @param clazzId
      * @param collection
      * @return

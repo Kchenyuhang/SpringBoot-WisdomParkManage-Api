@@ -6,6 +6,7 @@ import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.FleaType;
 import com.soft1851.smart.campus.service.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -180,4 +181,13 @@ public class FleaController {
         return fleaGoodsService.dashBorderShow();
     }
 
+    /**
+     * findTopFiveMark
+     *
+     * @return ResponseResult
+     */
+    @PostMapping(value = "mark/top")
+    public ResponseResult findTopFiveMark() {
+        return fleaGoodsService.findTopFiveMark();
+    }
 }

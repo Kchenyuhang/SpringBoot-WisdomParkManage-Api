@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 /**
  * @author Yujie_Zhao
  * @ClassName CommentController
- * @Description TODO
+ * @Description 动态评论
  * @Date 2020/6/22  8:34
  * @Version 1.0
  **/
@@ -29,6 +29,16 @@ import javax.annotation.Resource;
 public class CommentController {
     @Resource
     private CommentService commentService;
+
+    /**
+     * 查询所有
+     * @return
+     */
+    @ApiOperation(value = "查找所有动态",notes = "")
+    @PostMapping(value = "/allComments")
+    public ResponseResult findAll(){
+        return commentService.findAll(false);
+    }
 
     /**
      * 批量查找动态(逻辑删除)

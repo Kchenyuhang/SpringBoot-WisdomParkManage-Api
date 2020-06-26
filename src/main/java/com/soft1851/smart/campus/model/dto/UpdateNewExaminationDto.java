@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 /**
  * @author Tao
  * @version 1.0
@@ -20,8 +18,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class UpdateNewExaminationDto {
     private String area;
-    private Timestamp startTime;
-    private Timestamp finishTime;
+    private String startTime;
+    private String finishTime;
     private Long subjectId;
     private String teacherName;
     private String teacherId;

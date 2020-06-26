@@ -1,10 +1,7 @@
 package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
-import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
-import com.soft1851.smart.campus.model.dto.BookBatchDeleteDto;
-import com.soft1851.smart.campus.model.dto.PageDto;
-import com.soft1851.smart.campus.model.dto.QueryDto;
+import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.service.ReportLossService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,12 +47,12 @@ public class ReportLossController {
 
     /**
      * 删除挂失信息
-     * @param queryDto
+     * @param
      * @return
      */
     @PostMapping("/loss/deletion")
-    ResponseResult deleteReportLoss(@RequestBody QueryDto queryDto){
-        return reportLossService.deleteReportLoss(Long.parseLong(queryDto.getField().toString()));
+    ResponseResult deleteReportLoss(@RequestBody FleaRewardIdDto fleaRewardIdDto){
+        return reportLossService.deleteReportLoss(fleaRewardIdDto.getFleaRewardId());
     }
 
     /**
@@ -67,18 +64,6 @@ public class ReportLossController {
     public ResponseResult deletedBatch(@RequestBody BatchDeletionDto batchDeletionDto){
         return reportLossService.deletedBatch(batchDeletionDto.getIds());
     }
-
-//    /**
-//     * 申请挂失
-//     * @param reportLoss
-//     * @return
-//     */
-//    @ApiOperation(value = "申请挂失信息",notes = "")
-//    @PostMapping(value = "/increase")
-//    public ResponseResult increaseReportLoss(@RequestBody ReportLoss reportLoss){
-//        return reportLossService.insertReportLoss(reportLoss);
-//    }
-
     /**
      * 申请挂失
      * @param bookBatchDeleteDto

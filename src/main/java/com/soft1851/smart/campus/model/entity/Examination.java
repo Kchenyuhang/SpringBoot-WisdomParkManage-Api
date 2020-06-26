@@ -58,7 +58,7 @@ public class Examination {
     /**
      * 监考老师用户id
      */
-    @Column(nullable = false, length = 32)
+    @Column(nullable = false, length = 256)
     private String teacherId;
 
 

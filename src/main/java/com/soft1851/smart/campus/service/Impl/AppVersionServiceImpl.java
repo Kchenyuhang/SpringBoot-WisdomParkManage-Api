@@ -101,8 +101,7 @@ public class AppVersionServiceImpl implements AppVersionService {
     @Override
     public ResponseResult modificationAppVersion(UpdateAppVersionDto updateAppVersionDto) {
         appVersionRepository.updateAppVersion(updateAppVersionDto);
-        AppVersion appVersion  = appVersionRepository.findAppVersionByPkAppVersionId(updateAppVersionDto.getPkAppVersionId());
-        return ResponseResult.success(appVersion);
+        return ResponseResult.success();
     }
 
 

@@ -66,4 +66,11 @@ public interface ClazzService {
     ResponseResult getAllClazzs(String keywords);
 
 
+    /**
+     * 查询所有班级
+     * @return
+     */
+    ResponseResult getAllClazz();
+
+
 }

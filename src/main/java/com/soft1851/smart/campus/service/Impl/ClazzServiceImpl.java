@@ -178,7 +178,7 @@ public class ClazzServiceImpl implements ClazzService {
                     e.printStackTrace();
                 }
                 //将该班所有学生和班主任班级id设置为0
-                clazzRepository.increaseStudentToClazz(studentIds,(long)0);
+                clazzRepository.increaseStudentToClazz(studentIds, (long) 0);
             }
             // 2.最后删除班级表
             clazzRepository.deleteBatchByPkClazzId(idsList);
@@ -197,6 +197,12 @@ public class ClazzServiceImpl implements ClazzService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return ResponseResult.success(clazzVos);
+    }
+
+    @Override
+    public ResponseResult getAllClazz() {
+        List<ClazzVo> clazzVos = clazzMapper.getAllClazz();
         return ResponseResult.success(clazzVos);
     }
 }

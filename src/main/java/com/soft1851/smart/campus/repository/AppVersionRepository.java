@@ -64,7 +64,8 @@ public interface AppVersionRepository extends JpaRepository<AppVersion, Long> {
     @Transactional(rollbackFor = RuntimeException.class)
     @Query(value = "UPDATE first_smart_campus.app_version SET app_type=:#{#updateAppVersionDto.appType}," +
             "download_link=:#{#updateAppVersionDto.downloadLink}," +
-            "version_description=:#{#updateAppVersionDto.versionDescription} " +
+            "version_description=:#{#updateAppVersionDto.versionDescription}, " +
+            "max_version=:#{#updateAppVersionDto.maxVersion} " +
             "WHERE pk_app_version_id=:#{#updateAppVersionDto.pkAppVersionId}", nativeQuery = true)
     void updateAppVersion(@Param("updateAppVersionDto") UpdateAppVersionDto updateAppVersionDto);
 
