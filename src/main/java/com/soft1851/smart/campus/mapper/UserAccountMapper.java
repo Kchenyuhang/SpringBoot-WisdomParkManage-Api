@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -180,4 +181,14 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     @Select("SELECT job_number FROM user_account WHERE clazz_id=#{clazzId} AND is_deleted=false AND role=1")
     List<String> findJobNumberByClazzId(Long clazzId) throws SQLException;
 
+
+    /**
+     * 查询一周内的用户数量
+     * @return
+     */
+    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m-%d') AS time FROM user_account WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(gmt_create) GROUP BY DATE_FORMAT(gmt_create, '%Y-%m-%d') ")
+    List<Map<String, Object>> getNewUserCountByWeek();
+
+    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m-%d') AS time FROM user_account WHERE TO_DAYS( NOW( ) ) - TO_DAYS( gmt_create ) <= 1 ")
+    List<Map<String, Object>> getNewUserCountBy();
 }

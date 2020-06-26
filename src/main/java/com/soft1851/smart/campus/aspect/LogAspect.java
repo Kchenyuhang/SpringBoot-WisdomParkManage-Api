@@ -84,7 +84,7 @@ public class LogAspect {
             method = clazz.getMethod(method.getName(), method.getParameterTypes());
             annotation = method.getAnnotation(OperationLogDetail.class);
         } catch (Exception e) {
-            Log.error("获取当前类有OperationLogDetail 注解的方法 异常", e);
+            Log.error("获取当前类有OperationLogDetail注解的方法异常", e);
         }
         if (annotation != null) {
             logInfo.setOperationType(annotation.operationType().getValue());

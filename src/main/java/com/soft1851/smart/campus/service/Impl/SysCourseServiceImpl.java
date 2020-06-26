@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.security.auth.Subject;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -64,22 +65,22 @@ public class SysCourseServiceImpl implements SysCourseService {
 
     @Override
     public List<Map<String, Object>> getAllCourses(PageDto pageDto) {
+        LocalDateTime startTime = LocalDateTime.now();
         List<Map<String, Object>> courses = sysCourseMapper.getAllSysCourse(pageDto.getCurrentPage(), pageDto.getPageSize());
         courses.forEach(course -> {
-            Map<String, Object> semester = scheduleMapper.getScheduleSemesterById(Long.parseLong(course.get("schedule_id").toString()));
+            Map<String, Object> semester = scheduleMapper.getScheduleSemesterClazzById(Long.parseLong(course.get("schedule_id").toString()));
             String subject = sysSubjectRepository.getSubjectName(Long.parseLong(course.get("subject_id").toString()));
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            System.out.println(semester.toString());
-            Clazz clazz = clazzRepository.getOne(Long.parseLong(semester.get("clazz_id").toString()));
             Map<String, Object> tower = roomMapper.getRoomTowerByRoomId(Long.parseLong(course.get("room_id").toString()));
             course.put("subjectName", subject);
             course.put("semesterName", semester.get("name"));
-            course.put("clazz", clazz.getName());
+            course.put("clazz", semester.get("name1"));
             course.put("clazz_id", semester.get("clazz_id"));
             course.put("semester_id", semester.get("semester_id"));
             course.put("towerName", tower.get("name").toString());
             course.put("roomName", course.get("name"));
         });
+        LocalDateTime endTime = LocalDateTime.now();
+        System.out.println("方法执行的时间" + (endTime.getSecond() - startTime.getSecond()));
         return courses;
     }
 

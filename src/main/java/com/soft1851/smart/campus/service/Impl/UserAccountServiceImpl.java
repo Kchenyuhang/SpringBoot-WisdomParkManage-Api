@@ -19,6 +19,7 @@ import com.soft1851.smart.campus.service.UserAccountService;
 import com.soft1851.smart.campus.utils.ExcelConsumer;
 import com.soft1851.smart.campus.utils.ExportDataAdapter;
 import com.soft1851.smart.campus.utils.ThreadPool;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -383,6 +384,17 @@ public class UserAccountServiceImpl implements UserAccountService {
         } catch (Exception e) {
             throw new CustomException("导出学生信息异常", ResultCode.DATA_UPDATE_ERROR);
         }
+    }
+
+    @Override
+    public Map<String, Object> getNewUsers() {
+        List<Map<String, Object>> userAccounts = userAccountMapper.getNewUserCountByWeek();
+        Map<String, Object> userMap = new HashedMap();
+        userMap.put("weekNewUsers", userAccounts);
+        List<Map<String, Object>> list = userAccountMapper.getAllStudents();
+        List<TeacherVo> list1 = userAccountMapper.getAllTeacher();
+        userMap.put("newUsersCount", list.size() + list1.size());
+        return userMap;
     }
 
     /**

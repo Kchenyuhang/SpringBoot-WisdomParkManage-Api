@@ -203,4 +203,10 @@ public class UserAccountController {
         userAccountService.exportTeacherInfo();
         return ResponseResult.success();
     }
+
+    @ApiOperation(value = "统计新用户")
+    @PostMapping(value = "/count")
+    public Map<String, Object> countUser() {
+        return userAccountService.getNewUsers();
+    }
 }

@@ -70,4 +70,9 @@ class UserAccountMapperTest {
                 .build();
         System.out.println(userAccountMapper.getUserAccountVo(dto));
     }
+
+    @Test
+    void getNewUserCount() {
+        System.out.println(userAccountMapper.getNewUserCountBy());
+    }
 }

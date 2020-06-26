@@ -11,6 +11,7 @@ import com.soft1851.smart.campus.service.RedisService;
 import com.soft1851.smart.campus.service.RoleService;
 import com.soft1851.smart.campus.service.SysUserService;
 import com.soft1851.smart.campus.utils.JWTUtil;
+import com.soft1851.smart.campus.utils.Md5Util;
 import com.soft1851.smart.campus.utils.TreeNode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public Map<String, Object> login(LoginDto loginDto) {
         SysUser admin = sysUserRepository.getSysUserBySysUserPhoneNumber(loginDto.getAccount());
-        System.out.println("用户的信息>>>>>>>>>>>>>>>" + admin.toString());
+        if(admin == null){
+            throw new CustomException("用户不存在", ResultCode.USER_NOT_FOUND);
+        }
         SysUser user = new SysUser();
         user.setPkUserId(admin.getPkUserId());
         user.setSysUserAvatar(admin.getSysUserAvatar());
@@ -56,7 +59,7 @@ public class SysUserServiceImpl implements SysUserService {
             if (admin != null) {
                 System.out.println("用户密码>>>>>>>>>>>>" + admin.getSysPassword());
                 System.out.println("登录密码>>>>>>>>>>>>>" + loginDto.getPassword());
-                if (admin.getSysPassword().equals(loginDto.getPassword())) {
+                if (admin.getSysPassword().equals(Md5Util.getMd5(loginDto.getPassword(), true, 32))) {
                     String token = JWTUtil.getToken(loginDto.getAccount(), loginDto.getPassword(), String.valueOf(roleId));
                     Map<String, Object> result = new LinkedHashMap<>();
                     result.put("user", user);

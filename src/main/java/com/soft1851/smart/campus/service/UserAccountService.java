@@ -141,4 +141,10 @@ public interface  UserAccountService {
      * 导出学生信息
      */
     void exportStudentInfo();
+
+    /**
+     * 获取新用户统计视图
+     * @return
+     */
+    Map<String, Object> getNewUsers();
 }

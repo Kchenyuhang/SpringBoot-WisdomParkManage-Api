@@ -28,4 +28,17 @@ public interface ScheduleMapper extends BaseMapper<Schedule> {
             "ON s.pk_semester_id = sd.semester_id " +
             "WHERE pk_school_timetable_id = #{id}")
     Map<String, Object> getScheduleSemesterById(long id);
+
+    /**
+     * 根据id查询课程表学期信息
+     * @param id
+     * @return
+     */
+    @Select(value = "SELECT s.name, sd.clazz_id,c.name AS name1, sd.semester_id FROM sys_semester s " +
+            "LEFT JOIN schedule sd " +
+            "ON s.pk_semester_id = sd.semester_id " +
+            "LEFT JOIN clazz c " +
+            "ON c.pk_clazz_id = sd.clazz_id " +
+            "WHERE pk_school_timetable_id = #{id}")
+    Map<String, Object> getScheduleSemesterClazzById(long id);
 }
