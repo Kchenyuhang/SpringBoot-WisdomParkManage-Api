@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class ShopVo {
-    private String type;
-    private String number;
+    private String name;
+    private String value;
 
 }

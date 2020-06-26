@@ -54,18 +54,19 @@ public class FleaGoodsServiceImpl implements FleaGoodsService {
     @Override
     public ResponseResult dashBorderShow() {
         List<ShopVo> shopVos = fleaGoodsMapper.selectTypeIdAndNumber();
-        shopVos.forEach(shopVo -> shopVo.setType(fleaGoodsMapper.findTypeNameById(shopVo.getType())));
+        shopVos.forEach(shopVo -> shopVo.setName(fleaGoodsMapper.findTypeNameById(shopVo.getName())));
         Map<String, Object> map = new HashMap<>();
         map.put("list", shopVos);
         map.put("profit", String.format("%.2f", fleaGoodsMapper.getAllProfit() * 0.005));
         int count = 0;
         for (ShopVo shopVo : shopVos) {
-            count += Integer.parseInt(shopVo.getNumber());
+            count += Integer.parseInt(shopVo.getValue());
         }
         map.put("goodsNumber", count);
         return ResponseResult.success(map);
     }
 
+    @Override
     public ResponseResult findTopFiveMark() {
         return ResponseResult.success(fleaGoodsRepository.selectTopFiveMark());
     }

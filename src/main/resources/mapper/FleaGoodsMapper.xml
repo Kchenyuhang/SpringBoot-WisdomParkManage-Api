@@ -5,8 +5,8 @@
 
 <!--    查询所有售出商品的个数及其类型-->
     <resultMap id="showMap" type="com.soft1851.smart.campus.model.vo.ShopVo">
-        <result column="flea_type_pk_flea_type_id" property="type"/>
-        <result column="number" property="number"/>
+        <result column="flea_type_pk_flea_type_id" property="name"/>
+        <result column="number" property="value"/>
     </resultMap>
 
     <select id="selectTypeIdAndNumber" resultMap="showMap">
