@@ -186,9 +186,9 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      * 查询一周内的用户数量
      * @return
      */
-    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m-%d') AS time FROM user_account WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(gmt_create) GROUP BY DATE_FORMAT(gmt_create, '%Y-%m-%d') ")
+    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m.%d') AS time FROM user_account WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(gmt_create) GROUP BY DATE_FORMAT(gmt_create, '%Y-%m-%d') ")
     List<Map<String, Object>> getNewUserCountByWeek();
 
-    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m-%d') AS time FROM user_account WHERE TO_DAYS( NOW( ) ) - TO_DAYS( gmt_create ) <= 1 ")
+    @Select("SELECT COUNT(*) AS count, DATE_FORMAT(gmt_create, '%m.%d') AS time FROM user_account WHERE TO_DAYS( NOW( ) ) - TO_DAYS( gmt_create ) <= 1 ")
     List<Map<String, Object>> getNewUserCountBy();
 }
