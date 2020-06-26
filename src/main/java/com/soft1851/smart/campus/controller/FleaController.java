@@ -176,6 +176,11 @@ public class FleaController {
         return fleaTypeService.typeIncreased(fleaTypeIncreasedDto);
     }
 
+    @PostMapping("dashBorder")
+    private ResponseResult sellTypePercent(){
+        return fleaGoodsService.dashBorderShow();
+    }
+
     /**
      * findTopFiveMark
      *
