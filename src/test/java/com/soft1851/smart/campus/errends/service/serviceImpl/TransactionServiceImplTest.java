@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.errends.service.serviceImpl;
 
+import com.soft1851.smart.campus.errends.domain.vo.OrderVo;
 import com.soft1851.smart.campus.errends.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ class TransactionServiceImplTest {
 private TransactionService transactionService;
     @Test
     void getOrderByFifteenDays() {
-        List<Integer> orderByFifteenDays = transactionService.getOrderByFifteenDays();
+        List<OrderVo> orderByFifteenDays = transactionService.getOrderByFifteenDays();
         System.out.println(orderByFifteenDays);
     }
 }

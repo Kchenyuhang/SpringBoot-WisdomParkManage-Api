@@ -1,5 +1,6 @@
 package com.soft1851.smart.campus.errends.controller;
 
+import com.soft1851.smart.campus.errends.domain.vo.OrderVo;
 import com.soft1851.smart.campus.errends.service.TransactionService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping(value = "/getFifteenOrder")
-    public List<Integer> getFifteenOrder() {
+    public List<OrderVo> getFifteenOrder() {
 
         return transactionService.getOrderByFifteenDays();
     }

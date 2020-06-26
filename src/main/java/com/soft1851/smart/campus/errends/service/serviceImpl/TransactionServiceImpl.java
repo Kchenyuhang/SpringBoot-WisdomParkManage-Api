@@ -1,11 +1,13 @@
 package com.soft1851.smart.campus.errends.service.serviceImpl;
 
+import com.soft1851.smart.campus.errends.domain.vo.OrderVo;
 import com.soft1851.smart.campus.errends.mapper.TransactionMapper;
 import com.soft1851.smart.campus.errends.service.TransactionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +26,16 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     @Override
-    public List<Integer> getOrderByFifteenDays() {
-        List<Integer> dayOrder = new ArrayList<>();
+    public List<OrderVo> getOrderByFifteenDays() {
+        List<OrderVo> dayOrder = new ArrayList<>();
+
         for (int i = 1; i <= 15; i++) {
             Integer order = transactionMapper.getDayOrder(i);
-            dayOrder.add(order);
+            LocalDate localDate = LocalDate.now().minusDays(i);
+            OrderVo orderVo =OrderVo.builder().orderCount(order).time(localDate).build();
+            dayOrder.add(orderVo);
         }
         return dayOrder;
+
     }
 }

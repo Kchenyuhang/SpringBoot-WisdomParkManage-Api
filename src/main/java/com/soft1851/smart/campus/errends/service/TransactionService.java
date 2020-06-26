@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.errends.service;
 
+import com.soft1851.smart.campus.errends.domain.vo.OrderVo;
+
 import java.util.List;
 
 /**
@@ -14,5 +16,5 @@ public interface TransactionService  {
      * 获取十五天的订单量
      * @return
      */
-    List<Integer> getOrderByFifteenDays();
+    List<OrderVo> getOrderByFifteenDays();
 }
