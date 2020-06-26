@@ -37,6 +37,37 @@ public class DynamicServiceImpl implements DynamicService {
     @Resource
     private UserAccountRepository userAccountRepository;
 
+    @Override
+    public ResponseResult findAll(Boolean isDelete) {
+        List<Dynamic> dynamicList = dynamicRepository.findAllByIsDeleted(false);
+        return ResponseResult.success(dynamicList.size());
+    }
+
+    @Override
+    public ResponseResult findDynamicInfo(Boolean isDelete) {
+        List<Dynamic> dynamicList = dynamicRepository.findAllByIsDeleted(false);
+        List<DynamicFindDto> dynamicFindDtos = new ArrayList<>();
+        dynamicList.forEach(dynamic -> {
+            UserAccount userAccount = userAccountRepository.findByPkUserAccountId(dynamic.getUserId());
+            DynamicFindDto dynamicFindDto = DynamicFindDto.builder()
+                    .pkDynamicId(dynamic.getPkDynamicId())
+                    .comments(dynamic.getComments())
+                    .content(dynamic.getContent())
+                    .gmtCreate(dynamic.getGmtCreate())
+                    .gmtModified(dynamic.getGmtModified())
+                    .isDeleted(dynamic.getIsDeleted())
+                    .thumbs(dynamic.getThumbs())
+                    .type(dynamic.getType())
+                    .userName(userAccount.getUserName())
+                    .nickName(userAccount.getNickname())
+                    .build();
+            dynamicFindDtos.add(dynamicFindDto);
+        });
+        System.out.println(dynamicList.size());
+
+        return ResponseResult.success(dynamicFindDtos);
+    }
+
     /**
      * 添加动态资讯
      * @param dynamicDto
@@ -54,7 +85,8 @@ public class DynamicServiceImpl implements DynamicService {
                 .content(dynamicDto.getContent())
                 .userId(dynamicDto.getUserId())
                 .build();
-        return ResponseResult.success(dynamicRepository.save(dynamic));
+        dynamicRepository.save(dynamic);
+        return ResponseResult.success(dynamic);
     }
 
     /**
@@ -67,8 +99,8 @@ public class DynamicServiceImpl implements DynamicService {
         Pageable pageable = PageRequest.of(
                 pageDto.getCurrentPage(),
                 pageDto.getPageSize(),
-                Sort.Direction.ASC,
-                "pkDynamicId");
+                Sort.Direction.DESC,
+                "gmtCreate");
         Page<Dynamic> dynamicPage = dynamicRepository.findAllByIsDeleted(pageable);
         List<DynamicFindDto> dynamicFindDtos = new ArrayList<>();
         dynamicPage.forEach(dynamic -> {

@@ -19,6 +19,13 @@ import java.util.List;
  **/
 public interface DynamicRepository extends JpaRepository<Dynamic ,String> {
 
+    /**
+     *
+     * @param isDelete
+     * @return
+     */
+    List<Dynamic> findAllByIsDeleted(Boolean isDelete);
+
     @Query(value = "select m " +
             "FROM Dynamic m " +
             "where  m.isDeleted = false ")

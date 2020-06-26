@@ -4,6 +4,7 @@ package com.soft1851.smart.campus.repository;
 import com.soft1851.smart.campus.model.entity.FleaGoods;
 import com.soft1851.smart.campus.model.vo.FleaGoodsVo;
 import com.soft1851.smart.campus.model.vo.GoodsVo;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -41,7 +42,7 @@ public interface FleaGoodsRepository extends JpaRepository<FleaGoods, Long> {
             "from FleaGoods g " +
             "left join g.fleaType t " +
             "left join g.fleaUser u ")
-    List<FleaGoodsVo> getAllGoodsByTime(Pageable pageable);
+    Page<FleaGoodsVo> getAllGoodsByTime(Pageable pageable);
 
     /**
      * 根据商品id查询指定商品的详细信息

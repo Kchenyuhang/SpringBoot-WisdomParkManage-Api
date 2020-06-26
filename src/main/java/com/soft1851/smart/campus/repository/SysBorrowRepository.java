@@ -27,10 +27,38 @@ public interface SysBorrowRepository extends JpaRepository<SysBorrow, Long> {
     /**
      * 修改还书状态
      * @param pkBorrowId
+     * @param gmtReturn
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "update first_smart_campus.sys_borrow b set b.is_returned=true,b.gmt_return=?2 where b.pk_borrow_id=?1",nativeQuery = true)
+    void setIsReturn(Long pkBorrowId,Timestamp gmtReturn);
+
+    /**
+     * 根据id查找借阅数据
+     * @param id
+     * @return
+     */
+    @Query(value = "SELECT * FROM first_smart_campus.sys_borrow WHERE pk_borrow_id=?1 AND is_deleted=false",nativeQuery = true)
+    SysBorrow findByPkBorrowId(Long id);
+
+
+    /**
+     * 单个逻辑删除
+     * @param pkBorrowId
+     */
+    @Modifying
+    @Transactional(rollbackFor = RuntimeException.class)
+    @Query(value = "UPDATE first_smart_campus.sys_borrow SET is_deleted = true WHERE pk_borrow_id = ?1",nativeQuery = true)
+    void deleteSysBorrow(Long pkBorrowId);
+
+    /**
+     * 批量逻辑删除
+     * @param ids
      * @return
      */
     @Modifying
     @Transactional(rollbackFor = RuntimeException.class)
-    @Query(value = "update first_smart_campus.sys_borrow b set b.is_deleted=?2 where b.pk_borrow_id=?1",nativeQuery = true)
-    int setIsDeletedByPkBorrowId(Long pkBorrowId,Boolean isDeleted);
+    @Query(value = "update first_smart_campus.sys_borrow s set s.is_deleted = true where s.pk_borrow_id in ?1",nativeQuery = true)
+    int deleteBatchByPkBorrowIds(List<Long> ids);
 }

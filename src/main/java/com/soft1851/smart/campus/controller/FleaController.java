@@ -6,6 +6,7 @@ import com.soft1851.smart.campus.model.dto.*;
 import com.soft1851.smart.campus.model.entity.FleaType;
 import com.soft1851.smart.campus.service.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -137,12 +138,11 @@ public class FleaController {
     }
 
     @PostMapping("/goods/all")
-    public ResponseResult getGoods(@RequestBody PageDto pageDto){
+    public ResponseResult getGoods(@RequestBody PageDto pageDto) {
         return fleaGoodsService.getGoodsByTime(pageDto);
     }
 
     /**
-     *
      * @param fleaGoodsDto
      * @return
      */
@@ -157,12 +157,12 @@ public class FleaController {
     }
 
     @PostMapping("/comment/del")
-    public ResponseResult delOne(@RequestBody FleaCommentDto commentDto){
+    public ResponseResult delOne(@RequestBody FleaCommentDto commentDto) {
         return fleaCommentService.delComment(commentDto);
     }
 
     @PostMapping("/comment/all")
-    public ResponseResult getAll(@RequestBody PageDto pageDto){
+    public ResponseResult getAll(@RequestBody PageDto pageDto) {
         return fleaCommentService.getAll(pageDto);
     }
 
@@ -170,8 +170,24 @@ public class FleaController {
     public ResponseResult batchDel(@RequestBody FleaRewardBatchIdDto idDto) {
         return fleaCommentService.batchDel(idDto);
     }
+
     @PostMapping("type/increased")
     public ResponseResult typeIncreased(@RequestBody FleaTypeIncreasedDto fleaTypeIncreasedDto) {
         return fleaTypeService.typeIncreased(fleaTypeIncreasedDto);
+    }
+
+    @PostMapping("dashBorder")
+    private ResponseResult sellTypePercent(){
+        return fleaGoodsService.dashBorderShow();
+    }
+
+    /**
+     * findTopFiveMark
+     *
+     * @return ResponseResult
+     */
+    @PostMapping(value = "mark/top")
+    public ResponseResult findTopFiveMark() {
+        return fleaGoodsService.findTopFiveMark();
     }
 }

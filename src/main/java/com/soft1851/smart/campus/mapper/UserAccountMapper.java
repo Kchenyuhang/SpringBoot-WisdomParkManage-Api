@@ -86,7 +86,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
      *
      * @return
      */
-    @Select("SELECT t.job_number,t.user_name FROM user_account t WHERE t.is_deleted = false AND t.role = 2 ORDER BY gmt_create DESC ")
+    @Select("SELECT t.pk_user_account_id,t.job_number,t.user_name FROM user_account t WHERE t.is_deleted = false AND t.role = 2 ORDER BY gmt_create DESC ")
     List<TeacherVo> getAllTeacher();
 
     /**

@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.model.dto.BatchDeletionDto;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.dto.SingleParam;
 import com.soft1851.smart.campus.model.entity.InfoType;
 import com.soft1851.smart.campus.service.InfoTypeService;
@@ -28,13 +29,14 @@ public class InfoTypeController {
     private InfoTypeService infoTypeService;
 
     /**
-     * 查找所有资讯分类
-     * @return List<InfoManage>
+     * 分页查询所有资讯分类
+     * @param pageDto
+     * @return
      */
-    @ApiOperation(value = "查询资讯分类",notes = "")
+    @ApiOperation(value = "分页查询所有资讯分类",notes = "")
     @PostMapping(value = "/all")
-    public ResponseResult findInfoType(){
-        return infoTypeService.findAllInfoType();
+    ResponseResult getAllInfoType(@RequestBody PageDto pageDto){
+        return infoTypeService.getAllInfoType(pageDto);
     }
 
     /**

@@ -2,9 +2,14 @@ package com.soft1851.smart.campus.service.Impl;
 
 import com.soft1851.smart.campus.constant.ResponseResult;
 import com.soft1851.smart.campus.constant.ResultCode;
+import com.soft1851.smart.campus.model.dto.PageDto;
 import com.soft1851.smart.campus.model.entity.InfoType;
 import com.soft1851.smart.campus.repository.InfoTypeRepository;
 import com.soft1851.smart.campus.service.InfoTypeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,15 +31,21 @@ public class InfoTypeServiceImpl implements InfoTypeService {
     @Resource
     private InfoTypeRepository infoTypeRepository;
 
+
     /**
      * 查询所有资讯分类
+     * @param pageDto
      * @return
      */
     @Override
-
-    public ResponseResult findAllInfoType() {
-        List<InfoType> infoTypeList = infoTypeRepository.findAll();
-        return ResponseResult.success(infoTypeList);
+    public ResponseResult getAllInfoType(PageDto pageDto) {
+        Pageable pageable = PageRequest.of(
+                pageDto.getCurrentPage(),
+                pageDto.getPageSize(),
+                Sort.Direction.DESC,
+                "gmt_create");
+        Page<InfoType> infoTypePage = infoTypeRepository.getAllInfoType(pageable);
+        return ResponseResult.success(infoTypePage.getContent());
     }
 
     /**
@@ -66,10 +77,10 @@ public class InfoTypeServiceImpl implements InfoTypeService {
     public ResponseResult deleteInfoType(Long id) {
         InfoType infoType = infoTypeRepository.findByPkInfoTypeId(id);
         if (infoType!=null){
-            infoTypeRepository.deleteById(id);
+            infoTypeRepository.deleteInfoType(id);
             return ResponseResult.success("删除成功");
         }
-        return ResponseResult.success(ResultCode.DATABASE_ERROR);
+        return ResponseResult.failure(ResultCode.USER_NOT_FOUND);
     }
 
     @Override
@@ -83,7 +94,7 @@ public class InfoTypeServiceImpl implements InfoTypeService {
                 //遍历所有id存入到list
                 idsList.add(Long.valueOf(id));
             }
-            infoTypeRepository.deleteBatch(idsList);
+            infoTypeRepository.deleteBatchInfoType(idsList);
             return ResponseResult.success("删除成功");
         } else {
             return ResponseResult.failure(ResultCode.PARAM_IS_BLANK);

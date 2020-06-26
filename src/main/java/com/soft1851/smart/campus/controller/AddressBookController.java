@@ -2,10 +2,12 @@ package com.soft1851.smart.campus.controller;
 
 import com.soft1851.smart.campus.model.dto.QueryDto;
 import com.soft1851.smart.campus.model.entity.AddressBook;
-import com.soft1851.smart.campus.repository.AddressBookRepository;
 import com.soft1851.smart.campus.service.AddressBookService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;

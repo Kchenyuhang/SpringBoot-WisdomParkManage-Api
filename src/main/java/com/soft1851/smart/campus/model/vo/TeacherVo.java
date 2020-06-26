@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherVo {
+    private String pkUserAccountId;
     private String jobNumber;
     private String userName;
 }

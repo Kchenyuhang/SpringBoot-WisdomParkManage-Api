@@ -32,6 +32,29 @@ public class DynamicController {
     @Resource
     private DynamicCollectionsService dynamicCollectionsService;
 
+
+
+    /**
+     * 查询所有动态
+     * @return
+     */
+    @ApiOperation(value = "查找所有动态",notes = "")
+    @PostMapping(value = "/allDynamic")
+    public ResponseResult findAll(){
+        return dynamicService.findAll(false);
+    }
+
+
+    /**
+     * 查询所有动态
+     * @return
+     */
+    @ApiOperation(value = "查找所有动态",notes = "")
+    @PostMapping(value = "/allDynamicInfo")
+    public ResponseResult findDynamicInfo(){
+        return dynamicService.findDynamicInfo(false);
+    }
+
     /**
      * 添加校友动态
      * @return

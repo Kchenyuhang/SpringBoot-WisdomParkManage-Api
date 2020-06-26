@@ -31,7 +31,7 @@ public class CommentController {
     private CommentService commentService;
 
     /**
-     * 分页查询所有
+     * 查询所有
      * @return
      */
     @ApiOperation(value = "查找所有动态",notes = "")

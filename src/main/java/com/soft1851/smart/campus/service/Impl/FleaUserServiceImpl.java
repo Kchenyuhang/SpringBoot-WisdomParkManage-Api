@@ -8,6 +8,7 @@ import com.soft1851.smart.campus.repository.FleaUserRepository;
 import com.soft1851.smart.campus.repository.UserAccountRepository;
 import com.soft1851.smart.campus.service.FleaUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.reflect.UnlockSignature;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -31,9 +34,13 @@ public class FleaUserServiceImpl implements FleaUserService {
 
     @Override
     public ResponseResult findAllUser(PageDto pageDto) {
-        Pageable pageable = PageRequest.of(pageDto.getCurrentPage(), pageDto.getPageSize());
+        Pageable pageable = PageRequest.of(pageDto.getCurrentPage()-1, pageDto.getPageSize());
         Page<FleaUser> all = fleaUserRepository.findAll(pageable);
-        return ResponseResult.success(all);
+        int total= (int) all.getTotalElements();
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", all);
+        map.put("total", total);
+        return ResponseResult.success(map);
     }
 
     @Override

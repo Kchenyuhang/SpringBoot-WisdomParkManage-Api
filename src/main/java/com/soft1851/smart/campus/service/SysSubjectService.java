@@ -28,4 +28,10 @@ public interface SysSubjectService {
      */
     ResponseResult getSubjectLike(String keywords);
 
+    /**
+     * 获取所有学科（用于下拉框）
+     * @return
+     */
+    ResponseResult getAllSysSubjectVo();
+
 }

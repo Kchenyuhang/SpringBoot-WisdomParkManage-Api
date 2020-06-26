@@ -21,8 +21,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
-import javax.xml.transform.Result;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -69,11 +69,9 @@ public class AuditFormServiceImpl implements AuditFormService {
         //更改申请表状态
         QueryWrapper<ReviewForm> queryWrapper = new QueryWrapper();
         queryWrapper.eq("requester_id", auditFormDto.getFounderId());
-        ReviewForm reviewForm = ReviewForm.builder().status(1L).build();
+        ReviewForm reviewForm = ReviewForm.builder().status((long) auditFormDto.getStauts()).build();
         reviwFormMapper.update(reviewForm, queryWrapper);
         return ResponseResult.success();
-
-
     }
 
     @Override
@@ -191,21 +189,24 @@ public class AuditFormServiceImpl implements AuditFormService {
 
     @Override
     public ResponseResult DeleteErrends(FinshOrderDto finshOrderDto) {
+        log.info(String.valueOf(finshOrderDto.getReqId()));
         //循环删除
-for (String id:finshOrderDto.getReqId()){
 
-    QueryWrapper<ReviewForm>reviewFormQueryWrapper=new QueryWrapper<>();
-    reviewFormQueryWrapper.eq("requester_id",id);
-    int delete = reviwFormMapper.delete(reviewFormQueryWrapper);
-    if (delete==1){
-        QueryWrapper<AuditForm>auditFormQueryWrapper=new QueryWrapper<>();
-        auditFormQueryWrapper.eq("founder_id",finshOrderDto.getFounderId());
-      auditFormMapper.delete(auditFormQueryWrapper);
-      return ResponseResult.success();
-    }
-}
+        for (int i = 0; i < finshOrderDto.getReqId().size(); i++) {
+            QueryWrapper<ReviewForm> reviewFormQueryWrapper = new QueryWrapper<>();
+            reviewFormQueryWrapper.eq("requester_id", finshOrderDto.getReqId().get(i));
+            int delete = reviwFormMapper.delete(reviewFormQueryWrapper);
 
-        return  null;
+            if (delete == 1) {
+                QueryWrapper<AuditForm> auditFormQueryWrapper = new QueryWrapper<>();
+                auditFormQueryWrapper.eq("founder_id", finshOrderDto.getReqId().get(i));
+                auditFormMapper.delete(auditFormQueryWrapper);
+
+            }
+        }
+
+        return ResponseResult.success();
+
     }
 
 }

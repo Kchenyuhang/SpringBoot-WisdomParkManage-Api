@@ -18,4 +18,10 @@ class SysSubjectMapperTest {
         List<SysSubjectVo> mapList = sysSubjectMapper.findSubjectLike("大学生");
         System.out.println(mapList);
     }
+
+    @Test
+    void findAllSubject() throws SQLException{
+        List<SysSubjectVo> sysSubjectVos = sysSubjectMapper.findAllSubject();
+        System.out.println(sysSubjectVos.size());
+    }
 }
