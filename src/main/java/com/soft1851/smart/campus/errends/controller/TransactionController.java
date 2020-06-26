@@ -29,4 +29,10 @@ public class TransactionController {
 
         return transactionService.getOrderByFifteenDays();
     }
+
+    @PostMapping(value = "/getallOrde")
+    public Integer getAllOrde() {
+
+        return transactionService.countOrder();
+    }
 }

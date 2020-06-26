@@ -17,4 +17,10 @@ public interface TransactionService  {
      * @return
      */
     List<OrderVo> getOrderByFifteenDays();
+
+    /**
+     * 统计所有的订单
+     * @return
+     */
+    Integer countOrder();
 }

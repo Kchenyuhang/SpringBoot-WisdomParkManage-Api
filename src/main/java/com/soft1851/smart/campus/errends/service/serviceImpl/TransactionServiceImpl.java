@@ -1,5 +1,7 @@
 package com.soft1851.smart.campus.errends.service.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.soft1851.smart.campus.errends.domain.entity.Transaction;
 import com.soft1851.smart.campus.errends.domain.vo.OrderVo;
 import com.soft1851.smart.campus.errends.mapper.TransactionMapper;
 import com.soft1851.smart.campus.errends.service.TransactionService;
@@ -37,5 +39,13 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return dayOrder;
 
+    }
+
+    @Override
+    public Integer countOrder() {
+        QueryWrapper<Transaction>queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("status",3);
+        Integer integer = transactionMapper.selectCount(queryWrapper);
+        return  integer;
     }
 }
