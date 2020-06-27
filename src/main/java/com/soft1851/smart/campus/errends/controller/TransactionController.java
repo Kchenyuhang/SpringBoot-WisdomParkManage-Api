@@ -31,8 +31,7 @@ public class TransactionController {
     }
 
     @PostMapping(value = "/getallOrde")
-    public Integer getAllOrde() {
-
+    public Integer getAllOrder() {
         return transactionService.countOrder();
     }
 }

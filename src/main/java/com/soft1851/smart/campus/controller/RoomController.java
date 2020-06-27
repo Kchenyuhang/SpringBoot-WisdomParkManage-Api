@@ -41,6 +41,7 @@ public class RoomController {
     @ApiOperation(value = "修改房间信息")
     @PostMapping("/modification/id")
     public ResponseResult updateRoomById(@RequestBody Room room) {
+        System.out.println(room);
         roomService.update(room);
         return ResponseResult.success();
     }
