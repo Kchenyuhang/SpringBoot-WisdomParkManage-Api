@@ -2,6 +2,7 @@ package com.soft1851.smart.campus.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft1851.smart.campus.model.dto.JobAddDto;
+import com.soft1851.smart.campus.model.dto.JobDto;
 import com.soft1851.smart.campus.model.dto.JobPageDto;
 import com.soft1851.smart.campus.model.entity.Job;
 import com.soft1851.smart.campus.model.vo.JobVo;
@@ -22,4 +23,6 @@ public interface JobService extends IService<Job> {
     int insertJob(JobAddDto jobAddDto);
 
     int updateJob(JobAddDto jobAddDto);
+
+    int deleteJob(JobDto jobDto);
 }

@@ -94,10 +94,12 @@ public class CompanyServiceImpl extends ServiceImpl<CompanyMapper, Company> impl
         Job job = new Job();
         UpdateWrapper<Company> wrapper = new UpdateWrapper<>();
         wrapper.set("is_deleted", true)
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("pk_company_id", jobDto.getId());
         //把公司相关的职位删除
         UpdateWrapper<Job> jobWrapper = new UpdateWrapper<>();
         jobWrapper.set("is_deleted", true)
+                .set("gmt_modified", Timestamp.valueOf(LocalDateTime.now()))
                 .eq("company_id", jobDto.getId());
         jobMapper.update(job, jobWrapper);
         return companyMapper.update(company, wrapper);
